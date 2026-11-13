@@ -20,6 +20,7 @@
   .sp{position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:var(--sp-bg,#15171c);color:#ece8de;z-index:40;transform:translateX(102%);
     transition:transform .25s ease-out;box-shadow:-10px 0 30px rgba(0,0,0,.45);display:flex;flex-direction:column}
   body.sp-on .sp{transform:none}
+  @media (max-width:640px){.sp{width:100vw}}   /* phones: always full width */
   .sp-head{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 14px 10px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
   .sp-tabs{display:flex;gap:4px}
   .sp-tabs button{font:700 12px "Courier Prime",monospace;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:#a3a7b0;
