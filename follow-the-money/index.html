@@ -152,7 +152,8 @@
 let CASE;   // loaded from the case file below
 
 
-const CHECKS = 3, VW = 360, VH = 520, W = 112, H = 58;
+const CHECKS = 3, VW = 360, W = 112, H = 58;
+let VH = 520;   // grows in setup() so a bank tag under a bottom box isn't cut off
 let values, results, history, left, over;
 const $ = id => document.getElementById(id);
 const fmt = n => '£' + n.toLocaleString('en-GB');
@@ -171,6 +172,8 @@ const midOf = e => { const a = node(e.from), b = node(e.to), p = anchor(a, b), q
 
 function setup(){
   hidden = CASE.edges.filter(e => e.hidden);
+  VH = Math.max(520, ...CASE.nodes.map(n => n.y + H / 2 + (n.total != null ? 16 : 1)));
+  $('map').setAttribute('viewBox', `0 0 ${VW} ${VH}`);
   values = {}; results = {}; history = []; left = CHECKS; over = false;
   $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
   $('brief').textContent = CASE.brief;
