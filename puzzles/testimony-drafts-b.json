@@ -1,0 +1,138 @@
+[
+  {
+    "no": 4,
+    "title": "The Wren Cup",
+    "brief": "On late-opening night at the Fallowmere Museum, someone took the Wren Cup from its case in the Tower Room. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Four staff were on duty for late opening: Ines the curator, Walt the guard, Odette who runs the café, and Nell, a volunteer guide.",
+      "The Wren Cup's case records every opening. Tonight it was opened twice: at 20:00 by the curator, and at 20:19. At 20:40 the case was empty.",
+      "The Tower Room is reached only by a spiral stair inside the Map Room, whose one door opens off the café on the first floor. The main stairs are the only way between the ground and first floors.",
+      "From 20:00 the Map Room was kept locked. Its only key hangs behind the café counter. At 20:40 the key was found in the Map Room door.",
+      "From 20:15 to 20:45 the curator gave a talk in the lecture room on the ground floor, beside the staff kitchen. Every visitor in the building was there by 20:15, and nobody left before the end.",
+      "In Nell's coat on the volunteers' peg: a letter from her bank demanding £3,000 by Monday."
+    ],
+    "statements": [
+      {
+        "who": "Walt Grieve",
+        "tag": "the guard",
+        "text": "At 20:00 I locked the Map Room behind the curator and Hugo, hung the key behind the café counter and went back [[up|*down]] to my desk, where I sat until 20:45. After the talk began, the only people on the main stairs were Odette, who passed me at 20:17 and again at 20:25, and Nell, who came [[up|*down]] at 20:24."
+      },
+      {
+        "who": "Odette Finch",
+        "tag": "who runs the café",
+        "text": "I never left my counter all evening, except to go [[up|*down]] to the staff kitchen for milk at 20:17. That left Nell [[in company|*alone]] at her café table. When I got back at 20:25 the Map Room key was [[*gone|on its hook]], and nobody came behind my counter after that."
+      },
+      {
+        "who": "Hugo Penrith",
+        "tag": "an antiques dealer",
+        "text": "I admit I once offered the curator £5,000 for that cup. But from my seat at her talk I could see Walt at his desk, out in the [[first-floor|*ground-floor]] hall, through the glass door. When the case was opened at 20:19, he and I were both [[*downstairs|upstairs]]."
+      },
+      {
+        "who": "Ines Marlow",
+        "tag": "the curator",
+        "text": "Hugo and I came down together at 20:00, just after I'd checked the cup. When the case was opened again, Odette [[was|*wasn't]] upstairs. And poor Nell has been [[*hard up|comfortable]] since her bookshop closed."
+      },
+      {
+        "who": "Nell Arden",
+        "tag": "a volunteer guide",
+        "text": "Volunteers don't have to sit through the curator's talks, so I had my tea break in the café, [[downstairs|*upstairs]] from the lecture room. I left the café [[*before|after]] Odette came back with the milk."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": ["Odette Finch", "Ines Marlow", "Hugo Penrith"],
+        "text": "Nell Arden. When the case was opened at 20:19, everyone else was downstairs: the visitors and Hugo in the talk, Walt at his desk in the ground-floor hall, and Odette fetching milk. Nell was alone on the first floor."
+      },
+      {
+        "key": "How",
+        "needs": ["Walt Grieve", "Odette Finch", "Nell Arden"],
+        "text": "Once Odette went down for milk at 20:17, Nell took the Map Room key from behind the empty counter, climbed the spiral stair and opened the case at 20:19. She left the key in the door and was down the main stairs at 20:24, a minute before Odette came back."
+      },
+      {
+        "key": "Why",
+        "needs": ["Ines Marlow"],
+        "text": "Money. Nell has been hard up since her bookshop closed, and her bank wants £3,000 by Monday."
+      }
+    ],
+    "solution": "Nell Arden took the Wren Cup. The case was opened a second time at 20:19. By then the visitors and Hugo were in the curator's talk, Walt was at his desk in the ground-floor hall, and Odette had gone down to the staff kitchen for milk, so Nell was the only person on the first floor. She took the Map Room key from behind the empty counter, climbed to the Tower Room, left the key in the door and came down the main stairs at 20:24, a minute before Odette got back. She needed the money: her bank wants £3,000 by Monday.",
+    "solutionPath": [
+      "Step 1, settled by the evidence: Hugo's 'ground-floor' (the lecture room, whose glass door he looks through, is on the ground floor). Odette's 'down' (the staff kitchen is beside the ground-floor lecture room; the café is on the first floor). Odette's 'gone' (the case was opened at 20:19, so the only Map Room key had been used, and it ended up in the door with nobody going behind the counter after 20:25). Nell's 'upstairs' (café on the first floor, lecture room on the ground floor). Ines's 'hard up' (the bank letter).",
+      "Step 1, settled by plain text: Walt's second 'down' (Odette left Nell at her café table at 20:17, and nobody else used the main stairs until Nell at 20:24).",
+      "Step 2, from Hugo's 'ground-floor': Walt's first 'down' (his desk is in the ground-floor hall and he had been at the café counter) and Hugo's 'downstairs' (Hugo in the talk, Walt at that desk at 20:19).",
+      "Step 2, from Hugo's 'ground-floor' plus the evidence: Odette's 'alone' (the visitors, Hugo and the curator were in the talk, Walt was at his ground-floor desk, Odette was leaving; only four staff on duty).",
+      "Step 2, from Odette's 'down' and Walt's times: Ines's 'wasn't' (Odette was downstairs from 20:17 to 20:25, so not upstairs at 20:19).",
+      "Step 2, from Walt's second 'down': Nell's 'before' (she came down at 20:24; Odette got back at 20:25).",
+      "Step 3: with Odette's 'alone' and Ines's 'wasn't', Nell was the only person upstairs at 20:19, which unlocks Who."
+    ]
+  },
+  {
+    "no": 5,
+    "title": "Fresh Snow",
+    "brief": "A snowstorm has cut off the lodge, and the week's takings have vanished from the ski-hire hut. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Five people were snowed in at the lodge: Freya, Tomas, Pip, Anouk and Rafe. At 21:00 Tomas locked the week's takings in the cash box in the ski-hire hut, across the yard. At 23:00 the box was empty.",
+      "It snowed hard until 22:00, then stopped. Tracks made before then were filled in; tracks made after it stopped stayed sharp.",
+      "At 23:00 there were two sets of sharp tracks in the yard: one from the front door to the generator shed and back, the other from the back door to the hire hut and back.",
+      "The power failed at 22:10. It came back at 22:25, when the generator in the shed was started by hand.",
+      "The only stairs to the bedrooms come down into the kitchen. The back door is in the boot room, which opens off the kitchen.",
+      "In Anouk's locker: a letter from Freya ending her job on Friday. Her last month's wages, it says, will be paid 'when the season's takings allow'."
+    ],
+    "statements": [
+      {
+        "who": "Tomas Brack",
+        "tag": "who runs the ski hire",
+        "text": "When I locked the takings away at 21:00 I walked to the hut and back, and by 22:00 those tracks were [[sharp|*filled in]]. At 22:13 I went out by the [[back|*front]] door, started the generator and came straight in. That was my only trip out after 21:00, so the tracks to the hut [[were|*weren't]] mine."
+      },
+      {
+        "who": "Pip Garrow",
+        "tag": "the cook",
+        "text": "I never left the kitchen all evening, and before the blackout the only person to use the stairs was Anouk, going up to bed at 21:30. At 22:12, in the dark, someone came [[up|*down]] the stairs, went out through the boot room and was back eight minutes later, [[*before|after]] the lights came on. They went back the way they'd come, and nobody else came through my kitchen during the blackout."
+      },
+      {
+        "who": "Rafe Mallory",
+        "tag": "a guest",
+        "text": "Freya and I sat by the fire right through the blackout. Tomas left us at 22:13, and the lights came back twelve minutes [[earlier|*later]]. Two people went out into the yard in the dark, and the one who went to the hut [[*didn't come|came]] from the lounge."
+      },
+      {
+        "who": "Freya Lund",
+        "tag": "the owner",
+        "text": "I never left the lounge until the lights came back. Tomas's tracks keep [[close to|*well away from]] the hut. As for Anouk, I [[*still owe|paid]] her last month's wages."
+      },
+      {
+        "who": "Anouk Stray",
+        "tag": "a ski instructor",
+        "text": "The blackout woke me; I'd gone to bed at 21:30. I [[didn't come|*came]] down again before the lights came back, and by the time they did I was [[*upstairs|downstairs]]."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": ["Pip Garrow", "Tomas Brack", "Rafe Mallory"],
+        "text": "Anouk Stray. The hut tracks are sharp and start at the back door, and the only person through the kitchen in the blackout came down the bedroom stairs. Anouk was the only one upstairs."
+      },
+      {
+        "key": "How",
+        "needs": ["Anouk Stray", "Pip Garrow", "Freya Lund"],
+        "text": "At 22:12, in the dark, she came down into the kitchen, slipped out through the boot room and crossed the fresh snow to the hut. She was back upstairs by 22:20, before the lights came on. The only other tracks were Tomas's, from the front door to the generator shed."
+      },
+      {
+        "key": "Why",
+        "needs": ["Freya Lund"],
+        "text": "Freya was letting her go on Friday and still owed her a month's wages, to be paid 'when the season's takings allow'. Anouk took them herself."
+      }
+    ],
+    "solution": "Anouk Stray took the takings. The tracks to the hut were sharp, so they were made after the snow stopped at 22:00, and they started at the back door, which is reached only through the kitchen. At 22:12, in the blackout, someone came down the bedroom stairs and went out that way, and Anouk was the only person upstairs. Tomas went out by the front door to the generator shed, and his 21:00 trip to the hut had long since filled in. She was back upstairs by 22:20, before the lights came on. Freya was letting her go and still owed her a month's wages.",
+    "solutionPath": [
+      "Step 1, settled by the evidence: Tomas's 'filled in' (tracks made before 22:00 filled in). Tomas's 'front' (he started the generator, and the only tracks to the shed start at the front door). Pip's 'down' (the stairs come down into the kitchen from the bedrooms, and the person then went out through the boot room). Pip's 'before' (22:12 plus eight minutes is 22:20; the lights came back at 22:25). Rafe's 'later' (22:13 plus twelve minutes is 22:25, when the lights came back). Freya's 'still owe' (Anouk's letter).",
+      "Step 2, from Tomas's 'filled in' and 'front': Tomas's 'weren't' (his old hut tracks are buried, and his only later trip went out the front to the shed).",
+      "Step 2, from Tomas's 'front': Freya's 'well away from' (Tomas's set is the front-door set, which runs to the shed).",
+      "Step 2, from Pip's 'down' (or Tomas's 'weren't'): Rafe's 'didn't come' (the hut set starts at the back door, and the only person out that way came down the stairs; Freya and Rafe never left the lounge).",
+      "Step 2, from Pip's 'down': Anouk's 'came' (the 22:12 person came from upstairs, where only Anouk had gone).",
+      "Step 3, from Anouk's 'came' and Pip's timing: Anouk's 'upstairs' (she was back up the stairs by 22:20, before the lights came on at 22:25).",
+      "Together these unlock Who and How."
+    ]
+  }
+]

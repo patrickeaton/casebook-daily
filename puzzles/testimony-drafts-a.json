@@ -1,0 +1,152 @@
+[
+  {
+    "no": 2,
+    "title": "The Night Crossing",
+    "brief": "A painting vanished from the locked car deck of an overnight ferry. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The ferry sailed at 23:00 and docked at 06:00. The car deck was locked at 23:30 and stayed locked all night. Its only key hangs behind the purser's desk on Deck 7.",
+      "The car deck door logs every opening. That night it opened just once: at 02:15, for ten minutes.",
+      "Mirelle Okafor bought a painting at auction on Tuesday. For the crossing it was locked in her van on the car deck. At 06:00 the van had been forced and the painting was gone.",
+      "Deck 3 is the lowest passenger deck. The first-aid room is on Deck 3, beside the car deck door. It's a ten-minute walk from there to Deck 7. The first-aid cabinet logs each opening: that night it was opened once, at 02:27.",
+      "The caf\u00e9 and the open rear deck are both on Deck 7. The caf\u00e9 windows look out over the rear deck, and nowhere else.",
+      "In Tamsin's locker: an eviction notice for three months' unpaid rent, dated last week."
+    ],
+    "statements": [
+      {
+        "who": "Tamsin",
+        "tag": "the steward",
+        "text": "I minded the purser's desk while Hollis had his break, and while I was there Gideon Pryce asked me for seasickness tablets. I went straight [[up|*down]] to the first-aid room for them, and opened the cabinet [[before|*after]] the car deck door shut."
+      },
+      {
+        "who": "Gideon Pryce",
+        "tag": "a passenger",
+        "text": "Mirelle Okafor and I bid against each other for that painting on Tuesday, and I [[won|*lost]]. Tonight I asked Tamsin for seasickness tablets five minutes [[before|*after]] Hollis's break began, then waited [[less|*more]] than half an hour for them."
+      },
+      {
+        "who": "Hollis",
+        "tag": "the purser",
+        "text": "I had my break in the caf\u00e9, from 02:00 to 02:30. When I got back to the desk, Tamsin was [[*still away|already back]] and the key [[was|*wasn't]] on its hook. Between ourselves, she's been [[flush with|*short of]] money lately."
+      },
+      {
+        "who": "Bram",
+        "tag": "the caf\u00e9 cook",
+        "text": "Hollis and Mirelle Okafor sat at my counter from 02:00 to 02:30, and none of us left it. Through the window I watched Gideon Pryce on the [[*rear|front]] deck, being sick over the rail, from 02:10 until his tablets came. He [[could|*couldn't]] have been anywhere near the car deck when its door opened."
+      },
+      {
+        "who": "Mirelle Okafor",
+        "tag": "the painting's owner",
+        "text": "I could see Gideon through the caf\u00e9 window too. He went out on deck [[before|*after]] Tamsin set off for his tablets. If she went straight down, she reached Deck 3 [[*just as|long after]] the car deck door opened."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Bram",
+          "Mirelle Okafor",
+          "Tamsin"
+        ],
+        "text": "Tamsin. When the car deck door opened at 02:15, Hollis, Mirelle and Bram were together in the caf\u00e9 and Gideon was in full view on the rear deck. Tamsin was the only one down on Deck 3, right beside the door."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Tamsin",
+          "Gideon Pryce",
+          "Hollis"
+        ],
+        "text": "Gideon's request gave her an excuse to leave the desk at 02:05, and she took the key with her. She reached Deck 3 at 02:15, opened the car deck and forced the van, and only fetched the tablets at 02:27. Her twenty-minute errand took over half an hour, and when Hollis got back at 02:30 she and the key were both still gone."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Hollis"
+        ],
+        "text": "Money. Tamsin is three months behind on her rent and facing eviction."
+      }
+    ],
+    "solution": "Tamsin took the painting. Gideon asked her for seasickness tablets at 02:05, five minutes into Hollis's break, and she went straight down to Deck 3 with the car deck key, arriving at 02:15 just as the car deck door opened. She didn't open the first-aid cabinet until 02:27, after the door had shut, so she was away from the desk for more than half an hour on a twenty-minute errand. Everyone else is accounted for at 02:15: Hollis, Mirelle and Bram were at the caf\u00e9 counter, and Bram could see Gideon on the rear deck the whole time. She needed the money: she is about to be evicted for unpaid rent.",
+    "solutionPath": [
+      "Settled directly by the evidence: Tamsin went DOWN to the first-aid room (desk on Deck 7, first-aid room on Deck 3); she opened the cabinet AFTER the car deck door shut (02:27 against 02:25); Gideon LOST the auction (Mirelle owns the painting); Bram watched Gideon on the REAR deck (the only view from the caf\u00e9); Tamsin is SHORT OF money (eviction notice).",
+      "Settled by fixed statement text: Gideon asked AFTER Hollis's break began (Tamsin says he asked while she was minding the desk during the break, which began at 02:00), so he asked at 02:05.",
+      "Step two: Tamsin opened the cabinet at 02:27 and needed ten minutes to climb back to Deck 7, so she was STILL AWAY when Hollis returned at 02:30, and Gideon waited MORE than half an hour (02:05 to at least 02:37).",
+      "Step two: Tamsin set off at 02:05 and Gideon only went out on deck at 02:10, so he went out AFTER she set off; going straight down, she reached Deck 3 at 02:15, JUST AS the door opened.",
+      "Step two: Bram watched Gideon on the rear deck from 02:10 until the tablets came at 02:37 or later, which covers the whole time the door was open, so Gideon COULDN'T have been near the car deck.",
+      "Step three: with Hollis, Mirelle, Bram and Gideon all on Deck 7 at 02:15, only Tamsin could have used the key on Deck 3. She was still away at 02:30, so the key WASN'T on its hook."
+    ]
+  },
+  {
+    "no": 3,
+    "title": "Salt in the Sugar",
+    "brief": "At the village bake-off, the champion's lemon drizzle came out salty. Somebody swapped her tins. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the saboteur will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Four bakers worked at four benches in a single row, numbered 1 to 4 from the front of the marquee to the back. The judges' table stands at the front, beside bench 1. The ovens stand at the back, beside bench 4.",
+      "Each baker had a sugar tin and a salt tin, all identical. At 13:00 Hazel Brindle tasted her sugar, and it was sweet. At 14:00 her bench held two salt tins and no sugar: someone had swapped her sugar tin for their own salt tin.",
+      "At 13:30 the marquee lights failed for one minute. For the rest of the afternoon the judges had every bench in plain sight.",
+      "In the dark nobody could move more than a step. Only someone standing at Hazel's bench, or at a bench next to it, could have reached her sugar tin.",
+      "On the marquee wall hang the results of the last two shows. Both years: 1st Hazel Brindle, 2nd Clem Ashworth. In Clem's apron pocket: a note in his handwriting, 'Not a third time.'"
+    ],
+    "statements": [
+      {
+        "who": "Ottilie Vane",
+        "tag": "the judge",
+        "text": "Priya's bench is the one beside my table, and I sat there all through the blackout. When the lights failed, Priya's bench [[*was|wasn't]] empty. At 14:00 I checked every bench, and Clem's had [[no|*two]] sugar tins."
+      },
+      {
+        "who": "Priya Shah",
+        "tag": "a baker",
+        "text": "When the lights failed I was at the ovens with Hazel, at the [[front|*back]] of the marquee, [[*nowhere near|right by]] my own bench."
+      },
+      {
+        "who": "Hazel Brindle",
+        "tag": "the champion",
+        "text": "My bench is next to Priya's. My sugar was swapped [[before|*during]] the blackout, by someone standing at the bench beside mine on the side [[nearer the judges|*nearer the ovens]]."
+      },
+      {
+        "who": "Dot Penrose",
+        "tag": "a baker",
+        "text": "My bench, right beside the ovens, is at the [[front|*back]] of the row, and Clem's is [[*next to|far from]] mine. When the lights failed I was at my bench, [[*too far|close enough]] to reach Hazel's tin."
+      },
+      {
+        "who": "Clem Ashworth",
+        "tag": "a baker",
+        "text": "When the lights failed I was standing at my own bench, [[*right next to|well away from]] Hazel's. Hazel has [[never|*twice]] beaten me at this show."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Priya Shah",
+          "Dot Penrose",
+          "Clem Ashworth"
+        ],
+        "text": "Clem Ashworth. The benches run Priya, Hazel, Clem, Dot from front to back. When the lights failed, Priya and Hazel were at the ovens and Dot was two benches away. Clem, at bench 3, was the only person standing next to Hazel's bench."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Hazel Brindle",
+          "Ottilie Vane"
+        ],
+        "text": "In the minute of darkness he reached across from the bench behind Hazel's and swapped his salt tin for her sugar tin. When the judge checked at 14:00, his bench had two sugar tins."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Clem Ashworth"
+        ],
+        "text": "Pride. Hazel has beaten Clem into second place two years running, and he wasn't going to let it happen a third time."
+      }
+    ],
+    "solution": "Clem Ashworth swapped the tins. Hazel's sugar was fine at 13:00 and every bench was watched except during the one-minute blackout at 13:30, so the swap happened in the dark, by someone standing at Hazel's bench or the next one. Priya has bench 1 by the judges' table, Hazel is next to her at bench 2, and Dot is at the back by the ovens at bench 4, which leaves Clem at bench 3. When the lights failed Priya and Hazel were at the ovens and Dot was at her own bench, too far away. Only Clem stood next to Hazel's bench, and afterwards his bench had two sugar tins. Hazel had beaten him two years running.",
+    "solutionPath": [
+      "Settled directly by the evidence: the ovens are at the BACK of the marquee (Priya); Dot's bench, beside the ovens, is at the BACK of the row; the swap happened DURING the blackout (sugar fine at 13:00, benches watched at all other times); Hazel has TWICE beaten Clem (results on the wall).",
+      "Bench order from fixed text plus Dot's flip: Priya is bench 1 (beside the judges' table), Hazel bench 2 (next to Priya), Dot bench 4, so Clem is bench 3.",
+      "Step two: Priya was at the ovens, NOWHERE NEAR her own bench at the front, so the bench in front of Hazel's WAS empty; Clem's bench is NEXT TO Dot's; Clem, standing at his own bench, was RIGHT NEXT TO Hazel's; Dot, at bench 4, was TOO FAR to reach Hazel's tin.",
+      "Step three: with bench 1 empty and Hazel herself at the ovens, the only person who could reach her tin was Clem at bench 3, so the swap was made from the bench BEHIND hers, and Clem's bench ended up with TWO sugar tins (his own plus Hazel's)."
+    ]
+  }
+]

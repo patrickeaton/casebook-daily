@@ -1,0 +1,156 @@
+[
+  {
+    "no": 8,
+    "title": "The Gannet Rock Light",
+    "brief": "On a night of rain the lighthouse on Gannet Rock went dark, and a coal ship ran onto the reef below. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the saboteur will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The tide covered the causeway to Gannet Rock at 20:00 and uncovered it at 02:00. Outside those hours the causeway is dry; in between, nobody can cross. There is no boat on the Rock. That evening the only people on the Rock were Hollis Brand, his daughter Nell, Tobias Vane, Miss Quill, and two visitors: Jory and Penhale.",
+      "The lamp went dark at 23:10, the moment its wick was cut. At 23:40 the coal ship Merrow ran onto the reef below the tower.",
+      "The only way up to the lamp room is the spiral stair, which starts in the cottage kitchen.",
+      "The kitchen has two doors: an inside door to the rest of the cottage, and an outside door to the yard, the only way in from outside. Rain fell from 21:00 until dawn.",
+      "Fresh rainwater had dripped across the lamp-room floor beside the cut wick.",
+      "In Tobias Vane's sea chest: a letter from a Port Ellery salvage dealer, promising him a fifth of anything saved from a wreck on Gannet reef."
+    ],
+    "statements": [
+      {
+        "who": "Nell",
+        "tag": "the keeper's daughter",
+        "text": "I kneaded bread alone at the kitchen window from 22:00 until the ship struck, my back to the stair. Only two people came through the kitchen, and each climbed the stair and came straight back down within ten minutes: Father at 22:40, and someone else twenty-five minutes [[earlier|*later]]. Just before the other one went up, I heard the [[*outside|inside]] door open."
+      },
+      {
+        "who": "Hollis Brand",
+        "tag": "the head keeper",
+        "text": "Of the two people who climbed the stair that evening, I went up [[second|*first]]. I trimmed the wick at 22:45 with nobody else in the lamp room, then sat down to cards in the parlour with Miss Quill, and neither of us left the table until the ship struck. Tobias came into the parlour at 23:20 with his oilskin [[dry|*wet]]."
+      },
+      {
+        "who": "Miss Quill",
+        "tag": "a visiting birdwatcher",
+        "text": "Mister Brand sat down to cards with me at 22:50, ten minutes [[*after|before]] he climbed to trim the wick. Jory set off home at 19:30, so he spent the night [[on|*off]] the Rock."
+      },
+      {
+        "who": "Penhale",
+        "tag": "the supply boatman",
+        "text": "I set off home at 19:50, [[after|*before]] the tide covered the causeway, and crossed with my boots [[*dry|wet]]. Tobias has been asking me which nights the coal ships pass. Whatever he tells you, a wreck on that reef would leave him [[poorer|*richer]]."
+      },
+      {
+        "who": "Tobias Vane",
+        "tag": "the assistant keeper",
+        "text": "From 22:50 until 23:20 I was [[with|*without]] company. That evening I [[hadn't|*had]] been out in the rain. I came into the parlour at 23:20, [[*after|before]] the light went out."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Nell",
+          "Miss Quill",
+          "Tobias Vane"
+        ],
+        "text": "Tobias Vane. The wick was cut by someone who came in from the rain at 23:05 and climbed the stair. Brand and Miss Quill were at cards, Nell was alone at her bread, and Penhale had gone ashore before the tide. Tobias was the only one alone, and the only one out in the rain."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Nell",
+          "Hollis Brand",
+          "Tobias Vane"
+        ],
+        "text": "He waited alone in the yard, slipped in by the outside door at 23:05 behind Nell's back, climbed the only stair and cut the wick at 23:10. He walked into the parlour at 23:20, his oilskin still wet."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Penhale"
+        ],
+        "text": "Salvage. A Port Ellery dealer had promised Tobias a fifth of anything saved from a wreck on the reef. A dark light meant a wreck, and a wreck meant money."
+      }
+    ],
+    "solution": "Tobias Vane cut the wick. Brand climbed at 22:40 and was down by 22:50, so the other climber must have gone up twenty-five minutes later, at 23:05, to be in the lamp room when the wick was cut at 23:10. That climber dripped fresh rainwater, so came in from the yard by the outside door. Brand and Miss Quill were at cards, Nell was kneading bread alone, and Penhale had crossed home at 19:50, before the tide, so he was ashore all night. That left Tobias, alone and out in the rain. He came into the parlour at 23:20 with his oilskin wet. He did it for the salvage money a Port Ellery dealer had promised him.",
+    "solutionPath": [
+      "Direct from the evidence: Penhale set off 'before' the tide (19:50 is before 20:00); Penhale's motive flip is 'richer' (the salvage letter); Vane came into the parlour 'after' the light went out (23:20 is after 23:10); Nell heard the 'outside' door (the cutter dripped fresh rainwater, and the outside door is the only way in from the rain).",
+      "Direct from evidence plus fixed text: Nell's other climber went up 'later' (23:05). If it were earlier (22:15), both climbers would have been down by 22:50, Brand found the lamp room empty at 22:45, and nobody would have been up there to cut the wick at 23:10.",
+      "Cross-statement: Quill sat down to cards 'after' Brand climbed (Nell puts his climb at 22:40).",
+      "Second step: from 'later', Brand went up 'first'. From Penhale's 'before' and the flooded causeway, Penhale crossed with his boots 'dry', and Quill's Jory spent the night 'off' the Rock.",
+      "Second step: Vane was 'without' company from 22:50 to 23:20. Brand and Quill were together, Nell was alone, and Penhale was ashore, so nobody was free to be with him.",
+      "Third step: the climber came in by the outside door ('outside') at 23:05 ('later'), when Brand, Quill and Nell were all accounted for and Penhale was 'off' the Rock. So the climber was Vane, and Vane 'had' been out in the rain.",
+      "Fourth step: having been out in the rain until he climbed at 23:05, Vane came into the parlour at 23:20 with his oilskin 'wet'."
+    ]
+  },
+  {
+    "no": 9,
+    "title": "The Midnight Edition",
+    "brief": "The night before the Harwick Courier was to expose Alderman Coyle, the signed statement behind the story vanished from the editor's locked office. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "At 21:30 Ada Lennox locked the clerk's signed statement in her desk drawer, locked her office on the top floor and came downstairs. At 22:45 the office was still locked, but the drawer had been forced and the statement was gone.",
+      "There are two keys to the editor's office. One was in Ada Lennox's handbag, which never left her all evening. The spare hangs on a hook in the newsroom.",
+      "The exchange logged one call from the Courier that night: from the telephone on the editor's desk to Alderman Coyle's house, at 22:20.",
+      "The street door bell rings whenever the door opens. After 21:00 it rang only twice that night: at 21:35 and at 22:40. Apart from Ada Lennox and Felix Harrow, the only people in the building after 21:00 were Ivy, Bassey and Conrad Pike.",
+      "The building has one staircase. It runs from the press room in the basement, past the newsroom on the ground floor, up to the top floor.",
+      "In Conrad Pike's desk: a letter from Alderman Coyle, promising him the post of council press officer 'once this bridge business has blown over'."
+    ],
+    "statements": [
+      {
+        "who": "Ivy",
+        "tag": "the copy girl",
+        "text": "I sat at my desk beside the stairs from 21:30 until Mrs Lennox came back at 22:40, and while I was there nobody used them. I left only once, at 22:12, to go straight down to the press room with the football results and straight back, and Mister Pike [[*was|wasn't]] alone in the newsroom when I went. When I came back, he was [[out of|*in]] his chair."
+      },
+      {
+        "who": "Bassey",
+        "tag": "the printer",
+        "text": "I never left the press room all evening. Ivy brought the football results down at 22:12 and stood by me the whole time she was here, which was [[less|*more]] than five minutes. When that call was made, she [[*was|wasn't]] still with me."
+      },
+      {
+        "who": "Ada Lennox",
+        "tag": "the editor",
+        "text": "When I came down at 21:30 nobody was left on the top floor, and when I went back up at 22:45 nobody was there either. I locked the statement away [[*before|after]] Felix and I went out. Whoever took it [[came|*didn't come]] in from the street."
+      },
+      {
+        "who": "Felix Harrow",
+        "tag": "the chief reporter",
+        "text": "Ada and I went out together at 21:35 for supper across the road, and came back [[separately|*together]]. At 22:20 we were both [[inside|*outside]] the building. Pike stands to [[lose|*gain]] if this story never runs."
+      },
+      {
+        "who": "Conrad Pike",
+        "tag": "the sports writer",
+        "text": "I wrote up the cup match at my desk all evening, apart from one quick trip [[downstairs|*upstairs]] while Ivy was in the press room. I was back in my chair [[*before|after]] she came up."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Ada Lennox",
+          "Felix Harrow",
+          "Bassey"
+        ],
+        "text": "Conrad Pike. Whoever rang Coyle at 22:20 was on the top floor, and could only have climbed the stairs while Ivy was away from her desk. Lennox and Harrow were out, nobody came in from the street, and Ivy was with Bassey in the press room. Pike was the only one left."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Ivy",
+          "Bassey",
+          "Conrad Pike"
+        ],
+        "text": "The moment Ivy went down to the press room, he took the spare key from the newsroom hook, went up the only staircase, forced the drawer and telephoned Coyle at 22:20. He locked up and was back in his chair before Ivy came up the stairs."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Felix Harrow"
+        ],
+        "text": "A job. Coyle had promised Pike the post of council press officer once the bridge business blew over, and it would only blow over if the story never ran."
+      }
+    ],
+    "solution": "Conrad Pike took the statement. The call to Coyle at 22:20 came from the editor's desk, so someone was on the top floor then. It was empty at 21:30 and at 22:45, and Ivy watched the only staircase all evening except while she was in the press room. So the thief went up and came down while she was away, and she must have been away for more than five minutes and still with Bassey at 22:20. The bell rang only when Lennox and Harrow went out together and came back together, so they were outside at 22:20 and nobody came in from the street. That left Pike, alone in the newsroom when Ivy went down. He went upstairs, and was back in his chair before she returned. Coyle had promised him a council job once the story was buried.",
+    "solutionPath": [
+      "Direct from the evidence: Harrow and Lennox came back 'together' (only one ring after 21:35, at 22:40); they were 'outside' at 22:20 (no ring between 21:35 and 22:40); the thief 'didn't come' in from the street (no ring that let anyone else in); Lennox locked the statement away 'before' they went out (21:30 is before 21:35); Pike stands to 'gain' (Coyle's letter).",
+      "From the evidence plus fixed text: the 22:20 caller was on the top floor, which was empty at 21:30 and 22:45, and nobody used the stairs while Ivy sat at her desk. So the caller went up and came down while Ivy was away, and she was still away after 22:20. Bassey's flips follow: Ivy stayed 'more' than five minutes, and 'was' still with him at 22:20 (she went straight to the press room and back).",
+      "Cross-statement: Pike used the stairs while Ivy was away, so he was back in his chair 'before' she came up (nobody used them once she was back at her desk).",
+      "Second step: with Lennox and Harrow 'outside' and Bassey in the press room, Pike 'was' alone in the newsroom when Ivy went down. From Pike's 'before', Ivy found him 'in' his chair.",
+      "Third step: the caller was not Lennox or Harrow ('outside'), not an outsider ('didn't come'), not Bassey (never left the press room) and not Ivy ('was' still with Bassey at 22:20). So it was Pike, and his trip was 'upstairs'."
+    ]
+  }
+]
