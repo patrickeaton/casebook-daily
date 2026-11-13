@@ -10,7 +10,7 @@
       "At 21:45 Lady Ashby locked her ring in the upstairs study. At 22:30 it was gone.",
       "Whoever took the ring left wet footprints across the study carpet.",
       "The back stairs are the only way upstairs. They start in the kitchen, beside the back door to the garden.",
-      "In the Major's coat pocket: a pawnbroker's ticket for his medals, and an unpaid gambling bill for £400."
+      "In the Major's coat pocket: a pawnbroker's ticket for his medals, and an unpaid gambling bill for \u00a3400."
     ],
     "statements": [
       {
@@ -63,9 +63,619 @@
         "needs": [
           "Pell"
         ],
-        "text": "Money. The Major is broke: his medals are at the pawnbroker's and he owes £400 in gambling debts."
+        "text": "Money. The Major is broke: his medals are at the pawnbroker's and he owes \u00a3400 in gambling debts."
       }
     ],
     "solution": "Major Fenn took the ring. Only two people climbed the back stairs: Lady Ashby at 21:45, and someone dripping wet twenty-five minutes later, at 22:10. The only person missing from the library at 22:10 was the Major, out in the rain with no umbrella. Rook came in at 21:20, before the rain, and his boots stayed dry, so the wet footprints aren't his. He needed the money: his medals were already pawned to cover his gambling debts."
+  },
+  {
+    "no": 2,
+    "title": "The Night Crossing",
+    "brief": "A painting vanished from the locked car deck of an overnight ferry. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The ferry sailed at 23:00 and docked at 06:00. The car deck was locked at 23:30 and stayed locked all night. Its only key hangs behind the purser's desk on Deck 7.",
+      "The car deck door logs every opening. That night it opened just once: at 02:15, for ten minutes.",
+      "Mirelle Okafor bought a painting at auction on Tuesday. For the crossing it was locked in her van on the car deck. At 06:00 the van had been forced and the painting was gone.",
+      "Deck 3 is the lowest passenger deck. The first-aid room is on Deck 3, beside the car deck door. It's a ten-minute walk from there to Deck 7. The first-aid cabinet logs each opening: that night it was opened once, at 02:27.",
+      "The caf\u00e9 and the open rear deck are both on Deck 7. The caf\u00e9 windows look out over the rear deck, and nowhere else.",
+      "In Tamsin's locker: an eviction notice for three months' unpaid rent, dated last week."
+    ],
+    "statements": [
+      {
+        "who": "Tamsin",
+        "tag": "the steward",
+        "text": "I minded the purser's desk while Hollis had his break, and while I was there Gideon Pryce asked me for seasickness tablets. I went straight [[up|*down]] to the first-aid room for them, and opened the cabinet [[before|*after]] the car deck door shut."
+      },
+      {
+        "who": "Gideon Pryce",
+        "tag": "a passenger",
+        "text": "Mirelle Okafor and I bid against each other for that painting on Tuesday, and I [[won|*lost]]. Tonight I asked Tamsin for seasickness tablets five minutes [[before|*after]] Hollis's break began, then waited [[less|*more]] than half an hour for them."
+      },
+      {
+        "who": "Hollis",
+        "tag": "the purser",
+        "text": "I had my break in the caf\u00e9, from 02:00 to 02:30. When I got back to the desk, Tamsin was [[*still away|already back]] and the key [[was|*wasn't]] on its hook. Between ourselves, she's been [[flush with|*short of]] money lately."
+      },
+      {
+        "who": "Bram",
+        "tag": "the caf\u00e9 cook",
+        "text": "Hollis and Mirelle Okafor sat at my counter from 02:00 to 02:30, and none of us left it. Through the window I watched Gideon Pryce on the [[*rear|front]] deck, being sick over the rail, from 02:10 until his tablets came. He [[could|*couldn't]] have been anywhere near the car deck when its door opened."
+      },
+      {
+        "who": "Mirelle Okafor",
+        "tag": "the painting's owner",
+        "text": "I could see Gideon through the caf\u00e9 window too. He went out on deck [[before|*after]] Tamsin set off for his tablets. If she went straight down, she reached Deck 3 [[*just as|long after]] the car deck door opened."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Bram",
+          "Mirelle Okafor",
+          "Tamsin"
+        ],
+        "text": "Tamsin. When the car deck door opened at 02:15, Hollis, Mirelle and Bram were together in the caf\u00e9 and Gideon was in full view on the rear deck. Tamsin was the only one down on Deck 3, right beside the door."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Tamsin",
+          "Gideon Pryce",
+          "Hollis"
+        ],
+        "text": "Gideon's request gave her an excuse to leave the desk at 02:05, and she took the key with her. She reached Deck 3 at 02:15, opened the car deck and forced the van, and only fetched the tablets at 02:27. Her twenty-minute errand took over half an hour, and when Hollis got back at 02:30 she and the key were both still gone."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Hollis"
+        ],
+        "text": "Money. Tamsin is three months behind on her rent and facing eviction."
+      }
+    ],
+    "solution": "Tamsin took the painting. Gideon asked her for seasickness tablets at 02:05, five minutes into Hollis's break, and she went straight down to Deck 3 with the car deck key, arriving at 02:15 just as the car deck door opened. She didn't open the first-aid cabinet until 02:27, after the door had shut, so she was away from the desk for more than half an hour on a twenty-minute errand. Everyone else is accounted for at 02:15: Hollis, Mirelle and Bram were at the caf\u00e9 counter, and Bram could see Gideon on the rear deck the whole time. She needed the money: she is about to be evicted for unpaid rent.",
+    "solutionPath": [
+      "Settled directly by the evidence: Tamsin went DOWN to the first-aid room (desk on Deck 7, first-aid room on Deck 3); she opened the cabinet AFTER the car deck door shut (02:27 against 02:25); Gideon LOST the auction (Mirelle owns the painting); Bram watched Gideon on the REAR deck (the only view from the caf\u00e9); Tamsin is SHORT OF money (eviction notice).",
+      "Settled by fixed statement text: Gideon asked AFTER Hollis's break began (Tamsin says he asked while she was minding the desk during the break, which began at 02:00), so he asked at 02:05.",
+      "Step two: Tamsin opened the cabinet at 02:27 and needed ten minutes to climb back to Deck 7, so she was STILL AWAY when Hollis returned at 02:30, and Gideon waited MORE than half an hour (02:05 to at least 02:37).",
+      "Step two: Tamsin set off at 02:05 and Gideon only went out on deck at 02:10, so he went out AFTER she set off; going straight down, she reached Deck 3 at 02:15, JUST AS the door opened.",
+      "Step two: Bram watched Gideon on the rear deck from 02:10 until the tablets came at 02:37 or later, which covers the whole time the door was open, so Gideon COULDN'T have been near the car deck.",
+      "Step three: with Hollis, Mirelle, Bram and Gideon all on Deck 7 at 02:15, only Tamsin could have used the key on Deck 3. She was still away at 02:30, so the key WASN'T on its hook."
+    ]
+  },
+  {
+    "no": 3,
+    "title": "Salt in the Sugar",
+    "brief": "At the village bake-off, the champion's lemon drizzle came out salty. Somebody swapped her tins. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the saboteur will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Four bakers worked at four benches in a single row, numbered 1 to 4 from the front of the marquee to the back. The judges' table stands at the front, beside bench 1. The ovens stand at the back, beside bench 4.",
+      "Each baker had a sugar tin and a salt tin, all identical. At 13:00 Hazel Brindle tasted her sugar, and it was sweet. At 14:00 her bench held two salt tins and no sugar: someone had swapped her sugar tin for their own salt tin.",
+      "At 13:30 the marquee lights failed for one minute. For the rest of the afternoon the judges had every bench in plain sight.",
+      "In the dark nobody could move more than a step. Only someone standing at Hazel's bench, or at a bench next to it, could have reached her sugar tin.",
+      "On the marquee wall hang the results of the last two shows. Both years: 1st Hazel Brindle, 2nd Clem Ashworth. In Clem's apron pocket: a note in his handwriting, 'Not a third time.'"
+    ],
+    "statements": [
+      {
+        "who": "Ottilie Vane",
+        "tag": "the judge",
+        "text": "Priya's bench is the one beside my table, and I sat there all through the blackout. When the lights failed, Priya's bench [[*was|wasn't]] empty. At 14:00 I checked every bench, and Clem's had [[no|*two]] sugar tins."
+      },
+      {
+        "who": "Priya Shah",
+        "tag": "a baker",
+        "text": "When the lights failed I was at the ovens with Hazel, at the [[front|*back]] of the marquee, [[*nowhere near|right by]] my own bench."
+      },
+      {
+        "who": "Hazel Brindle",
+        "tag": "the champion",
+        "text": "My bench is next to Priya's. My sugar was swapped [[before|*during]] the blackout, by someone standing at the bench beside mine on the side [[nearer the judges|*nearer the ovens]]."
+      },
+      {
+        "who": "Dot Penrose",
+        "tag": "a baker",
+        "text": "My bench, right beside the ovens, is at the [[front|*back]] of the row, and Clem's is [[*next to|far from]] mine. When the lights failed I was at my bench, [[*too far|close enough]] to reach Hazel's tin."
+      },
+      {
+        "who": "Clem Ashworth",
+        "tag": "a baker",
+        "text": "When the lights failed I was standing at my own bench, [[*right next to|well away from]] Hazel's. Hazel has [[never|*twice]] beaten me at this show."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Priya Shah",
+          "Dot Penrose",
+          "Clem Ashworth"
+        ],
+        "text": "Clem Ashworth. The benches run Priya, Hazel, Clem, Dot from front to back. When the lights failed, Priya and Hazel were at the ovens and Dot was two benches away. Clem, at bench 3, was the only person standing next to Hazel's bench."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Hazel Brindle",
+          "Ottilie Vane"
+        ],
+        "text": "In the minute of darkness he reached across from the bench behind Hazel's and swapped his salt tin for her sugar tin. When the judge checked at 14:00, his bench had two sugar tins."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Clem Ashworth"
+        ],
+        "text": "Pride. Hazel has beaten Clem into second place two years running, and he wasn't going to let it happen a third time."
+      }
+    ],
+    "solution": "Clem Ashworth swapped the tins. Hazel's sugar was fine at 13:00 and every bench was watched except during the one-minute blackout at 13:30, so the swap happened in the dark, by someone standing at Hazel's bench or the next one. Priya has bench 1 by the judges' table, Hazel is next to her at bench 2, and Dot is at the back by the ovens at bench 4, which leaves Clem at bench 3. When the lights failed Priya and Hazel were at the ovens and Dot was at her own bench, too far away. Only Clem stood next to Hazel's bench, and afterwards his bench had two sugar tins. Hazel had beaten him two years running.",
+    "solutionPath": [
+      "Settled directly by the evidence: the ovens are at the BACK of the marquee (Priya); Dot's bench, beside the ovens, is at the BACK of the row; the swap happened DURING the blackout (sugar fine at 13:00, benches watched at all other times); Hazel has TWICE beaten Clem (results on the wall).",
+      "Bench order from fixed text plus Dot's flip: Priya is bench 1 (beside the judges' table), Hazel bench 2 (next to Priya), Dot bench 4, so Clem is bench 3.",
+      "Step two: Priya was at the ovens, NOWHERE NEAR her own bench at the front, so the bench in front of Hazel's WAS empty; Clem's bench is NEXT TO Dot's; Clem, standing at his own bench, was RIGHT NEXT TO Hazel's; Dot, at bench 4, was TOO FAR to reach Hazel's tin.",
+      "Step three: with bench 1 empty and Hazel herself at the ovens, the only person who could reach her tin was Clem at bench 3, so the swap was made from the bench BEHIND hers, and Clem's bench ended up with TWO sugar tins (his own plus Hazel's)."
+    ]
+  },
+  {
+    "no": 4,
+    "title": "The Wren Cup",
+    "brief": "On late-opening night at the Fallowmere Museum, someone took the Wren Cup from its case in the Tower Room. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Four staff were on duty for late opening: Ines the curator, Walt the guard, Odette who runs the caf\u00e9, and Nell, a volunteer guide.",
+      "The Wren Cup's case records every opening. Tonight it was opened twice: at 20:00 by the curator, and at 20:19. At 20:40 the case was empty.",
+      "The Tower Room is reached only by a spiral stair inside the Map Room, whose one door opens off the caf\u00e9 on the first floor. The main stairs are the only way between the ground and first floors.",
+      "From 20:00 the Map Room was kept locked. Its only key hangs behind the caf\u00e9 counter. At 20:40 the key was found in the Map Room door.",
+      "From 20:15 to 20:45 the curator gave a talk in the lecture room on the ground floor, beside the staff kitchen. Every visitor in the building was there by 20:15, and nobody left before the end.",
+      "In Nell's coat on the volunteers' peg: a letter from her bank demanding \u00a33,000 by Monday."
+    ],
+    "statements": [
+      {
+        "who": "Walt Grieve",
+        "tag": "the guard",
+        "text": "At 20:00 I locked the Map Room behind the curator and Hugo, hung the key behind the caf\u00e9 counter and went back [[up|*down]] to my desk, where I sat until 20:45. After the talk began, the only people on the main stairs were Odette, who passed me at 20:17 and again at 20:25, and Nell, who came [[up|*down]] at 20:24."
+      },
+      {
+        "who": "Odette Finch",
+        "tag": "who runs the caf\u00e9",
+        "text": "I never left my counter all evening, except to go [[up|*down]] to the staff kitchen for milk at 20:17. While I was gone, Nell [[had company|*was alone]] at her caf\u00e9 table. When I got back at 20:25 the Map Room key was [[*gone|on its hook]], and nobody came behind my counter after that."
+      },
+      {
+        "who": "Hugo Penrith",
+        "tag": "an antiques dealer",
+        "text": "I admit I once offered the curator \u00a35,000 for that cup. But from my seat at her talk I could see Walt at his desk, out in the [[first-floor|*ground-floor]] hall, through the glass door. When the case was opened at 20:19, he and I were both [[*downstairs|upstairs]]."
+      },
+      {
+        "who": "Ines Marlow",
+        "tag": "the curator",
+        "text": "Hugo and I came down together at 20:00, just after I'd checked the cup. When the case was opened again, Odette [[was|*wasn't]] upstairs. And Nell has been [[*hard up|comfortable]] since her bookshop closed."
+      },
+      {
+        "who": "Nell Arden",
+        "tag": "a volunteer guide",
+        "text": "Volunteers don't have to sit through the curator's talks, so I had my tea break in the caf\u00e9, [[downstairs|*upstairs]] from the lecture room. I left the caf\u00e9 [[*before|after]] Odette came back with the milk."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Odette Finch",
+          "Ines Marlow",
+          "Hugo Penrith"
+        ],
+        "text": "Nell Arden. When the case was opened at 20:19, everyone else was downstairs: the visitors and Hugo in the talk, Walt at his desk in the ground-floor hall, and Odette fetching milk. Nell was alone on the first floor."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Walt Grieve",
+          "Odette Finch",
+          "Nell Arden"
+        ],
+        "text": "Once Odette went down for milk at 20:17, Nell took the Map Room key from behind the empty counter, climbed the spiral stair and opened the case at 20:19. She left the key in the door and was down the main stairs at 20:24, a minute before Odette came back."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Ines Marlow"
+        ],
+        "text": "Money. Nell has been hard up since her bookshop closed, and her bank wants \u00a33,000 by Monday."
+      }
+    ],
+    "solution": "Nell Arden took the Wren Cup. The case was opened a second time at 20:19. By then the visitors and Hugo were in the curator's talk, Walt was at his desk in the ground-floor hall, and Odette had gone down to the staff kitchen for milk, so Nell was the only person on the first floor. She took the Map Room key from behind the empty counter, climbed to the Tower Room, left the key in the door and came down the main stairs at 20:24, a minute before Odette got back. She needed the money: her bank wants \u00a33,000 by Monday.",
+    "solutionPath": [
+      "Step 1, settled by the evidence: Hugo's 'ground-floor' (the lecture room, whose glass door he looks through, is on the ground floor). Odette's 'down' (the staff kitchen is beside the ground-floor lecture room; the caf\u00e9 is on the first floor). Odette's 'gone' (the case was opened at 20:19, so the only Map Room key had been used, and it ended up in the door with nobody going behind the counter after 20:25). Nell's 'upstairs' (caf\u00e9 on the first floor, lecture room on the ground floor). Ines's 'hard up' (the bank letter).",
+      "Step 1, settled by plain text: Walt's second 'down' (Odette left Nell at her caf\u00e9 table at 20:17, and nobody else used the main stairs until Nell at 20:24).",
+      "Step 2, from Hugo's 'ground-floor': Walt's first 'down' (his desk is in the ground-floor hall and he had been at the caf\u00e9 counter) and Hugo's 'downstairs' (Hugo in the talk, Walt at that desk at 20:19).",
+      "Step 2, from Hugo's 'ground-floor' plus the evidence: Odette's 'alone' (the visitors, Hugo and the curator were in the talk, Walt was at his ground-floor desk, Odette was leaving; only four staff on duty).",
+      "Step 2, from Odette's 'down' and Walt's times: Ines's 'wasn't' (Odette was downstairs from 20:17 to 20:25, so not upstairs at 20:19).",
+      "Step 2, from Walt's second 'down': Nell's 'before' (she came down at 20:24; Odette got back at 20:25).",
+      "Step 3: with Odette's 'alone' and Ines's 'wasn't', Nell was the only person upstairs at 20:19, which unlocks Who."
+    ]
+  },
+  {
+    "no": 5,
+    "title": "Fresh Snow",
+    "brief": "A snowstorm has cut off the lodge, and the week's takings have vanished from the ski-hire hut. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Five people were snowed in at the lodge: Freya, Tomas, Pip, Anouk and Rafe. At 21:00 Tomas locked the week's takings in the cash box in the ski-hire hut, across the yard. At 23:00 the box was empty.",
+      "It snowed hard until 22:00, then stopped. Tracks made before then were filled in; tracks made after it stopped stayed sharp.",
+      "At 23:00 there were two sets of sharp tracks in the yard: one from the front door to the generator shed and back, the other from the back door to the hire hut and back.",
+      "The power failed at 22:10. It came back at 22:25, when the generator in the shed was started by hand.",
+      "The only stairs to the bedrooms come down into the kitchen. The back door is in the boot room, which opens off the kitchen.",
+      "In Anouk's locker: a letter from Freya ending her job on Friday. Her last month's wages, it says, will be paid 'when the season's takings allow'."
+    ],
+    "statements": [
+      {
+        "who": "Tomas Brack",
+        "tag": "who runs the ski hire",
+        "text": "When I locked the takings away at 21:00 I walked to the hut and back, and by 22:00 those tracks were [[sharp|*filled in]]. At 22:20 I went out by the [[back|*front]] door, started the generator and came straight in. That was my only trip out after 21:00, so the tracks to the hut [[were|*weren't]] mine."
+      },
+      {
+        "who": "Pip Garrow",
+        "tag": "the cook",
+        "text": "I never left the kitchen all evening, and before the blackout the only person to use the stairs was Anouk, going up to bed at 21:30. At 22:12, in the dark, someone came [[up|*down]] the stairs, went out through the boot room and was back eight minutes later, [[*before|after]] the lights came on. They went back the way they'd come, and nobody else came through my kitchen during the blackout."
+      },
+      {
+        "who": "Rafe Mallory",
+        "tag": "a guest",
+        "text": "Freya and I sat by the fire right through the blackout. Tomas left us at 22:20, and the lights came back five minutes [[earlier|*later]]. Two people went out into the yard in the dark, and the one who went to the hut [[*didn't come|came]] from the lounge."
+      },
+      {
+        "who": "Freya Lund",
+        "tag": "the owner",
+        "text": "I never left the lounge until the lights came back. Tomas came back in [[long after|*just as]] the lights came on. As for Anouk, I [[*still owe|paid]] her last month's wages."
+      },
+      {
+        "who": "Anouk Stray",
+        "tag": "a ski instructor",
+        "text": "The blackout woke me; I'd gone to bed at 21:30. I [[didn't come|*came]] down again before the lights came back, and I was back in bed [[*before|after]] they did."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Pip Garrow",
+          "Tomas Brack",
+          "Rafe Mallory"
+        ],
+        "text": "Anouk Stray. The hut tracks are sharp and start at the back door, and the only person through the kitchen in the blackout came down the bedroom stairs. Anouk was the only one upstairs."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Anouk Stray",
+          "Pip Garrow",
+          "Freya Lund"
+        ],
+        "text": "At 22:12, in the dark, she came down into the kitchen, slipped out through the boot room and crossed the fresh snow to the hut. She was back upstairs by 22:20, before the lights came on. The only other tracks were Tomas's, from the front door to the generator shed."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Freya Lund"
+        ],
+        "text": "Freya was letting her go on Friday and still owed her a month's wages, to be paid 'when the season's takings allow'. Anouk took them herself."
+      }
+    ],
+    "solution": "Anouk Stray took the takings. The tracks to the hut were sharp, so they were made after the snow stopped at 22:00, and they started at the back door, which is reached only through the kitchen. At 22:12, in the blackout, someone came down the bedroom stairs and went out that way, and Anouk was the only person upstairs. Tomas went out by the front door to the generator shed, and his 21:00 trip to the hut had long since filled in. She was back upstairs by 22:20, before the lights came on. Freya was letting her go and still owed her a month's wages.",
+    "solutionPath": [
+      "Step 1, settled by the evidence: Tomas's 'filled in' (tracks made before 22:00 filled in). Tomas's 'front' (he started the generator, and the only tracks to the shed start at the front door). Pip's 'down' (the stairs come down into the kitchen from the bedrooms, and the person then went out through the boot room). Pip's 'before' (22:12 plus eight minutes is 22:20; the lights came back at 22:25). Rafe's 'later' (22:20 plus five minutes is 22:25, when the lights came back). Freya's 'still owe' (Anouk's letter).",
+      "Step 2, from Tomas's 'filled in' and 'front': Tomas's 'weren't' (his old hut tracks are buried, and his only later trip went out the front to the shed).",
+      "Step 2, from Pip's 'down' (or Tomas's 'weren't'): Rafe's 'didn't come' (the hut set starts at the back door, and the only person out that way came down the stairs; Freya and Rafe never left the lounge).",
+      "Together these unlock Who and How.",
+      "Freya's 'just as': Tomas started the generator (lights on at 22:25) and came straight in.",
+      "Anouk's 'before' (back in bed): Pip saw the person come back eight minutes after 22:12, so at 22:20, before the 22:25 lights."
+    ]
+  },
+  {
+    "no": 6,
+    "title": "The Interval Pearls",
+    "brief": "Margot Vell's pearls vanished from her dressing room during the interval of a sold-out show. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The interval ran from 21:00 to 21:20. The five-minute bell rang at 21:15.",
+      "At 21:00 Margot Vell took off her pearls in her dressing room, under the stage, and left them on the table. At 21:20 they were gone.",
+      "The only way down to the dressing rooms is the iron stair beside the prompt desk, where Hollis sat all interval. The stair lights fused at 21:10 and stayed off until after the interval.",
+      "Whoever took the pearls trod in a tray of white scene paint at the foot of the stair and left white footprints to Margot's table and back.",
+      "Backstage that interval were Hollis, Margot, the leading man Felix Rand and the understudy Nina Crane. The only visitor was Ruth Abel from the foyer bar.",
+      "Folded in Felix's script: a letter from his agent saying the film part has gone to another actor, and a tailor's bill for \u00a3900 marked 'final demand'."
+    ],
+    "statements": [
+      {
+        "who": "Hollis",
+        "tag": "the stage manager",
+        "text": "Two people went down the iron stair in the interval. Margot went at 21:00 and came back up at 21:03 [[with|*without]] her pearls. The other went down four minutes [[before|*after]] the stair lights failed and came back up two minutes later, in the dark both ways, so I never saw who it was."
+      },
+      {
+        "who": "Ruth Abel",
+        "tag": "the bar manager",
+        "text": "Hollis let me through the pass door with a tray of drinks just as the stair lights went [[*out|back on]], and I stayed in the green room until the bell. Margot and Nina never left it, and Felix was [[in|*out]] the whole time."
+      },
+      {
+        "who": "Nina Crane",
+        "tag": "the understudy",
+        "text": "Felix went out at 21:08, two minutes [[*before|after]] Ruth came in with the drinks. Whoever went down that stair in the dark, it [[was|*wasn't]] me."
+      },
+      {
+        "who": "Felix Rand",
+        "tag": "the leading man",
+        "text": "I went out at 21:08 to telephone my agent from the stage door, and I was back in the green room two minutes [[*after|before]] the bell. My tailor's bill is [[paid|*overdue]]."
+      },
+      {
+        "who": "Margot Vell",
+        "tag": "the leading lady",
+        "text": "I left my pearls on my dressing table at 21:00 and was back in the green room at 21:03, [[*before|after]] Ruth arrived. When Felix came back in, there was [[no|*fresh]] white paint on his shoes. Felix has been [[flush|*broke]] since the film part fell through."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Hollis",
+          "Ruth Abel",
+          "Nina Crane"
+        ],
+        "text": "Felix Rand. Someone went down the dark stair at 21:14 and came up at 21:16. Hollis was at the prompt desk, and Margot, Nina and Ruth were together in the green room from 21:10 until the bell. Only Felix was missing."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Hollis",
+          "Felix Rand",
+          "Margot Vell"
+        ],
+        "text": "He left the green room at 21:08, waited for the stair lights to fail, and went down in the dark at 21:14. He trod in the white paint at the foot of the stair, and came back into the green room at 21:17 with it still on his shoes."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Margot Vell",
+          "Felix Rand"
+        ],
+        "text": "Money. The film part has fallen through, he is broke, and his tailor is demanding \u00a3900."
+      }
+    ],
+    "solution": "Felix Rand took the pearls. Someone went down the iron stair at 21:14, four minutes after the lights failed, and came up at 21:16. From 21:10 until the bell Ruth sat in the green room with Margot and Nina, and Hollis never left the prompt desk, so the only person unaccounted for was Felix, who had gone out at 21:08. He trod in the white paint at the foot of the stair and was back in the green room at 21:17 with it on his shoes. He needed the money: the film part had gone to someone else and his tailor wanted \u00a3900.",
+    "solutionPath": [
+      "Settled by the evidence: Hollis 'without' (Margot left the pearls on her table at 21:00). Hollis 'after' (the figure went down and came up in the dark, and the lights only failed at 21:10; 'before' puts them on the stair at 21:06 in full light). Ruth 'out' (the stair lights never came back on during the interval, so Ruth arrived at 21:10). Felix 'overdue' and Margot 'broke' (the tailor's final demand).",
+      "From those: the figure was on the stair from 21:14 to 21:16, while Ruth, Margot and Nina were in the green room and Hollis was at his desk. That gives Ruth 'out' for Felix (if he had been in the green room, nobody was left to go down the stair) and Nina 'wasn't'. Ruth arriving at 21:10 gives Nina 'before' (21:08) and Margot 'before' (21:03).",
+      "From Felix being out from 21:10 to 21:15, and so being the figure on the stair: Felix 'after' (back at 21:17, not 21:13, when Ruth would still have seen him) and Margot 'fresh' (the thief trod in the white paint)."
+    ]
+  },
+  {
+    "no": 7,
+    "title": "The Ashgrove Halt",
+    "brief": "Imogen Hale's emerald brooch vanished overnight from her chained compartment on the sleeper train. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The sleeping car has six compartments, numbered 1 to 6 from the engine end. Compartments 1 to 3 are the front half. Connecting doors join them in pairs: 1 with 2, 3 with 4, 5 with 6.",
+      "Each connecting door has a bolt on each side, and each bolt can only be worked from its own side.",
+      "The booking chart: Captain Dunmore in 1, Edie Marchbank in 3, Imogen Hale in 4, Laszlo Pryce in 5. Compartments 2 and 6 stayed empty and locked all night. Apart from Joss, the attendant, nobody else was in the car.",
+      "At 23:30 Mrs Hale locked her emerald brooch in its case in compartment 4 and chained her corridor door. At 06:00 the brooch was gone. The chain was still on, but the connecting door was unbolted on both sides.",
+      "At 02:00 the train stopped for five minutes at Ashgrove Halt. The platform is so short that only the front half of the sleeping car stood alongside it. The back half faced open fields.",
+      "In Laszlo Pryce's coat: a letter from his landlord. The rent on his antique shop is four months behind, and he loses the lease on Friday unless he pays."
+    ],
+    "statements": [
+      {
+        "who": "Joss",
+        "tag": "the sleeping-car attendant",
+        "text": "At 23:00 two passengers asked to swap compartments with each other, and I let them. Nobody else changed compartments all night. Mrs Hale [[*wasn't|was]] one of the two, and Miss Marchbank [[wasn't|*was]]."
+      },
+      {
+        "who": "Captain Dunmore",
+        "tag": "a passenger",
+        "text": "At Ashgrove I stepped down for a smoke, and apart from my own, every window along the platform stayed dark. I [[*kept|swapped]] the compartment on the chart. Pryce told me over dinner that trade at his shop was [[booming|*dreadful]]."
+      },
+      {
+        "who": "Edie Marchbank",
+        "tag": "a novelist",
+        "text": "I slept in the [[front|*back]] half of the car. When we stopped at Ashgrove I put my light on and lifted the blind, and saw [[the platform|*nothing but fields]]."
+      },
+      {
+        "who": "Imogen Hale",
+        "tag": "the owner of the brooch",
+        "text": "At 23:30 I chained my corridor door, and the bolt on my side of the connecting door stayed [[shut|*open]] all night. That door leads to the compartment [[*nearer to|further from]] the engine. From 23:30 until midnight I could hear Miss Marchbank's typewriter through the wall [[nearer to|*further from]] the engine."
+      },
+      {
+        "who": "Laszlo Pryce",
+        "tag": "an antiques dealer",
+        "text": "I deal in antiques, and I know a fine emerald when I see one. I [[didn't|*did]] swap compartments last night. Nobody came into the compartment I slept in, and it connects with an [[*occupied|empty]] one."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Edie Marchbank",
+          "Joss",
+          "Laszlo Pryce"
+        ],
+        "text": "Laszlo Pryce. Edie Marchbank slept in the back half of the car, so she had swapped out of 3, and the only passenger's compartment she could have swapped into was Pryce's 5. That put Pryce in 3, the only compartment that connects with Mrs Hale's."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Joss",
+          "Imogen Hale",
+          "Laszlo Pryce"
+        ],
+        "text": "At 23:00 he swapped into compartment 3. Mrs Hale chained her corridor door but never bolted her side of the connecting door, so in the night he drew back his own bolt and walked straight in."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Captain Dunmore"
+        ],
+        "text": "Money. His antique shop is failing: four months' rent unpaid, and the lease is lost on Friday unless he pays."
+      }
+    ],
+    "solution": "Laszlo Pryce took the brooch. Mrs Hale's corridor door stayed chained, so the thief came through the connecting door from compartment 3. At Ashgrove, Edie Marchbank's lit window was not alongside the platform, so she slept in the back half of the car, not in 3 as the chart said. She had swapped, and the only passenger's compartment in the back half she could take was Pryce's 5. So Pryce spent the night in 3. Mrs Hale had left her bolt open, so he only had to draw his own. His shop was months behind on rent and about to lose its lease.",
+    "solutionPath": [
+      "Settled by the evidence: Imogen 'open' (her chain stayed on and a bolt only works from its own side, so nobody else could have opened hers). Imogen 'in front of' (3 pairs with 4). Joss 'wasn't' for Mrs Hale (she was still in 4, her charted compartment, at 23:30). Captain 'dreadful' (the landlord's letter). Edie 'nothing but fields' (her light was on, but the Captain saw no lit window along the platform except his own).",
+      "From 'fields': Edie 'back' (she slept in the back half).",
+      "From Edie in the back half: Joss 'was' (she was charted in 3, so she must have changed compartments) and Imogen 'behind' (Edie was in 5 or 6, both behind 4).",
+      "From Edie having swapped into the back half with another passenger: the compartment she took was Pryce's 5, since 4 is Mrs Hale's and 6 was empty. So Pryce 'did' and Captain 'kept'.",
+      "From Pryce in 3: Pryce 'occupied' (3 connects with Mrs Hale's 4)."
+    ]
+  },
+  {
+    "no": 8,
+    "title": "The Gannet Rock Light",
+    "brief": "On a night of rain the lighthouse on Gannet Rock went dark, and a coal ship ran onto the reef below. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the saboteur will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "The tide covered the causeway to Gannet Rock at 20:00 and uncovered it at 02:00. Outside those hours the causeway is dry; in between, nobody can cross. There is no boat on the Rock. That evening the only people on the Rock were Hollis Brand, his daughter Nell, Tobias Vane, Miss Quill, and two visitors: Jory and Penhale.",
+      "The lamp went dark at 23:10, the moment its wick was cut. At 23:40 the coal ship Merrow ran onto the reef below the tower.",
+      "The only way up to the lamp room is the spiral stair, which starts in the cottage kitchen.",
+      "The kitchen has two doors: an inside door to the rest of the cottage, and an outside door to the yard, the only way in from outside. Rain fell from 21:00 until dawn.",
+      "Fresh rainwater had dripped across the lamp-room floor beside the cut wick.",
+      "In Tobias Vane's sea chest: a letter from a Port Ellery salvage dealer, promising him a fifth of anything saved from a wreck on Gannet reef."
+    ],
+    "statements": [
+      {
+        "who": "Nell",
+        "tag": "the keeper's daughter",
+        "text": "I kneaded bread alone at the kitchen window from 22:00 until the ship struck, my back to the stair. Only two people came through the kitchen, and each climbed the stair and came straight back down within ten minutes: Father at 22:40, and someone else twenty-five minutes [[earlier|*later]]. Just before the other one went up, I heard the [[*outside|inside]] door open."
+      },
+      {
+        "who": "Hollis Brand",
+        "tag": "the head keeper",
+        "text": "Of the two people who climbed the stair that evening, I went up [[second|*first]]. I trimmed the wick at 22:45 with nobody else in the lamp room, then sat down to cards in the parlour with Miss Quill, and neither of us left the table until the ship struck. Tobias came into the parlour at 23:20 with his oilskin [[dry|*wet]]."
+      },
+      {
+        "who": "Miss Quill",
+        "tag": "a visiting birdwatcher",
+        "text": "Mister Brand sat down to cards with me at 22:50, ten minutes [[*after|before]] he climbed to trim the wick. Jory set off home at 19:30, so he spent the night [[on|*off]] the Rock."
+      },
+      {
+        "who": "Penhale",
+        "tag": "the supply boatman",
+        "text": "I set off home at 19:50, [[after|*before]] the tide covered the causeway, and crossed with my boots [[*dry|wet]]. Tobias has been asking me which nights the coal ships pass. Whatever he tells you, a wreck on that reef would leave him [[poorer|*richer]]."
+      },
+      {
+        "who": "Tobias Vane",
+        "tag": "the assistant keeper",
+        "text": "From 22:50 until 23:20 I was [[with|*without]] company. That evening I [[hadn't|*had]] been out in the rain. I came into the parlour at 23:20, [[*after|before]] the light went out."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Nell",
+          "Miss Quill",
+          "Tobias Vane"
+        ],
+        "text": "Tobias Vane. The wick was cut by someone who came in from the rain at 23:05 and climbed the stair. Brand and Miss Quill were at cards, Nell was alone at her bread, and Penhale had gone ashore before the tide. Tobias was the only one alone, and the only one out in the rain."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Nell",
+          "Hollis Brand",
+          "Tobias Vane"
+        ],
+        "text": "He waited alone in the yard, slipped in by the outside door at 23:05 behind Nell's back, climbed the only stair and cut the wick at 23:10. He walked into the parlour at 23:20, his oilskin still wet."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Penhale"
+        ],
+        "text": "Salvage. A Port Ellery dealer had promised Tobias a fifth of anything saved from a wreck on the reef. A dark light meant a wreck, and a wreck meant money."
+      }
+    ],
+    "solution": "Tobias Vane cut the wick. Brand climbed at 22:40 and was down by 22:50, so the other climber must have gone up twenty-five minutes later, at 23:05, to be in the lamp room when the wick was cut at 23:10. That climber dripped fresh rainwater, so came in from the yard by the outside door. Brand and Miss Quill were at cards, Nell was kneading bread alone, and Penhale had crossed home at 19:50, before the tide, so he was ashore all night. That left Tobias, alone and out in the rain. He came into the parlour at 23:20 with his oilskin wet. He did it for the salvage money a Port Ellery dealer had promised him.",
+    "solutionPath": [
+      "Direct from the evidence: Penhale set off 'before' the tide (19:50 is before 20:00); Penhale's motive flip is 'richer' (the salvage letter); Vane came into the parlour 'after' the light went out (23:20 is after 23:10); Nell heard the 'outside' door (the cutter dripped fresh rainwater, and the outside door is the only way in from the rain).",
+      "Direct from evidence plus fixed text: Nell's other climber went up 'later' (23:05). If it were earlier (22:15), both climbers would have been down by 22:50, Brand found the lamp room empty at 22:45, and nobody would have been up there to cut the wick at 23:10.",
+      "Cross-statement: Quill sat down to cards 'after' Brand climbed (Nell puts his climb at 22:40).",
+      "Second step: from 'later', Brand went up 'first'. From Penhale's 'before' and the flooded causeway, Penhale crossed with his boots 'dry', and Quill's Jory spent the night 'off' the Rock.",
+      "Second step: Vane was 'without' company from 22:50 to 23:20. Brand and Quill were together, Nell was alone, and Penhale was ashore, so nobody was free to be with him.",
+      "Third step: the climber came in by the outside door ('outside') at 23:05 ('later'), when Brand, Quill and Nell were all accounted for and Penhale was 'off' the Rock. So the climber was Vane, and Vane 'had' been out in the rain.",
+      "Fourth step: having been out in the rain until he climbed at 23:05, Vane came into the parlour at 23:20 with his oilskin 'wet'."
+    ]
+  },
+  {
+    "no": 9,
+    "title": "The Midnight Edition",
+    "brief": "The night before the Harwick Courier was to expose Alderman Coyle, the signed statement behind the story vanished from the editor's locked office. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "At 21:30 Ada Lennox locked the clerk's signed statement in her desk drawer, locked her office on the top floor and came downstairs. At 22:45 the office was still locked, but the drawer had been forced and the statement was gone.",
+      "There are two keys to the editor's office. One was in Ada Lennox's handbag, which never left her all evening. The spare hangs on a hook in the newsroom.",
+      "The exchange logged one call from the Courier that night: from the telephone on the editor's desk to Alderman Coyle's house, at 22:20.",
+      "The street door bell rings whenever the door opens. After 21:00 it rang only twice that night: at 21:35 and at 22:40. Apart from Ada Lennox and Felix Harrow, the only people in the building after 21:00 were Ivy, Bassey and Conrad Pike.",
+      "The building has one staircase. It runs from the press room in the basement, past the newsroom on the ground floor, up to the top floor.",
+      "In Conrad Pike's desk: a letter from Alderman Coyle, promising him the post of council press officer 'once this bridge business has blown over'."
+    ],
+    "statements": [
+      {
+        "who": "Ivy",
+        "tag": "the copy girl",
+        "text": "I sat at my desk beside the stairs from 21:30 until Mrs Lennox came back at 22:40, and while I was there nobody used them. I left only once, at 22:12, to go straight down to the press room with the football results and straight back, and Mister Pike [[*was|wasn't]] alone in the newsroom when I went. When I came back, he was [[out of|*in]] his chair."
+      },
+      {
+        "who": "Bassey",
+        "tag": "the printer",
+        "text": "I never left the press room all evening. Ivy brought the football results down at 22:12 and stood by me the whole time she was here, which was [[less|*more]] than five minutes. When that call was made, she [[*was|wasn't]] still with me."
+      },
+      {
+        "who": "Ada Lennox",
+        "tag": "the editor",
+        "text": "When I came down at 21:30 nobody was left on the top floor, and when I went back up at 22:45 nobody was there either. I locked the statement away [[*before|after]] Felix and I went out. Whoever took it [[came|*didn't come]] in from the street."
+      },
+      {
+        "who": "Felix Harrow",
+        "tag": "the chief reporter",
+        "text": "Ada and I went out together at 21:35 for supper across the road, and came back [[separately|*together]]. At 22:20 we were both [[inside|*outside]] the building. Pike stands to [[lose|*gain]] if this story never runs."
+      },
+      {
+        "who": "Conrad Pike",
+        "tag": "the sports writer",
+        "text": "I wrote up the cup match at my desk all evening, apart from one quick trip [[downstairs|*upstairs]] while Ivy was in the press room. I was back in my chair [[*before|after]] she came up."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Ada Lennox",
+          "Felix Harrow",
+          "Bassey"
+        ],
+        "text": "Conrad Pike. Whoever rang Coyle at 22:20 was on the top floor, and could only have climbed the stairs while Ivy was away from her desk. Lennox and Harrow were out, nobody came in from the street, and Ivy was with Bassey in the press room. Pike was the only one left."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Ivy",
+          "Bassey",
+          "Conrad Pike"
+        ],
+        "text": "The moment Ivy went down to the press room, he took the spare key from the newsroom hook, went up the only staircase, forced the drawer and telephoned Coyle at 22:20. He locked up and was back in his chair before Ivy came up the stairs."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Felix Harrow"
+        ],
+        "text": "A job. Coyle had promised Pike the post of council press officer once the bridge business blew over, and it would only blow over if the story never ran."
+      }
+    ],
+    "solution": "Conrad Pike took the statement. The call to Coyle at 22:20 came from the editor's desk, so someone was on the top floor then. It was empty at 21:30 and at 22:45, and Ivy watched the only staircase all evening except while she was in the press room. So the thief went up and came down while she was away, and she must have been away for more than five minutes and still with Bassey at 22:20. The bell rang only when Lennox and Harrow went out together and came back together, so they were outside at 22:20 and nobody came in from the street. That left Pike, alone in the newsroom when Ivy went down. He went upstairs, and was back in his chair before she returned. Coyle had promised him a council job once the story was buried.",
+    "solutionPath": [
+      "Direct from the evidence: Harrow and Lennox came back 'together' (only one ring after 21:35, at 22:40); they were 'outside' at 22:20 (no ring between 21:35 and 22:40); the thief 'didn't come' in from the street (no ring that let anyone else in); Lennox locked the statement away 'before' they went out (21:30 is before 21:35); Pike stands to 'gain' (Coyle's letter).",
+      "From the evidence plus fixed text: the 22:20 caller was on the top floor, which was empty at 21:30 and 22:45, and nobody used the stairs while Ivy sat at her desk. So the caller went up and came down while Ivy was away, and she was still away after 22:20. Bassey's flips follow: Ivy stayed 'more' than five minutes, and 'was' still with him at 22:20 (she went straight to the press room and back).",
+      "Cross-statement: Pike used the stairs while Ivy was away, so he was back in his chair 'before' she came up (nobody used them once she was back at her desk).",
+      "Second step: with Lennox and Harrow 'outside' and Bassey in the press room, Pike 'was' alone in the newsroom when Ivy went down. From Pike's 'before', Ivy found him 'in' his chair.",
+      "Third step: the caller was not Lennox or Harrow ('outside'), not an outsider ('didn't come'), not Bassey (never left the press room) and not Ivy ('was' still with Bassey at 22:20). So it was Pike, and his trip was 'upstairs'."
+    ]
   }
 ]
