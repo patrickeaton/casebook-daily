@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=11"></script>
-<script src="../shared/modal.js?v=11"></script>
+<script src="../shared/casebook.js?v=12"></script>
+<script src="../shared/modal.js?v=12"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -312,7 +312,7 @@ function toast(m){ $('toast').textContent = m; }
 Casebook.pickCase('testimony', '../puzzles/testimony.json').then(r => { CASE = r.case; setup(); })
   .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=11" data-root=".." data-game="testimony"></script>
+<script src="../shared/menu.js?v=12" data-root=".." data-game="testimony"></script>
 <template data-howto data-title="Testimony">
   <p>Five people have given statements. Everything in them is true <b>except the raised words</b>, some of which have been flipped to their opposite (up/down, before/after, wet/dry…).</p>
   <ul>
@@ -327,6 +327,6 @@ Casebook.pickCase('testimony', '../puzzles/testimony.json').then(r => { CASE = r
   <h4>TIP</h4>
   <p>Start with statements the evidence settles on its own. Once those are right, they tell you what you need for the rest.</p>
 </template>
-<script src="../shared/help.js?v=11" data-game="testimony"></script>
+<script src="../shared/help.js?v=12" data-game="testimony"></script>
 </body>
 </html>

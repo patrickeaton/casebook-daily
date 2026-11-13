@@ -52,13 +52,13 @@
   button,[data-num],a{touch-action:manipulation}
   /* what shows when iOS rubber-bands past the top (header colour) or bottom (page colour) */
   html{background:linear-gradient(to bottom, var(--bg2, var(--bg, #1b1d22)) 0 50%, var(--bg, #1b1d22) 50% 100%)}
-  header.cb-head{position:sticky;top:0;z-index:35;padding-top:calc(10px + env(safe-area-inset-top))!important;padding-bottom:10px!important;margin-top:0!important;margin-bottom:6px;
+  header.cb-top{position:sticky;top:0;z-index:35;padding-top:calc(10px + env(safe-area-inset-top))!important;padding-bottom:10px!important;margin-top:0!important;margin-bottom:6px;
     flex-wrap:nowrap!important;align-items:center!important;
     background:var(--bg2, var(--bg, #1b1d22));
     /* full-width band + a 1px divider underneath, both as shadows so nothing widens the page */
     box-shadow:0 0 0 100vmax var(--bg2, var(--bg, #1b1d22)), 0 1px 0 100vmax rgba(255,255,255,.1);
     clip-path:inset(0 -100vmax -1px)}
-  @media (max-width:520px){header.cb-head h1{font-size:18px;letter-spacing:.2em}.cb-subline{letter-spacing:.02em!important;font-size:11px!important}}
+  @media (max-width:520px){header.cb-top h1{font-size:18px;letter-spacing:.2em}.cb-subline{letter-spacing:.02em!important;font-size:11px!important}}
   .cb-open{width:38px;height:38px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);cursor:pointer;
     display:grid;place-items:center;padding:0;flex:none}
   .cb-open span,.cb-open span:before,.cb-open span:after{display:block;width:18px;height:2px;background:currentColor;border-radius:1px;position:relative;content:""}
@@ -120,7 +120,7 @@
     title.replaceWith(brand);
     brand.querySelector('.cb-titles').appendChild(title);
     if (sub) { sub.classList.add('cb-subline'); brand.querySelector('.cb-titles').appendChild(sub); }
-    header.classList.add('cb-head');
+    header.classList.add('cb-top');   // not 'cb-head': that's the drawer's own header
     // No gap above the header: drop the top padding of whatever wraps it (e.g. .wrap's 22px).
     if (header.parentElement !== document.body && header.parentElement.firstElementChild === header) header.parentElement.style.paddingTop = '0';
     const publish = () => document.documentElement.style.setProperty('--cb-head-h', header.offsetHeight + 'px');
