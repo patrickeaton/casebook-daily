@@ -86,5 +86,15 @@
     (shade.querySelector('.cbm-copy') || shade.querySelector('.cbm-close')).focus();
     requestAnimationFrame(() => shade.classList.add('on'));   // next frame, so the fade/pop-in transition runs
   }
-  window.CasebookModal = { open, close };
+  // Reopening a case this browser has already finished: say so, then let them play it again.
+  function played(game, issue){
+    const r = window.Casebook?.getResult(game, issue); if (!r) return false;
+    const when = r.at ? new Date(r.at).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' }) : '';
+    open({ stamp: r.win ? 'SOLVED' : 'COLD CASE', tone: r.win ? 'win' : 'lose', heading: 'YOU\'VE BEEN HERE BEFORE',
+      html: `<p>You ${r.win ? 'solved' : 'closed'} this case${when ? ` on ${esc(when)}` : ''}${r.detail ? ` (${esc(r.detail)})` : ''}${r.win ? '' : ' without cracking it'}.</p>
+        <p>Want to have another go? Your new result will replace the old one.</p>`,
+      closeLabel: 'Play it again' });
+    return true;
+  }
+  window.CasebookModal = { open, close, played };
 })();

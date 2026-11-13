@@ -105,6 +105,7 @@
       <ul class="cb-list">${item({ id:'home', name:'Home', tag:"Today's case and every game.", href:`${root}/` }, true)}</ul>
       <hr class="cb-rule">
       <ul class="cb-list">${GAMES.map(g => item(g, true)).join('')}</ul>
+      <hr class="cb-rule">
       <ul class="cb-list">${item({ id:'archive', name:'Archive', tag:'Every past case, newest first.', href:`${root}/archive/` }, true)}</ul>
       <hr class="cb-rule">
       <ul class="cb-list">${SOON.map(g => item(g, false)).join('')}</ul>
