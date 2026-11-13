@@ -51,7 +51,10 @@
   html{touch-action:manipulation}
   button,[data-num],a{touch-action:manipulation}
   /* what shows when iOS rubber-bands past the top (header colour) or bottom (page colour) */
-  html{background:linear-gradient(to bottom, var(--bg2, var(--bg, #1b1d22)) 0 50%, var(--bg, #1b1d22) 50% 100%)}
+  /* iOS Safari colours its bottom toolbar from the page's solid background colour (gradients don't count),
+     so set a solid colour under the gradients on both html and body */
+  html{background-color:var(--bg, #1b1d22);background-image:linear-gradient(to bottom, var(--bg2, var(--bg, #1b1d22)) 0 50%, var(--bg, #1b1d22) 50% 100%)}
+  body{background-color:var(--bg, #1b1d22)}
   header.cb-top{position:sticky;top:0;z-index:35;padding-top:calc(10px + env(safe-area-inset-top))!important;padding-bottom:10px!important;margin-top:0!important;margin-bottom:6px;
     flex-wrap:nowrap!important;align-items:center!important;
     background:var(--bg2, var(--bg, #1b1d22));

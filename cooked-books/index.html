@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=12"></script>
-<script src="../shared/modal.js?v=12"></script>
+<script src="../shared/casebook.js?v=13"></script>
+<script src="../shared/modal.js?v=13"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -141,8 +141,8 @@
 </div>
 
 <section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
-<script src="../shared/calc.js?v=12"></script>
-<script src="../shared/side.js?v=12"></script>
+<script src="../shared/calc.js?v=13"></script>
+<script src="../shared/side.js?v=13"></script>
 <script>
 // Every cooked entry pushes one month and one category over the bank's total, and the clues pick out which crossings are real.
 // Verified unique with tools/verify-cooked.py: 6 answers fit the gaps, each clue alone leaves 2, together they leave 1.
@@ -271,7 +271,7 @@ function toast(m){ $('toast').textContent = m; }
 Casebook.pickCase('cooked', '../puzzles/cooked.json').then(r => { CASE = r.case; setup(); })
   .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=12" data-root=".." data-game="cooked"></script>
+<script src="../shared/menu.js?v=13" data-root=".." data-game="cooked"></script>
 <template data-howto data-title="Cooked Books">
   <p>A bookkeeper inflated some entries in the ledger and pocketed the difference. The bank's totals are genuine. Find the cooked entries.</p>
   <ul>
@@ -283,6 +283,6 @@ Casebook.pickCase('cooked', '../puzzles/cooked.json').then(r => { CASE = r.case;
   <h4>TIP</h4>
   <p>A cooked entry pushes both its month and its category over. When the differences allow more than one answer, the clues decide which crossings are real.</p>
 </template>
-<script src="../shared/help.js?v=12" data-game="cooked"></script>
+<script src="../shared/help.js?v=13" data-game="cooked"></script>
 </body>
 </html>
