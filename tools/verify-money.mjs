@@ -13,10 +13,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const html = fs.readFileSync(path.join(ROOT, 'follow-the-money/index.html'), 'utf8');
-const CASE = eval('(' + html.match(/const CASE = (\{[\s\S]*?\n\});/)[1] + ')');
+// Checks every case in puzzles/money.json (or just #N: node tools/verify-money.mjs N).
+const ALL = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles/money.json'), 'utf8'));
+const ONLY = +process.argv[2] || null;
+let failures = 0;
+export function verify(CASE, quiet = false){
+  const log = quiet ? () => {} : console.log;
+  if (process.env.NO_TOTALS) CASE.nodes.forEach(n => delete n.total);
 // NO_TOTALS=1 ignores bank statements, to prove a case really needs the backward step
-if (process.env.NO_TOTALS) CASE.nodes.forEach(n => delete n.total);
+
 
 const known = new Map(CASE.edges.filter(e => !e.hidden).map(e => [e.id, e.amount]));
 const hidden = CASE.edges.filter(e => e.hidden);
@@ -56,25 +61,38 @@ for (let progress = true; progress; ) {
 
 let ok = true;
 for (const e of hidden) {
-  if (!known.has(e.id)) { console.log(`✗ ${e.id} can't be worked out`); ok = false; }
-  else if (known.get(e.id) !== e.amount) { console.log(`✗ ${e.id}: rules give ${known.get(e.id)}, case says ${e.amount}`); ok = false; }
-  else if (known.get(e.id) <= 0) { console.log(`✗ ${e.id} is not positive`); ok = false; }
+  if (!known.has(e.id)) { log(`✗ ${e.id} can't be worked out`); ok = false; }
+  else if (known.get(e.id) !== e.amount) { log(`✗ ${e.id}: rules give ${known.get(e.id)}, case says ${e.amount}`); ok = false; }
+  else if (known.get(e.id) <= 0) { log(`✗ ${e.id} is not positive`); ok = false; }
 }
 for (const n of CASE.nodes) {
   const k = passOn(n); if (k == null) continue;
   const i = ins(n).reduce((a, e) => a + e.amount, 0), o = outs(n).reduce((a, e) => a + e.amount, 0);
-  if (Math.abs(i * k - o) > 0.01) { console.log(`✗ ${n.name} doesn't balance: in ${i} × ${k} ≠ out ${o}`); ok = false; }
-  if (n.split) for (const [id, f] of Object.entries(n.split)) if (Math.abs(CASE.edges.find(e => e.id === id).amount - i * f) > 0.01) { console.log(`✗ ${n.name} split for ${id} is off`); ok = false; }
+  if (Math.abs(i * k - o) > 0.01) { log(`✗ ${n.name} doesn't balance: in ${i} × ${k} ≠ out ${o}`); ok = false; }
+  if (n.split) for (const [id, f] of Object.entries(n.split)) if (Math.abs(CASE.edges.find(e => e.id === id).amount - i * f) > 0.01) { log(`✗ ${n.name} split for ${id} is off`); ok = false; }
 }
-for (const n of CASE.nodes) if (n.total != null && ins(n).reduce((a, e) => a + e.amount, 0) !== n.total) { console.log(`✗ ${n.name}'s known total doesn't match what flows in`); ok = false; }
+for (const n of CASE.nodes) if (n.total != null && ins(n).reduce((a, e) => a + e.amount, 0) !== n.total) { log(`✗ ${n.name}'s known total doesn't match what flows in`); ok = false; }
 const holds = CASE.nodes.filter(n => n.kind !== 'victim').map(n => {
   const i = ins(n).reduce((a, e) => a + e.amount, 0), o = outs(n).reduce((a, e) => a + e.amount, 0);
   return [n.name, i - o];
 }).filter(h => h[1] > 0).sort((a, b) => b[1] - a[1]);
-if (holds.length > 1 && holds[0][1] === holds[1][1]) { console.log('✗ "who ended up with the most" is a tie'); ok = false; }
-if (holds[0][0] !== CASE.answer) { console.log(`✗ the most went to ${holds[0][0]}, case says ${CASE.answer}`); ok = false; }
+if (holds.length > 1 && holds[0][1] === holds[1][1]) { log('✗ "who ended up with the most" is a tie'); ok = false; }
+if (holds[0][0] !== CASE.answer) { log(`✗ the most went to ${holds[0][0]}, case says ${CASE.answer}`); ok = false; }
 
-console.log('Solve order:\n  ' + order.join('\n  '));
-console.log('Who kept what: ' + holds.map(([n, v]) => `${n} £${v.toLocaleString('en-GB')}`).join(', '));
-console.log(ok ? '✓ case is fair: every hidden amount is forced, one step at a time' : '✗ case has problems');
-process.exit(ok ? 0 : 1);
+log('Solve order:\n  ' + order.join('\n  '));
+log('Who kept what: ' + holds.map(([n, v]) => `${n} £${v.toLocaleString('en-GB')}`).join(', '));
+log(ok ? '✓ case is fair: every hidden amount is forced, one step at a time' : '✗ case has problems');
+return ok;
+}
+
+if (process.argv[1] && process.argv[1].endsWith('verify-money.mjs')) {
+  for (const c of ALL) {
+    if (ONLY && c.no !== ONLY) continue;
+    const saved = JSON.parse(JSON.stringify(c));
+    if (ONLY) console.log(`#${c.no} ${c.title}`);
+    const ok = verify(saved, !ONLY);
+    if (!ONLY) console.log(`${ok ? '✓' : '✗'} #${c.no} ${c.title}`);
+    if (!ok) failures++;
+  }
+  process.exit(failures ? 1 : 0);
+}

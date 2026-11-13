@@ -1,0 +1,1379 @@
+[
+  {
+    "no": 1,
+    "title": "The Quayside Job",
+    "brief": "On the same night, £50,000 vanished from the Harbour Trust and an unknown sum from the Quayside Pension Fund. Both were pushed through shell companies and a dodgy consultancy to hide where they went. Rebuild the whole trail, including how much the pension fund lost.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Tallow & Co is a \"consultancy\". It keeps a 10% fee on everything it receives and passes on the rest.",
+      "A memo from Brisk Holdings: \"Usual split. 70% to Fenwick, the rest to Penn.\"",
+      "People keep everything they receive.",
+      "Carys Penn's bank statement shows she ended up with exactly £9,000."
+    ],
+    "answer": "Ines Marr",
+    "nodes": [
+      {
+        "id": "trust",
+        "name": "Harbour Trust",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "pension",
+        "name": "Quayside Pension",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Grey Gull Ltd",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Brisk Holdings",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.7,
+          "brisk-carys": 0.3
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Fenwick Holdings",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "tallow",
+        "name": "Tallow & Co",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.1
+      },
+      {
+        "id": "carys",
+        "name": "Carys Penn",
+        "kind": "person",
+        "x": 300,
+        "y": 372,
+        "total": 9000
+      },
+      {
+        "id": "vane",
+        "name": "Odell Vane",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "ines",
+        "name": "Ines Marr",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "trust-gull",
+        "from": "trust",
+        "to": "gull",
+        "amount": 50000
+      },
+      {
+        "id": "pension-brisk",
+        "from": "pension",
+        "to": "brisk",
+        "amount": 30000,
+        "hidden": true
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 30000,
+        "hidden": true
+      },
+      {
+        "id": "gull-tallow",
+        "from": "gull",
+        "to": "tallow",
+        "amount": 20000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 21000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-carys",
+        "from": "brisk",
+        "to": "carys",
+        "amount": 9000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-ines",
+        "from": "fenwick",
+        "to": "ines",
+        "amount": 25000
+      },
+      {
+        "id": "fenwick-tallow",
+        "from": "fenwick",
+        "to": "tallow",
+        "amount": 26000,
+        "hidden": true
+      },
+      {
+        "id": "tallow-vane",
+        "from": "tallow",
+        "to": "vane",
+        "amount": 18000
+      },
+      {
+        "id": "tallow-ines",
+        "from": "tallow",
+        "to": "ines",
+        "amount": 23400,
+        "hidden": true
+      }
+    ],
+    "story": "Working back from Carys Penn's £9,000, which was Brisk's 30% share, the pension fund lost £30,000. Grey Gull kept nothing: £30,000 to Fenwick and £20,000 to Tallow. Brisk split the pension money 70/30: £21,000 to Fenwick and £9,000 to Carys Penn. Fenwick, now holding £51,000, sent £25,000 to Ines Marr and £26,000 to Tallow. Tallow took its 10% cut of £46,000 and passed on £41,400: £18,000 to Odell Vane and £23,400 to Ines. Ines Marr, treasurer of both funds, walked away with £48,400."
+  },
+  {
+    "no": 2,
+    "title": "The Lantern Ledger",
+    "brief": "On the same night, £45,000 vanished from the Lantern Hospice and £25,000 from the Mill Lane School. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Tallow & Co is a \"consultancy\". It keeps a 20% fee on everything it receives and passes on the rest.",
+      "A memo from Grey Gull Ltd: \"Usual split. 60% to Tidewell Ltd, the rest to Crane.\"",
+      "People keep everything they receive.",
+      "Carys Penn's bank statement shows they ended up with exactly £15,000."
+    ],
+    "answer": "Ada Thorne",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Lantern Hospice",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Mill Lane School",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Dunlin Holdings",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Grey Gull Ltd",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.6,
+          "brisk-pa": 0.4
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Tidewell Ltd",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Tallow & Co",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.2
+      },
+      {
+        "id": "pa",
+        "name": "Lottie Crane",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Carys Penn",
+        "kind": "person",
+        "x": 70,
+        "y": 486,
+        "total": 15000
+      },
+      {
+        "id": "pc",
+        "name": "Ada Thorne",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 45000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 25000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 24000
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 21000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 15000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 10000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 26000
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 13000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 15000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 12200,
+        "hidden": true
+      }
+    ],
+    "story": "Dunlin Holdings kept nothing: £24,000 to Tidewell Ltd and £21,000 to Tallow & Co. Grey Gull Ltd split the Mill Lane School's £25,000 60/40: £15,000 to Tidewell Ltd and £10,000 to Lottie Crane. Tidewell Ltd, holding £39,000, sent £26,000 to Ada Thorne and £13,000 to Tallow & Co. Tallow & Co took its 20% cut of £34,000 and passed on £27,200: £15,000 to Carys Penn and £12,200 to Ada Thorne. Ada Thorne, the solicitor who handled both funds, walked away with £38,200."
+  },
+  {
+    "no": 3,
+    "title": "The Riverside Skim",
+    "brief": "On the same night, £41,000 vanished from the Rowing Club and £30,000 from the Allotment Fund. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Hartley & Co is a \"consultancy\". It keeps a 15% fee on everything it receives and passes on the rest.",
+      "A memo from Pennant Assets: \"Usual split. 70% to Fenwick Holdings, the rest to Mercer.\"",
+      "People keep everything they receive.",
+      "Tobias Wren's bank statement shows they ended up with exactly £45,500."
+    ],
+    "answer": "Tobias Wren",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Rowing Club",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Allotment Fund",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Tidewell Ltd",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Pennant Assets",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.7,
+          "brisk-pa": 0.3
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Fenwick Holdings",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Hartley & Co",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.15
+      },
+      {
+        "id": "pa",
+        "name": "Kit Mercer",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Carys Penn",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "pc",
+        "name": "Tobias Wren",
+        "kind": "person",
+        "x": 230,
+        "y": 486,
+        "total": 45500
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 41000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 30000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 13000,
+        "hidden": true
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 28000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 21000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 9000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 12000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 22000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 9000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 33500
+      }
+    ],
+    "story": "Tidewell Ltd kept nothing: £13,000 to Fenwick Holdings and £28,000 to Hartley & Co. Pennant Assets split the Allotment Fund's £30,000 70/30: £21,000 to Fenwick Holdings and £9,000 to Kit Mercer. Fenwick Holdings, holding £34,000, sent £12,000 to Tobias Wren and £22,000 to Hartley & Co. Hartley & Co took its 15% cut of £50,000 and passed on £42,500: £9,000 to Carys Penn and £33,500 to Tobias Wren. Tobias Wren, the bank manager who looked after both accounts, walked away with £45,500."
+  },
+  {
+    "no": 4,
+    "title": "The Lifeboat Leak",
+    "brief": "On the same night, £47,000 vanished from the Lifeboat Fund and an unknown sum from the Town Library. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Wexford Advisory is a \"consultancy\". It keeps a 15% fee on everything it receives and passes on the rest.",
+      "A memo from Ashdown Trading: \"Usual split. 60% to Tidewell Ltd, the rest to Moor.\"",
+      "People keep everything they receive.",
+      "Silas Moor's bank statement shows they ended up with exactly £18,000."
+    ],
+    "answer": "Bram Hollis",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Lifeboat Fund",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Town Library",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Starling Group",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Ashdown Trading",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.6,
+          "brisk-pa": 0.4
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Tidewell Ltd",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Wexford Advisory",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.15
+      },
+      {
+        "id": "pa",
+        "name": "Silas Moor",
+        "kind": "person",
+        "x": 300,
+        "y": 372,
+        "total": 18000
+      },
+      {
+        "id": "pb",
+        "name": "Odell Vane",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "pc",
+        "name": "Bram Hollis",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 47000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 45000,
+        "hidden": true
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 24000,
+        "hidden": true
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 23000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 27000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 18000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 40000
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 11000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 10000
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 18900,
+        "hidden": true
+      }
+    ],
+    "story": "Starling Group kept nothing: £24,000 to Tidewell Ltd and £23,000 to Wexford Advisory. Ashdown Trading split the Town Library's £45,000 60/40: £27,000 to Tidewell Ltd and £18,000 to Silas Moor. Tidewell Ltd, holding £51,000, sent £40,000 to Bram Hollis and £11,000 to Wexford Advisory. Wexford Advisory took its 15% cut of £34,000 and passed on £28,900: £10,000 to Odell Vane and £18,900 to Bram Hollis. Bram Hollis, treasurer of both funds, walked away with £58,900."
+  },
+  {
+    "no": 5,
+    "title": "The Collection Plate",
+    "brief": "On the same night, £87,000 vanished from the Cobble Church and £20,000 from the Youth Club Fund. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Sable Consulting is a \"consultancy\". It keeps a 20% fee on everything it receives and passes on the rest.",
+      "A memo from Fenwick Holdings: \"Usual split. 80% to Grey Gull Ltd, the rest to Vane.\"",
+      "People keep everything they receive.",
+      "Edwin Faye's bank statement shows they ended up with exactly £17,000."
+    ],
+    "answer": "Petra Lind",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Cobble Church",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Youth Club Fund",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Black Fen Ltd",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Fenwick Holdings",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.8,
+          "brisk-pa": 0.2
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Grey Gull Ltd",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Sable Consulting",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.2
+      },
+      {
+        "id": "pa",
+        "name": "Odell Vane",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Edwin Faye",
+        "kind": "person",
+        "x": 70,
+        "y": 486,
+        "total": 17000
+      },
+      {
+        "id": "pc",
+        "name": "Petra Lind",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 87000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 20000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 53000
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 34000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 16000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 4000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 31000
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 38000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 17000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 40600,
+        "hidden": true
+      }
+    ],
+    "story": "Black Fen Ltd kept nothing: £53,000 to Grey Gull Ltd and £34,000 to Sable Consulting. Fenwick Holdings split the Youth Club Fund's £20,000 80/20: £16,000 to Grey Gull Ltd and £4,000 to Odell Vane. Grey Gull Ltd, holding £69,000, sent £31,000 to Petra Lind and £38,000 to Sable Consulting. Sable Consulting took its 20% cut of £72,000 and passed on £57,600: £17,000 to Edwin Faye and £40,600 to Petra Lind. Petra Lind, the solicitor who handled both funds, walked away with £71,600."
+  },
+  {
+    "no": 6,
+    "title": "The Rescue Fund",
+    "brief": "On the same night, £54,000 vanished from the Animal Rescue and £35,000 from the Cricket Club. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Calder & Finch is a \"consultancy\". It keeps a 20% fee on everything it receives and passes on the rest.",
+      "A memo from Hollow Oak Ltd: \"Usual split. 70% to Grey Gull Ltd, the rest to Hollis.\"",
+      "People keep everything they receive.",
+      "Jasper Quayle's bank statement shows they ended up with exactly £54,600."
+    ],
+    "answer": "Jasper Quayle",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Animal Rescue",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Cricket Club",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Quillon Partners",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Hollow Oak Ltd",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.7,
+          "brisk-pa": 0.3
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Grey Gull Ltd",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Calder & Finch",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.2
+      },
+      {
+        "id": "pa",
+        "name": "Bram Hollis",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Petra Lind",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "pc",
+        "name": "Jasper Quayle",
+        "kind": "person",
+        "x": 230,
+        "y": 486,
+        "total": 54600
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 54000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 35000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 24000,
+        "hidden": true
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 30000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 24500,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 10500,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 19000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 29500,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 12000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 35600
+      }
+    ],
+    "story": "Quillon Partners kept nothing: £24,000 to Grey Gull Ltd and £30,000 to Calder & Finch. Hollow Oak Ltd split the Cricket Club's £35,000 70/30: £24,500 to Grey Gull Ltd and £10,500 to Bram Hollis. Grey Gull Ltd, holding £48,500, sent £19,000 to Jasper Quayle and £29,500 to Calder & Finch. Calder & Finch took its 20% cut of £59,500 and passed on £47,600: £12,000 to Petra Lind and £35,600 to Jasper Quayle. Jasper Quayle, the accountant who audited both funds, walked away with £54,600."
+  },
+  {
+    "no": 7,
+    "title": "The Choir Accounts",
+    "brief": "On the same night, £42,000 vanished from the Saltmarsh Choir and an unknown sum from the Scout Hut Fund. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Hartley & Co is a \"consultancy\". It keeps a 10% fee on everything it receives and passes on the rest.",
+      "A memo from Quillon Partners: \"Usual split. 60% to Tidewell Ltd, the rest to Lind.\"",
+      "People keep everything they receive.",
+      "Petra Lind's bank statement shows they ended up with exactly £18,000."
+    ],
+    "answer": "Nell Hartigan",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Saltmarsh Choir",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Scout Hut Fund",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Corvid Capital",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Quillon Partners",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.6,
+          "brisk-pa": 0.4
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Tidewell Ltd",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Hartley & Co",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.1
+      },
+      {
+        "id": "pa",
+        "name": "Petra Lind",
+        "kind": "person",
+        "x": 300,
+        "y": 372,
+        "total": 18000
+      },
+      {
+        "id": "pb",
+        "name": "Mina Strand",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "pc",
+        "name": "Nell Hartigan",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 42000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 45000,
+        "hidden": true
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 17000,
+        "hidden": true
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 25000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 27000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 18000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 23000
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 21000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 10000
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 31400,
+        "hidden": true
+      }
+    ],
+    "story": "Corvid Capital kept nothing: £17,000 to Tidewell Ltd and £25,000 to Hartley & Co. Quillon Partners split the Scout Hut Fund's £45,000 60/40: £27,000 to Tidewell Ltd and £18,000 to Petra Lind. Tidewell Ltd, holding £44,000, sent £23,000 to Nell Hartigan and £21,000 to Hartley & Co. Hartley & Co took its 10% cut of £46,000 and passed on £41,400: £10,000 to Mina Strand and £31,400 to Nell Hartigan. Nell Hartigan, the accountant who audited both funds, walked away with £54,400."
+  },
+  {
+    "no": 8,
+    "title": "The Valley Vanishing",
+    "brief": "On the same night, £52,000 vanished from the Linden Care Home and £50,000 from the Tarn Museum. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Sable Consulting is a \"consultancy\". It keeps a 20% fee on everything it receives and passes on the rest.",
+      "A memo from Rook & Vale: \"Usual split. 70% to Brisk Holdings, the rest to Orme.\"",
+      "People keep everything they receive.",
+      "Petra Lind's bank statement shows they ended up with exactly £17,000."
+    ],
+    "answer": "Ines Marr",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Linden Care Home",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Tarn Museum",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Hollow Oak Ltd",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Rook & Vale",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.7,
+          "brisk-pa": 0.3
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Brisk Holdings",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Sable Consulting",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.2
+      },
+      {
+        "id": "pa",
+        "name": "Felix Orme",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Petra Lind",
+        "kind": "person",
+        "x": 70,
+        "y": 486,
+        "total": 17000
+      },
+      {
+        "id": "pc",
+        "name": "Ines Marr",
+        "kind": "person",
+        "x": 230,
+        "y": 486
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 52000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 50000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 36000
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 16000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 35000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 15000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 34000
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 37000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 17000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 25400,
+        "hidden": true
+      }
+    ],
+    "story": "Hollow Oak Ltd kept nothing: £36,000 to Brisk Holdings and £16,000 to Sable Consulting. Rook & Vale split the Tarn Museum's £50,000 70/30: £35,000 to Brisk Holdings and £15,000 to Felix Orme. Brisk Holdings, holding £71,000, sent £34,000 to Ines Marr and £37,000 to Sable Consulting. Sable Consulting took its 20% cut of £53,000 and passed on £42,400: £17,000 to Petra Lind and £25,400 to Ines Marr. Ines Marr, the accountant who audited both funds, walked away with £59,400."
+  },
+  {
+    "no": 9,
+    "title": "The Food Bank Fiddle",
+    "brief": "On the same night, £85,000 vanished from the Food Bank and £55,000 from the Beech Nursery. The money was pushed through shell companies and a dodgy consultancy to hide where it went. Rebuild the whole trail.",
+    "rules": [
+      "Shell companies keep nothing: every pound that comes in goes straight back out.",
+      "Gable Consulting is a \"consultancy\". It keeps a 10% fee on everything it receives and passes on the rest.",
+      "A memo from Pennant Assets: \"Usual split. 60% to Starling Group, the rest to Faye.\"",
+      "People keep everything they receive.",
+      "Petra Lind's bank statement shows they ended up with exactly £92,800."
+    ],
+    "answer": "Petra Lind",
+    "nodes": [
+      {
+        "id": "v1",
+        "name": "Food Bank",
+        "kind": "victim",
+        "x": 95,
+        "y": 36
+      },
+      {
+        "id": "v2",
+        "name": "Beech Nursery",
+        "kind": "victim",
+        "x": 265,
+        "y": 36
+      },
+      {
+        "id": "gull",
+        "name": "Ashdown Trading",
+        "kind": "shell",
+        "x": 95,
+        "y": 142
+      },
+      {
+        "id": "brisk",
+        "name": "Pennant Assets",
+        "kind": "shell",
+        "x": 265,
+        "y": 142,
+        "split": {
+          "brisk-fenwick": 0.6,
+          "brisk-pa": 0.4
+        }
+      },
+      {
+        "id": "fenwick",
+        "name": "Starling Group",
+        "kind": "shell",
+        "x": 180,
+        "y": 254
+      },
+      {
+        "id": "firm",
+        "name": "Gable Consulting",
+        "kind": "firm",
+        "x": 70,
+        "y": 372,
+        "keep": 0.1
+      },
+      {
+        "id": "pa",
+        "name": "Edwin Faye",
+        "kind": "person",
+        "x": 300,
+        "y": 372
+      },
+      {
+        "id": "pb",
+        "name": "Della Shaw",
+        "kind": "person",
+        "x": 70,
+        "y": 486
+      },
+      {
+        "id": "pc",
+        "name": "Petra Lind",
+        "kind": "person",
+        "x": 230,
+        "y": 486,
+        "total": 92800
+      }
+    ],
+    "edges": [
+      {
+        "id": "v1-gull",
+        "from": "v1",
+        "to": "gull",
+        "amount": 85000
+      },
+      {
+        "id": "v2-brisk",
+        "from": "v2",
+        "to": "brisk",
+        "amount": 55000
+      },
+      {
+        "id": "gull-fenwick",
+        "from": "gull",
+        "to": "fenwick",
+        "amount": 49000,
+        "hidden": true
+      },
+      {
+        "id": "gull-firm",
+        "from": "gull",
+        "to": "firm",
+        "amount": 36000
+      },
+      {
+        "id": "brisk-fenwick",
+        "from": "brisk",
+        "to": "fenwick",
+        "amount": 33000,
+        "hidden": true
+      },
+      {
+        "id": "brisk-pa",
+        "from": "brisk",
+        "to": "pa",
+        "amount": 22000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-pc",
+        "from": "fenwick",
+        "to": "pc",
+        "amount": 26000,
+        "hidden": true
+      },
+      {
+        "id": "fenwick-firm",
+        "from": "fenwick",
+        "to": "firm",
+        "amount": 56000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pb",
+        "from": "firm",
+        "to": "pb",
+        "amount": 16000,
+        "hidden": true
+      },
+      {
+        "id": "firm-pc",
+        "from": "firm",
+        "to": "pc",
+        "amount": 66800
+      }
+    ],
+    "story": "Ashdown Trading kept nothing: £49,000 to Starling Group and £36,000 to Gable Consulting. Pennant Assets split the Beech Nursery's £55,000 60/40: £33,000 to Starling Group and £22,000 to Edwin Faye. Starling Group, holding £82,000, sent £26,000 to Petra Lind and £56,000 to Gable Consulting. Gable Consulting took its 10% cut of £92,000 and passed on £82,800: £16,000 to Della Shaw and £66,800 to Petra Lind. Petra Lind, treasurer of both funds, walked away with £92,800."
+  }
+]

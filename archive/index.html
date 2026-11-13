@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Archive · Casebook</title>
+<meta name="theme-color" content="#272530">
+<link rel="icon" href="../shared/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="../shared/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../shared/icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casebook">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="../shared/casebook.js?v=9"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#17161b;--bg2:#272530;--card:#f6f3ec;--ink:#1f2328;--muted:#76705f;--light:#ece8de;--red:#b3261e}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 50% 0,var(--bg2),var(--bg) 65%) fixed;color:var(--light);font-family:"Libre Baskerville",Georgia,serif;min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 16px 56px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  h1{font:700 24px "Courier Prime",monospace;letter-spacing:.35em;margin:0}
+  h1 span{color:#d9534f}
+  .sub{font:13px "Courier Prime",monospace;letter-spacing:.12em;color:#a9a394;text-transform:uppercase}
+  .intro{color:#cfc9bb;font-size:14.5px;line-height:1.7;margin:16px 0 14px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+  .filters button{font:700 12px "Courier Prime",monospace;letter-spacing:.08em;background:transparent;color:var(--light);border:1px solid #4a4656;border-radius:16px;padding:7px 12px;cursor:pointer}
+  .filters button.on{background:var(--light);color:var(--ink);border-color:var(--light)}
+  h2{font:700 12px "Courier Prime",monospace;letter-spacing:.22em;color:#a29c8c;margin:24px 0 10px}
+  .list{display:flex;flex-direction:column;gap:8px}
+  .entry{display:flex;align-items:center;gap:14px;background:var(--card);color:var(--ink);border-radius:4px;padding:12px 14px;text-decoration:none;
+    border-left:6px solid;box-shadow:0 6px 16px rgba(0,0,0,.3);transition:transform .12s}
+  .entry:hover{transform:translateX(3px)}
+  .entry svg{width:40px;height:40px;flex:none}
+  .entry .when{font:700 11px "Courier Prime",monospace;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;width:76px;flex:none;line-height:1.4}
+  .entry .what{flex:1;min-width:0}
+  .entry .g{font:700 12px "Courier Prime",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .entry .t{font-size:15px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .entry .today{font:700 10px "Courier Prime",monospace;letter-spacing:.1em;background:var(--red);color:#fff;border-radius:9px;padding:2px 7px;flex:none}
+  .soon{display:flex;flex-direction:column;gap:6px}
+  .soon div{display:flex;align-items:center;gap:12px;font:13px "Courier Prime",monospace;color:#bdb7a8;padding:6px 4px;border-bottom:1px dashed #3a3744}
+  .soon svg{width:26px;height:26px;opacity:.75}
+  .soon b{color:var(--light);width:110px}
+  @media (max-width:520px){.entry .when{width:58px}.entry svg{width:32px;height:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>ARCHIV<span>E</span></h1><div class="sub" id="sub"></div></header>
+  <p class="intro">Every case so far, newest first. Missed a day? Play it here; they're all still open.</p>
+  <div class="filters" id="filters"></div>
+  <h2>PAST CASES</h2>
+  <div class="list" id="list"></div>
+  <h2>COMING UP</h2>
+  <div class="soon" id="soon"></div>
+</div>
+<script src="../shared/menu.js?v=9" data-root=".." data-game="archive"></script>
+<script>
+(async () => {
+  const CB = window.Casebook, today = CB.today(), ICONS = CB.ICONS;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt = (d, o) => CB.dateOf(d).toLocaleDateString('en-GB', { timeZone:'UTC', ...o });
+  document.getElementById('sub').textContent = `${today + 1} days of cases`;
+
+  // Titles come from each game's case file (Forgery's from its puzzle bank).
+  const FILES = { forgery:'../puzzles/bank.json', testimony:'../puzzles/testimony.json', cooked:'../puzzles/cooked.json', money:'../puzzles/money.json' };
+  const titles = {};
+  await Promise.all(Object.entries(FILES).map(async ([id, f]) => {
+    try { titles[id] = Object.fromEntries((await (await fetch(f)).json()).map(c => [c.no, c.title])); } catch { titles[id] = {}; }
+  }));
+
+  const entries = [];
+  for (let d = today; d >= 0; d--) {
+    const g = CB.gameOn(d), n = CB.issuesBy(g.id, d);
+    if (!titles[g.id][n]) continue;                      // only cases that exist
+    entries.push({ d, g, n, title: titles[g.id][n] });
+  }
+  let filter = 'all';
+  const draw = () => {
+    document.getElementById('list').innerHTML = entries.filter(e => filter === 'all' || e.g.id === filter).map(e => `
+      <a class="entry" href="../${e.g.path}?issue=${e.n}" style="border-left-color:${e.g.accent}">
+        <span class="when">${fmt(e.d, { weekday:'short' })}<br>${fmt(e.d, { day:'numeric', month:'short' })}</span>
+        ${ICONS[e.g.id]}
+        <span class="what"><div class="g">${esc(e.g.name)} · #${e.n}</div><div class="t">${esc(e.title)}</div></span>
+        ${e.d === today ? '<span class="today">TODAY</span>' : ''}
+      </a>`).join('') || '<p class="intro">Nothing here yet.</p>';
+    document.querySelectorAll('#filters button').forEach(b => b.classList.toggle('on', b.dataset.f === filter));
+  };
+  document.getElementById('filters').innerHTML = [['all', 'All games'], ...CB.GAMES.map(g => [g.id, g.name])].map(([f, l]) => `<button data-f="${f}">${esc(l)}</button>`).join('');
+  document.getElementById('filters').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) { filter = b.dataset.f; draw(); } });
+  draw();
+
+  // next few days: which game, no titles (no spoilers)
+  document.getElementById('soon').innerHTML = [1, 2, 3, 4].map(k => { const g = CB.gameOn(today + k);
+    return `<div>${ICONS[g.id]}<b>${k === 1 ? 'Tomorrow' : fmt(today + k, { weekday:'long' })}</b>${esc(g.name)}</div>`; }).join('');
+})();
+</script>
+</body>
+</html>

@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=7"></script>
-<script src="../shared/modal.js?v=7"></script>
+<script src="../shared/casebook.js?v=9"></script>
+<script src="../shared/modal.js?v=9"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -132,7 +132,7 @@
 let PUZZLES = [];
 // Which puzzles are out comes from the shared daily rotation (shared/casebook.js).
 // While building, unreleased puzzles are listed as previews so the whole bank can be play-tested.
-const SHOW_PREVIEWS = true;
+const SHOW_PREVIEWS = new URLSearchParams(location.search).has('preview');   // ?preview lists unreleased puzzles too
 
 // Difficulty = how much of the page starts already examined.
 // warm: share of fake-holding sentences pre-shaded amber; cold: share of clean sentences pre-shaded grey.
@@ -340,10 +340,11 @@ $('start').addEventListener('click', e => {
   const listed = file || SHOW_PREVIEWS ? PUZZLES.length : released;
   PUZZLES = PUZZLES.slice(0, listed);
   RELEASED = released; IS_TODAY = isToday; FILE = file;
-  showStart(released - 1);
+  const want = parseInt(new URLSearchParams(location.search).get('issue'), 10) || released;   // ?issue=N from the archive
+  showStart(Math.max(1, Math.min(want, PUZZLES.length)) - 1);
 })();
 </script>
-<script src="../shared/menu.js?v=7" data-root=".." data-game="forgery"></script>
+<script src="../shared/menu.js?v=9" data-root=".." data-game="forgery"></script>
 <template data-howto data-title="Forgery">
   <p>A forger has changed <b>four words</b> in today's document. Every fake is contradicted by the document itself, so you never need outside knowledge.</p>
   <ul>
@@ -357,6 +358,6 @@ $('start').addEventListener('click', e => {
   <h4>TIP</h4>
   <p>A fake is always outvoted: the true fact appears or is implied at least twice elsewhere. If two details disagree, look for the one that's on its own.</p>
 </template>
-<script src="../shared/help.js?v=7" data-game="forgery"></script>
+<script src="../shared/help.js?v=9" data-game="forgery"></script>
 </body>
 </html>

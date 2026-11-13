@@ -1,0 +1,777 @@
+[
+  {
+    "no": 1,
+    "title": "The Marlow Bakery",
+    "brief": "Marlow's Bakery suspects its bookkeeper, Simon Crale, has been padding the expenses. He inflated four entries in the ledger and pocketed the difference. The TOTAL figures show where the ledger and the bank disagree. Work out which entries he cooked.",
+    "ledgerTitle": "MARLOW BAKERY \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Flour",
+      "Dairy",
+      "Fuel"
+    ],
+    "truth": [
+      [
+        800,
+        1240,
+        420,
+        180,
+        160
+      ],
+      [
+        800,
+        1180,
+        385,
+        180,
+        165
+      ],
+      [
+        800,
+        1310,
+        450,
+        180,
+        175
+      ],
+      [
+        800,
+        1260,
+        410,
+        180,
+        150
+      ],
+      [
+        800,
+        1290,
+        430,
+        180,
+        140
+      ]
+    ],
+    "cooked": {
+      "1,2": 505,
+      "2,3": 300,
+      "3,1": 1560,
+      "4,4": 260
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a3800 every month.",
+      "The dairy delivers the same order every month, so the dairy bill never changes.",
+      "The van was off the road for most of May, so May had the lowest fuel bill of the five months."
+    ],
+    "story": "Crale padded April's wages by \u00a3300, then added \u00a3120 each to February's flour, March's dairy and May's fuel: \u00a3660 in all, paid to himself as \"petty cash\". The dairy bill gave March away, since it never changes, and May's fuel bill was far too high for a van that never left the garage.",
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 800
+      },
+      {
+        "type": "same",
+        "col": 3
+      },
+      {
+        "type": "lowest",
+        "col": 4,
+        "row": 4
+      }
+    ]
+  },
+  {
+    "no": 2,
+    "title": "Kettle & Rose Florist",
+    "brief": "Kettle & Rose Florist suspects the shop's driver, Sam Ainsley, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "KETTLE & ROSE FLORIST \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Flowers",
+      "Van",
+      "Phone"
+    ],
+    "truth": [
+      [
+        850,
+        1310,
+        1120,
+        230,
+        45
+      ],
+      [
+        850,
+        1195,
+        1130,
+        190,
+        45
+      ],
+      [
+        850,
+        1210,
+        980,
+        275,
+        45
+      ],
+      [
+        850,
+        1320,
+        975,
+        180,
+        45
+      ],
+      [
+        850,
+        1275,
+        1075,
+        185,
+        45
+      ]
+    ],
+    "cooked": {
+      "2,1": 1510,
+      "3,4": 105,
+      "0,3": 290,
+      "1,2": 1190
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a3850 every month.",
+      "The van supplier's statement shows May was the biggest van bill of the five months.",
+      "The phone contract is a set monthly fee, so the phone bill never changes."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 850
+      },
+      {
+        "type": "highest",
+        "col": 3,
+        "row": 2
+      },
+      {
+        "type": "same",
+        "col": 4
+      }
+    ],
+    "story": "Sam Ainsley padded March's van by \u00a360, April's flowers by \u00a360, May's wages by \u00a3300 and June's phone by \u00a360: \u00a3480 in all, claimed back as \"van expenses\". Two things gave it away: May's genuine van was the biggest of the five, which only works one way round, and the phone bill never changes, so the one month that differed was cooked."
+  },
+  {
+    "no": 3,
+    "title": "Lowmoor Riding School",
+    "brief": "Lowmoor Riding School suspects the yard's bookkeeper, Gwen Archer, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "LOWMOOR RIDING SCHOOL \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Feed",
+      "Farrier",
+      "Vet"
+    ],
+    "truth": [
+      [
+        700,
+        1630,
+        555,
+        260,
+        125
+      ],
+      [
+        700,
+        1640,
+        530,
+        260,
+        175
+      ],
+      [
+        700,
+        1675,
+        485,
+        260,
+        230
+      ],
+      [
+        700,
+        1690,
+        460,
+        260,
+        225
+      ],
+      [
+        700,
+        1705,
+        570,
+        260,
+        170
+      ]
+    ],
+    "cooked": {
+      "0,2": 795,
+      "1,1": 1790,
+      "4,3": 410,
+      "3,4": 375
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the field lease: \u00a3700 every month.",
+      "The farrier visits on a fixed monthly fee, so the farrier bill never changes.",
+      "The auditors checked the April vet bill against the receipt: it's genuine."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 700
+      },
+      {
+        "type": "same",
+        "col": 3
+      },
+      {
+        "type": "genuine",
+        "row": 1,
+        "col": 4
+      }
+    ],
+    "story": "Gwen Archer padded March's feed by \u00a3240, April's wages by \u00a3150, June's vet by \u00a3150 and July's farrier by \u00a3150: \u00a3690 in all, paid to a \"tack supplier\" that turned out to be her sister. Two things gave it away: the farrier bill never changes, so the one month that differed was cooked, and the audited April vet receipt ruled out the other arrangement."
+  },
+  {
+    "no": 4,
+    "title": "Orchard Lane Surgery",
+    "brief": "Orchard Lane Surgery suspects the practice manager, Neil Brandt, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "ORCHARD LANE SURGERY \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Supplies",
+      "Cleaning",
+      "Postage"
+    ],
+    "truth": [
+      [
+        1800,
+        3480,
+        600,
+        300,
+        110
+      ],
+      [
+        1800,
+        3425,
+        610,
+        300,
+        65
+      ],
+      [
+        1800,
+        3460,
+        525,
+        300,
+        80
+      ],
+      [
+        1800,
+        3240,
+        550,
+        300,
+        100
+      ],
+      [
+        1800,
+        3430,
+        625,
+        300,
+        60
+      ]
+    ],
+    "cooked": {
+      "2,1": 3880,
+      "4,2": 700,
+      "0,4": 185,
+      "3,3": 375
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a31,800 every month.",
+      "The supplies supplier's statement shows October was the smallest supplies bill of the five months.",
+      "The cleaning contract is a set fee, so the cleaning bill never changes."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 1800
+      },
+      {
+        "type": "lowest",
+        "col": 2,
+        "row": 2
+      },
+      {
+        "type": "same",
+        "col": 3
+      }
+    ],
+    "story": "Neil Brandt padded August's postage by \u00a375, October's wages by \u00a3420, November's cleaning by \u00a375 and December's supplies by \u00a375: \u00a3645 in all, paid to a \"medical supplies\" account he controlled. Two things gave it away: October's supplies was meant to be the smallest bill of the five, and the padding broke that, and the cleaning bill never changes, so the one month that differed was cooked."
+  },
+  {
+    "no": 5,
+    "title": "The Copper Pot",
+    "brief": "The Copper Pot suspects the pub's cellar manager, Ivy Marsh, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "THE COPPER POT \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Beer",
+      "Food",
+      "Glasses"
+    ],
+    "truth": [
+      [
+        1500,
+        2430,
+        1330,
+        890,
+        60
+      ],
+      [
+        1500,
+        2565,
+        1415,
+        885,
+        60
+      ],
+      [
+        1500,
+        2550,
+        1305,
+        780,
+        60
+      ],
+      [
+        1500,
+        2540,
+        1555,
+        900,
+        60
+      ],
+      [
+        1500,
+        2500,
+        1410,
+        840,
+        60
+      ]
+    ],
+    "cooked": {
+      "2,1": 2750,
+      "1,2": 1475,
+      "0,3": 950,
+      "3,4": 120
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the brewery lease: \u00a31,500 every month.",
+      "The glasses hire is a set monthly fee, so the glasses bill never changes.",
+      "The auditors checked the January beer bill against the receipt: it's genuine."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 1500
+      },
+      {
+        "type": "same",
+        "col": 4
+      },
+      {
+        "type": "genuine",
+        "row": 0,
+        "col": 2
+      }
+    ],
+    "story": "Ivy Marsh padded January's food by \u00a360, February's beer by \u00a360, March's wages by \u00a3200 and April's glasses by \u00a360: \u00a3380 in all, taken as \"breakages\" from the till. Two things gave it away: the glasses bill never changes, so the one month that differed was cooked, and the audited January beer receipt ruled out the other arrangement."
+  },
+  {
+    "no": 6,
+    "title": "Wexley Print",
+    "brief": "Wexley Print suspects the print shop's foreman, Colin Dace, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "WEXLEY PRINT \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Paper",
+      "Ink",
+      "Repairs"
+    ],
+    "truth": [
+      [
+        1000,
+        2085,
+        585,
+        295,
+        150
+      ],
+      [
+        1000,
+        1840,
+        590,
+        395,
+        150
+      ],
+      [
+        1000,
+        1870,
+        535,
+        305,
+        150
+      ],
+      [
+        1000,
+        1980,
+        430,
+        320,
+        150
+      ],
+      [
+        1000,
+        1825,
+        435,
+        350,
+        150
+      ]
+    ],
+    "cooked": {
+      "3,3": 680,
+      "2,2": 625,
+      "1,4": 240,
+      "0,1": 2175
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a31,000 every month.",
+      "The paper supplier's statement shows August was the biggest paper bill of the five months.",
+      "The repairs contract is a set monthly fee, so the repairs bill never changes."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 1000
+      },
+      {
+        "type": "highest",
+        "col": 2,
+        "row": 1
+      },
+      {
+        "type": "same",
+        "col": 4
+      }
+    ],
+    "story": "Colin Dace padded July's wages by \u00a390, August's repairs by \u00a390, September's paper by \u00a390 and October's ink by \u00a3360: \u00a3630 in all, paid to a \"repairs\" firm that was really his own account. Two things gave it away: August's genuine paper was the biggest of the five, which only works one way round, and the repairs bill never changes, so the one month that differed was cooked."
+  },
+  {
+    "no": 7,
+    "title": "Harbourside Caf\u00e9",
+    "brief": "Harbourside Caf\u00e9 suspects the caf\u00e9's manager, Lena Voss, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "HARBOURSIDE CAF\u00c9 \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Coffee",
+      "Milk",
+      "Laundry"
+    ],
+    "truth": [
+      [
+        1200,
+        1950,
+        360,
+        160,
+        90
+      ],
+      [
+        1200,
+        1775,
+        470,
+        160,
+        100
+      ],
+      [
+        1200,
+        1925,
+        370,
+        160,
+        85
+      ],
+      [
+        1200,
+        1905,
+        435,
+        160,
+        115
+      ],
+      [
+        1200,
+        1870,
+        410,
+        160,
+        105
+      ]
+    ],
+    "cooked": {
+      "1,4": 300,
+      "2,2": 460,
+      "3,1": 1995,
+      "0,3": 250
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a31,200 every month.",
+      "The wages supplier's statement shows March was the biggest wages bill of the five months.",
+      "The milk order is the same every week, so the milk bill never changes."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 1200
+      },
+      {
+        "type": "highest",
+        "col": 1,
+        "row": 0
+      },
+      {
+        "type": "same",
+        "col": 3
+      }
+    ],
+    "story": "Lena Voss padded March's milk by \u00a390, April's laundry by \u00a3200, May's coffee by \u00a390 and June's wages by \u00a390: \u00a3470 in all, paid out as \"cash tips\". Two things gave it away: March's genuine wages was the biggest of the five, which only works one way round, and the milk bill never changes, so the one month that differed was cooked."
+  },
+  {
+    "no": 8,
+    "title": "Pell's Garage",
+    "brief": "Pell's Garage suspects Dora Pell's office manager, Ray Kettle, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "PELL'S GARAGE \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Parts",
+      "Power",
+      "Alarm"
+    ],
+    "truth": [
+      [
+        950,
+        1940,
+        620,
+        210,
+        180
+      ],
+      [
+        950,
+        2165,
+        625,
+        210,
+        180
+      ],
+      [
+        950,
+        2105,
+        680,
+        210,
+        180
+      ],
+      [
+        950,
+        2245,
+        550,
+        210,
+        180
+      ],
+      [
+        950,
+        2045,
+        660,
+        210,
+        180
+      ]
+    ],
+    "cooked": {
+      "2,3": 570,
+      "1,2": 775,
+      "3,1": 2395,
+      "0,4": 330
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a3950 every month.",
+      "The parts supplier's statement shows March was the biggest parts bill of the five months.",
+      "The alarm is paid at a set monthly rate, so the alarm bill never changes."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 950
+      },
+      {
+        "type": "highest",
+        "col": 2,
+        "row": 2
+      },
+      {
+        "type": "same",
+        "col": 4
+      }
+    ],
+    "story": "Ray Kettle padded January's alarm by \u00a3150, February's parts by \u00a3150, March's power by \u00a3360 and April's wages by \u00a3150: \u00a3810 in all, paid to himself as \"garage sundries\". Two things gave it away: March's genuine parts was the biggest of the five, which only works one way round, and the alarm bill never changes, so the one month that differed was cooked."
+  },
+  {
+    "no": 9,
+    "title": "Ferris Books",
+    "brief": "Ferris Books suspects the bookshop's assistant, Owen Hale, of padding the expenses. Four entries in the ledger were inflated and the difference pocketed. The TOTAL figures show where the ledger and the bank disagree. Work out which entries were cooked.",
+    "ledgerTitle": "FERRIS BOOKS \u00b7 EXPENSES LEDGER (\u00a3)",
+    "rows": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May"
+    ],
+    "cols": [
+      "Rent",
+      "Wages",
+      "Stock",
+      "Heating",
+      "Cleaning"
+    ],
+    "truth": [
+      [
+        1100,
+        1340,
+        990,
+        165,
+        120
+      ],
+      [
+        1100,
+        1395,
+        940,
+        125,
+        120
+      ],
+      [
+        1100,
+        1495,
+        975,
+        100,
+        120
+      ],
+      [
+        1100,
+        1465,
+        925,
+        150,
+        120
+      ],
+      [
+        1100,
+        1325,
+        815,
+        105,
+        120
+      ]
+    ],
+    "cooked": {
+      "0,2": 1290,
+      "2,1": 1645,
+      "1,4": 270,
+      "4,3": 255
+    },
+    "clues": [
+      "Exactly four entries were changed, and every change made an expense bigger.",
+      "Rent is fixed by the lease: \u00a31,100 every month.",
+      "The heating supplier's statement shows January was the biggest heating bill of the five months.",
+      "The auditors checked the March cleaning bill against the receipt: it's genuine."
+    ],
+    "rules": [
+      {
+        "type": "fixed",
+        "col": 0,
+        "value": 1100
+      },
+      {
+        "type": "highest",
+        "col": 3,
+        "row": 0
+      },
+      {
+        "type": "genuine",
+        "row": 2,
+        "col": 4
+      }
+    ],
+    "story": "Owen Hale padded January's stock by \u00a3300, February's cleaning by \u00a3150, March's wages by \u00a3150 and May's heating by \u00a3150: \u00a3750 in all, moved into a \"stock float\" that only he could reach. Two things gave it away: January's genuine heating was the biggest of the five, which only works one way round, and the audited March cleaning receipt ruled out the other arrangement."
+  }
+]

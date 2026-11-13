@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=7"></script>
-<script src="../shared/modal.js?v=7"></script>
+<script src="../shared/casebook.js?v=9"></script>
+<script src="../shared/modal.js?v=9"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -102,7 +102,8 @@
   .help b{color:var(--light)}
   @media (max-width:520px){
     table{font-size:12.5px}.cell{padding:10px 2px}.ledger{padding:12px 6px 8px}
-    th .line{padding:8px 2px;font-size:9.5px;letter-spacing:0}td .line{font-size:11px;letter-spacing:0;padding:9px 2px}
+    th .line{padding:8px 1px;font-size:8.5px;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    th.gap{letter-spacing:0;font-size:9px}td .line{font-size:11px;letter-spacing:0;padding:9px 2px}
     td.gap{font-size:10.5px}td.gap .d{font-size:9.5px}.cell .was{font-size:14px}
   }
   /* the main buttons stay on screen: a full-width band stuck to the bottom of the viewport */
@@ -140,35 +141,19 @@
 </div>
 
 <section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
-<script src="../shared/calc.js?v=7"></script>
-<script src="../shared/side.js?v=7"></script>
+<script src="../shared/calc.js?v=9"></script>
+<script src="../shared/side.js?v=9"></script>
 <script>
 // Every cooked entry pushes one month and one category over the bank's total, and the clues pick out which crossings are real.
 // Verified unique with tools/verify-cooked.py: 6 answers fit the gaps, each clue alone leaves 2, together they leave 1.
-const CASE = {
-  no: 1,
-  title: 'The Marlow Bakery',
-  brief: "Marlow's Bakery suspects its bookkeeper, Simon Crale, has been padding the expenses. He inflated four entries in the ledger and pocketed the difference. The TOTAL figures show where the ledger and the bank disagree. Work out which entries he cooked.",
-  ledgerTitle: 'MARLOW BAKERY · EXPENSES LEDGER (£)',
-  rows: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-  cols: ['Rent', 'Wages', 'Flour', 'Dairy', 'Fuel'],
-  truth: [[800, 1240, 420, 180, 160], [800, 1180, 385, 180, 165], [800, 1310, 450, 180, 175], [800, 1260, 410, 180, 150], [800, 1290, 430, 180, 140]],
-  cooked: { '1,2': 505, '2,3': 300, '3,1': 1560, '4,4': 260 },
-  clues: [
-    'Exactly four entries were changed, and every change made an expense bigger.',
-    'Rent is fixed by the lease: £800 every month.',
-    'The dairy delivers the same order every month, so the dairy bill never changes.',
-    'The van was off the road for most of May, so May had the lowest fuel bill of the five months.',
-  ],
-  story: "Crale padded April's wages by £300, then added £120 each to February's flour, March's dairy and May's fuel: £660 in all, paid to himself as \"petty cash\". The dairy bill gave March away, since it never changes, and May's fuel bill was far too high for a van that never left the garage.",
-};
+let CASE;   // loaded from the case file below
 
 const REPORTS = 3;
 let shown, marks, left, history, over;
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-GB');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const N = Object.keys(CASE.cooked).length;
+let N;   // number of cooked entries, set in setup()
 const key = (r, c) => `${r},${c}`;
 const locked = k => marks[k] === 'cooked' || marks[k] === 'genuine' || marks[k] === 'missed';
 const delta = k => { const [r, c] = k.split(',').map(Number); return shown[r][c] - CASE.truth[r][c]; };
@@ -176,6 +161,7 @@ const delta = k => { const [r, c] = k.split(',').map(Number); return shown[r][c]
 function setup(){
   shown = CASE.truth.map(r => r.slice());
   for (const [k, v] of Object.entries(CASE.cooked)) { const [r, c] = k.split(',').map(Number); shown[r][c] = v; }
+  N = Object.keys(CASE.cooked).length;
   marks = {}; left = REPORTS; history = []; over = false;
   $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
   $('brief').textContent = CASE.brief;
@@ -279,9 +265,11 @@ function finish(win){
 }
 
 function toast(m){ $('toast').textContent = m; }
-setup();
+// Cases live in ../puzzles/cooked.json; the shared loader picks today's (or ?issue=N from the archive).
+Casebook.pickCase('cooked', '../puzzles/cooked.json').then(r => { CASE = r.case; setup(); })
+  .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=7" data-root=".." data-game="cooked"></script>
+<script src="../shared/menu.js?v=9" data-root=".." data-game="cooked"></script>
 <template data-howto data-title="Cooked Books">
   <p>A bookkeeper inflated some entries in the ledger and pocketed the difference. The bank's totals are genuine. Find the cooked entries.</p>
   <ul>
@@ -293,6 +281,6 @@ setup();
   <h4>TIP</h4>
   <p>A cooked entry pushes both its month and its category over. When the differences allow more than one answer, the clues decide which crossings are real.</p>
 </template>
-<script src="../shared/help.js?v=7" data-game="cooked"></script>
+<script src="../shared/help.js?v=9" data-game="cooked"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 // One case is published per day, rotating through the games in ROTATION order. Day 0 is LAUNCH.
 // A game's "issue" is how many times it has come up so far; e.g. on day 5 Testimony is on its issue #2.
 (() => {
-  const LAUNCH = Date.UTC(2026, 10, 13);           // day 0 (13 Nov 2026). Set to the real launch date before going live.
+  const LAUNCH = Date.UTC(2026, 9, 23);            // day 0 (23 Oct 2026). Set to the real launch date before going live.
   const DAY = 864e5;
 
   const GAMES = [
@@ -25,5 +25,19 @@
   };
   const dateOf = day => new Date(LAUNCH + day * DAY);
 
-  window.Casebook = { GAMES, ROTATION, LAUNCH, dayOf, gameOn, issuesBy, dateOf, today: () => dayOf() };
+  // Load a game's case list and choose which case to show: ?issue=N (an archive link), else the latest
+  // released issue. Unreleased issues are only reachable with ?preview=1.
+  async function pickCase(id, url){
+    const all = await (await fetch(url)).json();
+    const day = dayOf(), released = Math.max(1, Math.min(all.length, issuesBy(id, day)));
+    const q = new URLSearchParams(location.search), preview = q.has('preview');
+    const want = parseInt(q.get('issue'), 10) || released;
+    const issue = Math.max(1, Math.min(want, preview ? all.length : released));
+    const c = all.find(x => x.no === issue) || all[issue - 1];
+    return { case: c, issue, released, total: all.length, isToday: gameOn(day).id === id && issue === issuesBy(id, day) };
+  }
+  // The date a game's issue N came out (or comes out).
+  const dateOfIssue = (id, n) => dateOf(ROTATION.indexOf(id) + (n - 1) * ROTATION.length);
+
+  window.Casebook = { GAMES, ROTATION, LAUNCH, dayOf, gameOn, issuesBy, dateOf, dateOfIssue, pickCase, today: () => dayOf() };
 })();

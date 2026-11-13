@@ -1,0 +1,71 @@
+[
+  {
+    "no": 1,
+    "title": "The Ashby Ring",
+    "brief": "Lady Ashby's ring vanished during her dinner party. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+    "checks": 4,
+    "evidence": [
+      "Dinner ended at 22:00. Coffee was then served downstairs in the library until 22:30.",
+      "It began to rain at 21:30 and rained all night.",
+      "At 21:45 Lady Ashby locked her ring in the upstairs study. At 22:30 it was gone.",
+      "Whoever took the ring left wet footprints across the study carpet.",
+      "The back stairs are the only way upstairs. They start in the kitchen, beside the back door to the garden.",
+      "In the Major's coat pocket: a pawnbroker's ticket for his medals, and an unpaid gambling bill for £400."
+    ],
+    "statements": [
+      {
+        "who": "Pell",
+        "tag": "the butler",
+        "text": "From 22:00 I served coffee in the library. Miss Clara and Lady Ashby never left the fire. The Major slipped out at 22:05 and came back at 22:15 with his collar [[dry|*wet]]. Between ourselves, the Major is [[rich|*poor]] these days, whatever he pretends."
+      },
+      {
+        "who": "Major Fenn",
+        "tag": "a guest",
+        "text": "I went [[inside|*outside]] for a cigar, and I didn't bother with an umbrella. I came back to the library by the [[front|*back]] door."
+      },
+      {
+        "who": "Lady Ashby",
+        "tag": "the hostess",
+        "text": "I went up to lock my ring away at 21:45, [[after|*before]] dinner ended. The rain was [[*already|not yet]] falling. I was the [[last|*first]] person to climb the back stairs that night."
+      },
+      {
+        "who": "Mrs Dace",
+        "tag": "the cook",
+        "text": "Only two people went up the back stairs tonight. Lady Ashby went up at 21:45. The other went up twenty-five minutes [[earlier|*later]]. My back was turned, but I heard the back door bang and found a trail of rainwater from it to the stairs. Rook's boots sat [[*dry|wet]] by my stove all evening."
+      },
+      {
+        "who": "Rook",
+        "tag": "the gardener",
+        "text": "I came in from the greenhouse at 21:20, [[*before|after]] the rain started, and set my boots by the stove. Whoever left that trail of rainwater, it [[was|*wasn't]] me."
+      }
+    ],
+    "file": [
+      {
+        "key": "Who",
+        "needs": [
+          "Mrs Dace",
+          "Pell",
+          "Rook"
+        ],
+        "text": "Major Fenn. Someone came in dripping from the garden at 22:10 and climbed the back stairs. The Major was the only one missing from the library then, and Rook's boots were dry."
+      },
+      {
+        "key": "How",
+        "needs": [
+          "Major Fenn",
+          "Lady Ashby",
+          "Mrs Dace"
+        ],
+        "text": "He slipped out to the garden at 22:05, came back in through the kitchen door at 22:10 and went up the back stairs, the only way to the study, leaving rainwater all the way."
+      },
+      {
+        "key": "Why",
+        "needs": [
+          "Pell"
+        ],
+        "text": "Money. The Major is broke: his medals are at the pawnbroker's and he owes £400 in gambling debts."
+      }
+    ],
+    "solution": "Major Fenn took the ring. Only two people climbed the back stairs: Lady Ashby at 21:45, and someone dripping wet twenty-five minutes later, at 22:10. The only person missing from the library at 22:10 was the Major, out in the rain with no umbrella. Rook came in at 21:20, before the rain, and his boots stayed dry, so the wet footprints aren't his. He needed the money: his medals were already pawned to cover his gambling debts."
+  }
+]

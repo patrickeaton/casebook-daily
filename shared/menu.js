@@ -38,7 +38,6 @@
       <rect x="14" y="23" width="20" height="3" rx="1.5" fill="#b3261e"/><rect x="14" y="29" width="14" height="3" rx="1.5" fill="#8a8270"/><rect x="14" y="35" width="17" height="3" rx="1.5" fill="#8a8270"/></svg>`;
   if (CB) CB.ICONS = ICONS;
   const SOON = [
-    { id:'archive', name:'Archive',     tag:'Every past case. Coming soon.' },
     { id:'record',  name:'Case Record', tag:'Streaks, stats and badges. Coming soon.' },
   ];
 
@@ -103,6 +102,7 @@
       <ul class="cb-list">${item({ id:'home', name:'Home', tag:"Today's case and every game.", href:`${root}/` }, true)}</ul>
       <hr class="cb-rule">
       <ul class="cb-list">${GAMES.map(g => item(g, true)).join('')}</ul>
+      <ul class="cb-list">${item({ id:'archive', name:'Archive', tag:'Every past case, newest first.', href:`${root}/archive/` }, true)}</ul>
       <hr class="cb-rule">
       <ul class="cb-list">${SOON.map(g => item(g, false)).join('')}</ul>
       <div class="cb-foot">One new case every day, rotating through the games.</div>

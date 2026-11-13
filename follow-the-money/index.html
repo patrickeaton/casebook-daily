@@ -14,8 +14,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=7"></script>
-<script src="../shared/modal.js?v=7"></script>
+<script src="../shared/casebook.js?v=9"></script>
+<script src="../shared/modal.js?v=9"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -127,48 +127,12 @@
 </div>
 
 <section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
-<script src="../shared/calc.js?v=7"></script>
-<script src="../shared/side.js?v=7"></script>
+<script src="../shared/calc.js?v=9"></script>
+<script src="../shared/side.js?v=9"></script>
 <script>
 // Each shell has exactly one missing amount once the one before it is solved, so the trail is a chain.
 // Verified with tools/verify-money.mjs.
-const CASE = {
-  no: 1,
-  title: 'The Quayside Job',
-  brief: "On the same night, £50,000 vanished from the Harbour Trust and an unknown sum from the Quayside Pension Fund. Both were pushed through shell companies and a dodgy consultancy to hide where they went. Rebuild the whole trail, including how much the pension fund lost.",
-  rules: [
-    'Shell companies keep nothing: every pound that comes in goes straight back out.',
-    'Tallow & Co is a "consultancy". It keeps a 10% fee on everything it receives and passes on the rest.',
-    'A memo from Brisk Holdings: "Usual split. 70% to Fenwick, the rest to Penn."',
-    'People keep everything they receive.',
-    "Carys Penn's bank statement shows she ended up with exactly £9,000.",
-  ],
-  answer: 'Ines Marr',
-  nodes: [
-    { id:'trust',   name:'Harbour Trust',    kind:'victim', x:95,  y:36 },
-    { id:'pension', name:'Quayside Pension', kind:'victim', x:265, y:36 },
-    { id:'gull',    name:'Grey Gull Ltd',    kind:'shell',  x:95,  y:142 },
-    { id:'brisk',   name:'Brisk Holdings',   kind:'shell',  x:265, y:142, split:{ 'brisk-fenwick':0.7, 'brisk-carys':0.3 } },
-    { id:'fenwick', name:'Fenwick Holdings', kind:'shell',  x:180, y:254 },
-    { id:'tallow',  name:'Tallow & Co',      kind:'firm',   x:70,  y:372, keep:0.1 },
-    { id:'carys',   name:'Carys Penn',       kind:'person', x:300, y:372, total:9000 },
-    { id:'vane',    name:'Odell Vane',       kind:'person', x:70,  y:486 },
-    { id:'ines',    name:'Ines Marr',        kind:'person', x:230, y:486 },
-  ],
-  edges: [
-    { id:'trust-gull',     from:'trust',   to:'gull',    amount:50000 },
-    { id:'pension-brisk',  from:'pension', to:'brisk',   amount:30000, hidden:true },
-    { id:'gull-fenwick',   from:'gull',    to:'fenwick', amount:30000, hidden:true },
-    { id:'gull-tallow',    from:'gull',    to:'tallow',  amount:20000 },
-    { id:'brisk-fenwick',  from:'brisk',   to:'fenwick', amount:21000, hidden:true },
-    { id:'brisk-carys',    from:'brisk',   to:'carys',   amount:9000,  hidden:true },
-    { id:'fenwick-ines',   from:'fenwick', to:'ines',    amount:25000 },
-    { id:'fenwick-tallow', from:'fenwick', to:'tallow',  amount:26000, hidden:true },
-    { id:'tallow-vane',    from:'tallow',  to:'vane',    amount:18000 },
-    { id:'tallow-ines',    from:'tallow',  to:'ines',    amount:23400, hidden:true },
-  ],
-  story: "Working back from Carys Penn's £9,000, which was Brisk's 30% share, the pension fund lost £30,000. Grey Gull kept nothing: £30,000 to Fenwick and £20,000 to Tallow. Brisk split the pension money 70/30: £21,000 to Fenwick and £9,000 to Carys Penn. Fenwick, now holding £51,000, sent £25,000 to Ines Marr and £26,000 to Tallow. Tallow took its 10% cut of £46,000 and passed on £41,400: £18,000 to Odell Vane and £23,400 to Ines. Ines Marr, treasurer of both funds, walked away with £48,400.",
-};
+let CASE;   // loaded from the case file below
 
 
 const CHECKS = 3, VW = 360, VH = 520, W = 112, H = 58;
@@ -177,7 +141,7 @@ const $ = id => document.getElementById(id);
 const fmt = n => '£' + n.toLocaleString('en-GB');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const node = id => CASE.nodes.find(n => n.id === id);
-const hidden = CASE.edges.filter(e => e.hidden);
+let hidden;   // the missing transfers, set in setup()
 const parse = s => { const t = String(s).trim().toLowerCase().replace(/[£,\s]/g, ''); if (!t) return null;
   const m = t.match(/^(\d+(?:\.\d+)?)(k?)$/); return m ? Math.round(parseFloat(m[1]) * (m[2] ? 1000 : 1)) : NaN; };
 
@@ -189,6 +153,7 @@ function anchor(n, toward){
 const midOf = e => { const a = node(e.from), b = node(e.to), p = anchor(a, b), q = anchor(b, a); return { p, q, x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }; };
 
 function setup(){
+  hidden = CASE.edges.filter(e => e.hidden);
   values = {}; results = {}; history = []; left = CHECKS; over = false;
   $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
   $('brief').textContent = CASE.brief;
@@ -211,7 +176,7 @@ function flowOf(n){
   if (n.kind === 'victim') return { text:`sent ${t(O)}`, cls:'' };
   if (n.kind === 'person' && n.total != null) {
     const cls = I.unk ? '' : I.sum === n.total ? 'ok' : 'bad';
-    return { text:`got ${t(I)} of ${short(n.total)}${cls === 'ok' ? ' ✓' : cls === 'bad' ? ' ✗' : ''}`, cls };
+    return { text:`${t(I)} of ${short(n.total)}${cls === 'ok' ? ' ✓' : cls === 'bad' ? ' ✗' : ''}`, cls };   // received so far, of the known total
   }
   if (n.kind === 'person') return { text:`received ${t(I)}`, cls:'' };
   // shells and firms: does what goes out match what came in (minus any fee)?
@@ -297,9 +262,11 @@ function finish(win){
 }
 
 function toast(m){ $('toast').textContent = m; }
-setup();
+// Cases live in ../puzzles/money.json; the shared loader picks today's (or ?issue=N from the archive).
+Casebook.pickCase('money', '../puzzles/money.json').then(r => { CASE = r.case; setup(); })
+  .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=7" data-root=".." data-game="money"></script>
+<script src="../shared/menu.js?v=9" data-root=".." data-game="money"></script>
 <template data-howto data-title="Follow the Money">
   <p>Stolen money has been moved through companies to hide where it went. Rebuild the trail by filling in every missing amount.</p>
   <ul>
@@ -311,6 +278,6 @@ setup();
   <h4>TIP</h4>
   <p>You can work backwards. A known final amount, or one company's share, can tell you what must have flowed in.</p>
 </template>
-<script src="../shared/help.js?v=7" data-game="money"></script>
+<script src="../shared/help.js?v=9" data-game="money"></script>
 </body>
 </html>
