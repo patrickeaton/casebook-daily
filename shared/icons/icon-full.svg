@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Casebook: a case-file folder with a document and a magnifying glass. Full-bleed (iOS rounds the corners itself). -->
+  <rect width="512" height="512" fill="#1f2328"/>
+  <g transform="translate(0 -26)">
+  <!-- folder back with tab -->
+  <path d="M92 138h118l30 32h178a22 22 0 0 1 22 22v206a22 22 0 0 1-22 22H92a22 22 0 0 1-22-22V160a22 22 0 0 1 22-22z" fill="#a8822f"/>
+  <!-- the document inside -->
+  <g transform="rotate(-5 250 250)">
+    <rect x="118" y="168" width="262" height="170" rx="8" fill="#f6f1e4"/>
+    <rect x="146" y="198" width="160" height="14" rx="7" fill="#8a8270"/>
+    <rect x="146" y="228" width="200" height="14" rx="7" fill="#8a8270"/>
+    <rect x="146" y="258" width="96" height="14" rx="7" fill="#b3261e"/>
+  </g>
+  <!-- folder front -->
+  <path d="M70 236h372v162a22 22 0 0 1-22 22H92a22 22 0 0 1-22-22z" fill="#e2c27a"/>
+  <rect x="104" y="318" width="132" height="40" rx="6" fill="#b3261e"/>
+  <rect x="120" y="333" width="100" height="10" rx="5" fill="#f6f1e4"/>
+  <!-- magnifying glass -->
+  <circle cx="352" cy="318" r="64" fill="#f6f1e4" fill-opacity=".22" stroke="#f6f1e4" stroke-width="22"/>
+  <path d="M400 366l52 52" stroke="#f6f1e4" stroke-width="32" stroke-linecap="round"/>
+  </g>
+</svg>

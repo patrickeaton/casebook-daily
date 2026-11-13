@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- maximum-scale stops iOS auto-zooming when a small amount tag is tapped; pinch-zoom still works (iOS ignores it for that) -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>Follow the Money · Casebook</title>
+<meta name="theme-color" content="#2c2820">
+<link rel="icon" href="../shared/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="../shared/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../shared/icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casebook">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="../shared/casebook.js?v=7"></script>
+<script src="../shared/modal.js?v=7"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sp-bar-bg:#24211b; --sp-bg:#16140f;
+    --bg:#1a1814; --bg2:#2c2820; --paper:#faf7ef; --ink:#221f1a; --muted:#7a7262; --light:#ece6d8;
+    --gold:#c9a227; --gold-soft:#f3e6b8; --red:#b3261e; --green:#2e7d4f; --blue:#2e5fa3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 50% 0,var(--bg2),var(--bg) 65%) fixed;color:var(--light);
+    font-family:"Libre Baskerville",Georgia,serif;min-height:100vh}
+  .wrap{max-width:720px;margin:0 auto;padding:22px 16px 48px}
+  header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h1{font:700 22px "Courier Prime",monospace;letter-spacing:.24em;margin:0}
+  h1 span{color:var(--gold)}
+  .case{font:13px "Courier Prime",monospace;color:#b5ac98;letter-spacing:.08em}
+  .brief{color:#d6cfbf;font-size:14px;line-height:1.7;margin:14px 0 16px}
+  h2{font:700 12px "Courier Prime",monospace;letter-spacing:.22em;color:#b5a983;margin:22px 0 10px}
+  .hint{font-size:13px;color:#cfc6b2;line-height:1.6;margin:-4px 0 10px}
+
+  .rules{display:grid;gap:8px}
+  .rule{background:#fdfbf4;color:var(--ink);border-radius:3px;overflow:hidden;display:flex;font-size:13.5px;line-height:21px;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+  .rule:before{content:attr(data-n);flex:none;width:34px;background:var(--gold);color:#221f1a;font:700 14px "Courier Prime",monospace;display:flex;align-items:center;justify-content:center}
+  .rule span{padding:10px 14px}
+
+  .board{background:var(--paper);border-radius:4px;box-shadow:0 14px 40px rgba(0,0,0,.5);padding:10px 6px 6px}
+  /* the SVG draws the trail; real <input>s sit on top of it where the missing amounts go */
+  .stage{position:relative;container-type:inline-size}
+  svg{display:block;width:100%;height:auto;font-family:"Courier Prime",monospace}
+  .node rect{fill:#fff;stroke:#3a352c;stroke-width:1.5}
+  .node.shell rect{stroke-dasharray:5 4;fill:#f4f1e8}
+  .node.person rect{fill:var(--gold-soft);stroke:#9a7b12}
+  .node.victim rect{fill:#f6e0dd;stroke:var(--red)}
+  .node.firm rect{fill:#e3ecf4;stroke:#3d5f80;stroke-dasharray:2 3;stroke-width:2}
+  .node .nm{font-size:10.8px;font-weight:700;fill:var(--ink)}
+  .node .fl{font-size:9.5px;font-weight:700;fill:#5c5547}
+  .node .known rect{fill:#2b2f3a}.node .known text{fill:#f3e6b8;font-size:8.5px;font-weight:700;letter-spacing:.1em}
+  .node .fl.ok{fill:var(--green)}.node .fl.bad{fill:var(--red)}
+  .node .kd{font-size:9px;letter-spacing:.12em;fill:var(--muted);text-transform:uppercase}
+  .edge{stroke:#5a5346;stroke-width:1.6;fill:none}
+  .amt rect{fill:#fff;stroke:#5a5346;stroke-width:1}
+  .amt text{font-size:11.5px;font-weight:700;fill:var(--ink)}
+  /* Sized in the drawing's own units so they match the fixed amount tags exactly at any width.
+     The drawing is 360 units wide, so 1 unit = 100cqw / 360 of the stage. Fixed tags are 20 units tall,
+     about 64 units wide for "£00,000", with 11.5-unit text and fully rounded ends. */
+  .amt-in{position:absolute;transform:translate(-50%,-50%);width:calc(64 * 100cqw / 360);height:calc(20 * 100cqw / 360);
+    border-radius:calc(10 * 100cqw / 360);border:max(1.5px, calc(1.6 * 100cqw / 360)) solid var(--gold);background:#fff6d6;color:var(--ink);
+    font:700 calc(11.5 * 100cqw / 360) "Courier Prime",monospace;text-align:center;padding:0;outline:none;margin:0}
+  .amt-in::placeholder{color:#a08624}
+  .amt-in:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(46,95,163,.25)}
+  .amt-in.typed{background:#e6edf8;border-color:var(--blue)}
+  .amt-in.ok{background:#e2f0e7;border-color:var(--green)}
+  .amt-in.bad{background:#f6e0dd;border-color:var(--red)}
+  .amt-in:disabled{opacity:1;-webkit-text-fill-color:var(--ink)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font:11px "Courier Prime",monospace;color:var(--muted);padding:4px 8px 6px}
+  .legend i{display:inline-block;width:18px;height:11px;vertical-align:-1px;margin-right:5px;border:1.5px solid #3a352c;border-radius:2px}
+  .legend i.s{border-style:dashed;background:#f4f1e8}.legend i.f{border-style:dotted;border-color:#3d5f80;background:#e3ecf4}.legend i.p{background:var(--gold-soft);border-color:#9a7b12}.legend i.v{background:#f6e0dd;border-color:var(--red)}
+
+  .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:20px 0 6px}
+  .btn{font:700 14px "Courier Prime",monospace;background:var(--light);color:var(--ink);border:0;border-radius:3px;padding:11px 18px;cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--light);border:1px solid #5a5242}
+  .checks{font:14px "Courier Prime",monospace;color:#cfc6b2}
+  .toast{min-height:22px;font:14px "Courier Prime",monospace;color:#e2dbcc;margin:6px 0 4px}
+  .history{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+  .row{display:flex;gap:5px;align-items:center;font:12px "Courier Prime",monospace;color:#9a917e}
+  .row i{width:20px;height:20px;border-radius:3px;display:inline-block}
+  .row i.ok{background:var(--green)}.row i.bad{background:var(--red)}
+  .closed{margin-top:16px;background:#fdfbf4;color:var(--ink);border-radius:3px;padding:16px 18px;box-shadow:0 8px 22px rgba(0,0,0,.35);position:relative}
+  .closed h3{margin:0 0 8px;font:700 14px "Courier Prime",monospace;letter-spacing:.18em}
+  .closed p{margin:0;line-height:1.7;font-size:15px}
+  .stamp{position:absolute;right:14px;top:10px;font:700 17px "Courier Prime",monospace;letter-spacing:.12em;padding:4px 10px;border:3px solid;border-radius:5px;transform:rotate(-8deg);opacity:.85}
+  .stamp.win{color:var(--green)}.stamp.lose{color:var(--red)}
+  pre.share{background:#14120e;color:var(--light);border-radius:4px;padding:12px;font:14px "Courier Prime",monospace;white-space:pre-wrap;margin:12px 0 0}
+  .help{font-size:13px;color:#b5ac98;line-height:1.7;margin-top:28px;border-top:1px solid #3d372b;padding-top:14px}
+  .help b{color:var(--light)}
+  /* the main buttons stay on screen: a full-width band stuck to the bottom of the viewport */
+  .actions{position:sticky;bottom:0;z-index:25;padding:12px 0 calc(12px + env(safe-area-inset-bottom));background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+  .actions .toast{flex-basis:100%;margin:2px 0 0;min-height:0}
+  .actions .toast:empty{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>FOLLOW THE MONE<span>Y</span></h1><div class="case" id="case"></div></header>
+  <p class="brief" id="brief"></p>
+
+  <div data-side-buttons></div>
+  <section data-side="rules" data-side-label="What we know" data-side-note="Facts the investigators are sure of."><div class="rules" id="rules"></div></section>
+
+  <h2>THE TRAIL</h2>
+  <p class="hint">Type the missing amounts into the gold tags. Each company shows a running total of money in → money out, with a ✓ when it balances. Check what we know: not every company passes everything on.</p>
+  <div class="board">
+    <div class="stage">
+      <svg id="map" viewBox="0 0 360 520" role="img" aria-label="Diagram of transfers between accounts"></svg>
+      <div id="inputs"></div>
+    </div>
+    <div class="legend"><span><i class="v"></i>victim</span><span><i class="s"></i>shell company</span><span><i class="f"></i>firm (takes a cut)</span><span><i class="p"></i>person</span></div>
+  </div>
+
+  <div class="bar actions">
+    <button class="btn" id="check">Check</button>
+    <span class="checks" id="checksLeft"></span>
+    <div class="toast" id="toast"></div>
+  </div>
+  <div class="history" id="history"></div>
+  <div id="end"></div>
+
+</div>
+
+<section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
+<script src="../shared/calc.js?v=7"></script>
+<script src="../shared/side.js?v=7"></script>
+<script>
+// Each shell has exactly one missing amount once the one before it is solved, so the trail is a chain.
+// Verified with tools/verify-money.mjs.
+const CASE = {
+  no: 1,
+  title: 'The Quayside Job',
+  brief: "On the same night, £50,000 vanished from the Harbour Trust and an unknown sum from the Quayside Pension Fund. Both were pushed through shell companies and a dodgy consultancy to hide where they went. Rebuild the whole trail, including how much the pension fund lost.",
+  rules: [
+    'Shell companies keep nothing: every pound that comes in goes straight back out.',
+    'Tallow & Co is a "consultancy". It keeps a 10% fee on everything it receives and passes on the rest.',
+    'A memo from Brisk Holdings: "Usual split. 70% to Fenwick, the rest to Penn."',
+    'People keep everything they receive.',
+    "Carys Penn's bank statement shows she ended up with exactly £9,000.",
+  ],
+  answer: 'Ines Marr',
+  nodes: [
+    { id:'trust',   name:'Harbour Trust',    kind:'victim', x:95,  y:36 },
+    { id:'pension', name:'Quayside Pension', kind:'victim', x:265, y:36 },
+    { id:'gull',    name:'Grey Gull Ltd',    kind:'shell',  x:95,  y:142 },
+    { id:'brisk',   name:'Brisk Holdings',   kind:'shell',  x:265, y:142, split:{ 'brisk-fenwick':0.7, 'brisk-carys':0.3 } },
+    { id:'fenwick', name:'Fenwick Holdings', kind:'shell',  x:180, y:254 },
+    { id:'tallow',  name:'Tallow & Co',      kind:'firm',   x:70,  y:372, keep:0.1 },
+    { id:'carys',   name:'Carys Penn',       kind:'person', x:300, y:372, total:9000 },
+    { id:'vane',    name:'Odell Vane',       kind:'person', x:70,  y:486 },
+    { id:'ines',    name:'Ines Marr',        kind:'person', x:230, y:486 },
+  ],
+  edges: [
+    { id:'trust-gull',     from:'trust',   to:'gull',    amount:50000 },
+    { id:'pension-brisk',  from:'pension', to:'brisk',   amount:30000, hidden:true },
+    { id:'gull-fenwick',   from:'gull',    to:'fenwick', amount:30000, hidden:true },
+    { id:'gull-tallow',    from:'gull',    to:'tallow',  amount:20000 },
+    { id:'brisk-fenwick',  from:'brisk',   to:'fenwick', amount:21000, hidden:true },
+    { id:'brisk-carys',    from:'brisk',   to:'carys',   amount:9000,  hidden:true },
+    { id:'fenwick-ines',   from:'fenwick', to:'ines',    amount:25000 },
+    { id:'fenwick-tallow', from:'fenwick', to:'tallow',  amount:26000, hidden:true },
+    { id:'tallow-vane',    from:'tallow',  to:'vane',    amount:18000 },
+    { id:'tallow-ines',    from:'tallow',  to:'ines',    amount:23400, hidden:true },
+  ],
+  story: "Working back from Carys Penn's £9,000, which was Brisk's 30% share, the pension fund lost £30,000. Grey Gull kept nothing: £30,000 to Fenwick and £20,000 to Tallow. Brisk split the pension money 70/30: £21,000 to Fenwick and £9,000 to Carys Penn. Fenwick, now holding £51,000, sent £25,000 to Ines Marr and £26,000 to Tallow. Tallow took its 10% cut of £46,000 and passed on £41,400: £18,000 to Odell Vane and £23,400 to Ines. Ines Marr, treasurer of both funds, walked away with £48,400.",
+};
+
+
+const CHECKS = 3, VW = 360, VH = 520, W = 112, H = 58;
+let values, results, history, left, over;
+const $ = id => document.getElementById(id);
+const fmt = n => '£' + n.toLocaleString('en-GB');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const node = id => CASE.nodes.find(n => n.id === id);
+const hidden = CASE.edges.filter(e => e.hidden);
+const parse = s => { const t = String(s).trim().toLowerCase().replace(/[£,\s]/g, ''); if (!t) return null;
+  const m = t.match(/^(\d+(?:\.\d+)?)(k?)$/); return m ? Math.round(parseFloat(m[1]) * (m[2] ? 1000 : 1)) : NaN; };
+
+function anchor(n, toward){
+  const dx = toward.x - n.x, dy = toward.y - n.y;
+  const sx = dx ? (W / 2) / Math.abs(dx) : Infinity, sy = dy ? (H / 2) / Math.abs(dy) : Infinity, s = Math.min(sx, sy);
+  return { x: n.x + dx * s, y: n.y + dy * s };
+}
+const midOf = e => { const a = node(e.from), b = node(e.to), p = anchor(a, b), q = anchor(b, a); return { p, q, x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }; };
+
+function setup(){
+  values = {}; results = {}; history = []; left = CHECKS; over = false;
+  $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
+  $('brief').textContent = CASE.brief;
+  $('rules').innerHTML = CASE.rules.map((r, i) => `<div class="rule" data-n="${i + 1}"><span>${esc(r)}</span></div>`).join('');
+  // one input per missing transfer, placed over the arrow's midpoint (positions in % of the drawing, so it scales)
+  $('inputs').innerHTML = hidden.map(e => { const m = midOf(e);
+    return `<input class="amt-in" data-in="${e.id}" inputmode="numeric" autocomplete="off" placeholder="£ ?" style="left:${m.x / VW * 100}%;top:${m.y / VH * 100}%"
+      aria-label="Amount from ${esc(node(e.from).name)} to ${esc(node(e.to).name)}">`; }).join('');
+  $('end').innerHTML = ''; toast('');
+  render();
+}
+
+// Live totals for a box, from known amounts plus whatever the player has typed. "?" = still blank.
+const short = v => v >= 1000 ? `${+(v / 1000).toFixed(1)}k` : String(v);
+function flowOf(n){
+  const amt = e => e.hidden ? values[e.id] : e.amount;
+  const part = es => es.reduce((p, e) => { const v = amt(e); if (v == null || Number.isNaN(v)) p.unk++; else p.sum += v; return p; }, { sum:0, unk:0 });
+  const I = part(CASE.edges.filter(e => e.to === n.id)), O = part(CASE.edges.filter(e => e.from === n.id));
+  const t = p => p.sum === 0 && p.unk ? '?' : `${short(p.sum)}${p.unk ? '+?' : ''}`;
+  if (n.kind === 'victim') return { text:`sent ${t(O)}`, cls:'' };
+  if (n.kind === 'person' && n.total != null) {
+    const cls = I.unk ? '' : I.sum === n.total ? 'ok' : 'bad';
+    return { text:`got ${t(I)} of ${short(n.total)}${cls === 'ok' ? ' ✓' : cls === 'bad' ? ' ✗' : ''}`, cls };
+  }
+  if (n.kind === 'person') return { text:`received ${t(I)}`, cls:'' };
+  // shells and firms: does what goes out match what came in (minus any fee)?
+  let cls = '';
+  if (!I.unk && !O.unk) cls = Math.abs(O.sum - I.sum * (1 - (n.keep || 0))) < 0.5 ? 'ok' : 'bad';
+  return { text:`${t(I)} → ${t(O)}${cls === 'ok' ? ' ✓' : cls === 'bad' ? ' ✗' : ''}`, cls };   // in → out
+}
+
+function drawMap(){
+  let edges = '', labels = '', nodes = '';
+  for (const e of CASE.edges) {
+    const m = midOf(e);
+    edges += `<line class="edge" x1="${m.p.x}" y1="${m.p.y}" x2="${m.q.x}" y2="${m.q.y}" marker-end="url(#arr)"/>`;
+    if (e.hidden) continue;                       // an <input> sits here instead
+    const text = fmt(e.amount), w = Math.max(44, text.length * 7.4 + 12);
+    labels += `<g class="amt" data-num="${e.amount}"><rect x="${m.x - w / 2}" y="${m.y - 10}" width="${w}" height="20" rx="10"/><text x="${m.x}" y="${m.y + 4}" text-anchor="middle">${esc(text)}</text></g>`;
+  }
+  for (const n of CASE.nodes) {
+    const kind = { victim:'victim', shell:'shell company', person:'person', firm:`firm · keeps ${Math.round((n.keep || 0) * 100)}%` }[n.kind];
+    const f = flowOf(n);
+    nodes += `<g class="node ${n.kind}" data-node="${esc(n.name)}">
+      <rect x="${n.x - W / 2}" y="${n.y - H / 2}" width="${W}" height="${H}" rx="5"/>
+      <text class="nm" x="${n.x}" y="${n.y - 9}" text-anchor="middle">${esc(n.name)}</text>
+      <text class="kd" x="${n.x}" y="${n.y + 4}" text-anchor="middle">${kind}</text>
+      <text class="fl ${f.cls}" x="${n.x}" y="${n.y + 19}" text-anchor="middle">${esc(f.text)}</text>${n.total != null ? `
+      <g class="known" data-num="${n.total}"><rect x="${n.x - 46}" y="${n.y + H / 2 - 2}" width="92" height="15" rx="3"/><text x="${n.x}" y="${n.y + H / 2 + 8.5}" text-anchor="middle">BANK: ${fmt(n.total)}</text></g>` : ''}</g>`;
+  }
+  $('map').innerHTML = `<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a5346"/></marker></defs>${edges}${labels}${nodes}`;
+}
+
+function render(){
+  drawMap();
+  document.querySelectorAll('[data-in]').forEach(i => {
+    const id = i.dataset.in, v = values[id];
+    i.classList.remove('typed', 'ok', 'bad');
+    if (results[id]) i.classList.add(results[id]); else if (v != null && !Number.isNaN(v)) i.classList.add('typed');
+    i.disabled = over || results[id] === 'ok';
+  });
+  $('checksLeft').textContent = `${left} check${left === 1 ? '' : 's'} left`;
+  $('check').disabled = over || left < 1;
+  $('history').innerHTML = history.map((row, i) => `<div class="row">${row.map(c => `<i class="${c}"></i>`).join('')}&nbsp; check ${i + 1}</div>`).join('');
+}
+
+$('inputs').addEventListener('input', e => {
+  const id = e.target.dataset.in; if (!id) return;
+  values[id] = parse(e.target.value);
+  delete results[id];                              // edited since the last check: back to "typed"
+  render();
+});
+// tidy what was typed ("32k" → "32,000") when leaving the tag
+$('inputs').addEventListener('change', e => { const v = values[e.target.dataset.in]; if (v != null && !Number.isNaN(v)) e.target.value = v.toLocaleString('en-GB'); });
+$('inputs').addEventListener('keydown', e => { if (e.key === 'Enter') e.target.blur(); });
+
+
+$('check').onclick = () => {
+  if (over || left < 1) return;
+  const missing = hidden.filter(e => values[e.id] == null || Number.isNaN(values[e.id])).length;
+  if (missing) return toast(`Fill in every gold tag first (${missing} to go).`);
+  left--;
+  const row = [];
+  for (const e of hidden) { results[e.id] = values[e.id] === e.amount ? 'ok' : 'bad'; row.push(results[e.id]); }
+  history.push(row);
+  const good = row.filter(c => c === 'ok').length;
+  if (good === row.length) return finish(true);
+  if (left === 0) return finish(false);
+  toast(`${good} of ${row.length} right. Fix the red ones.`);
+  render();
+};
+
+function finish(win){
+  over = true;
+  if (!win) { for (const e of hidden) { values[e.id] = e.amount; results[e.id] = results[e.id] === 'ok' ? 'ok' : 'bad'; } }
+  toast(win ? `Trail rebuilt in ${history.length} check${history.length === 1 ? '' : 's'}.` : 'Out of checks. The real amounts are filled in.');
+  const text = `FOLLOW THE MONEY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CHECKS}` : `Unsolved (X/${CHECKS})`}\n` +
+    history.map(r => r.map(c => c === 'ok' ? '🟩' : '🟥').join('')).join('\n');
+  $('end').innerHTML = `<div class="closed"><div class="stamp ${win ? 'win' : 'lose'}">${win ? 'TRAIL FOUND' : 'TRAIL LOST'}</div>
+    <h3>WHERE IT WENT</h3><p>${esc(CASE.story)}</p><pre class="share">${esc(text)}</pre>
+    <div class="bar"><button class="btn" id="copy">Copy result</button></div></div>`;
+  $('copy').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text above.'));
+  document.querySelectorAll('[data-in]').forEach(i => i.value = values[i.dataset.in].toLocaleString('en-GB'));
+  if (win) setTimeout(() => CasebookModal.open({ stamp:'TRAIL FOUND', heading:'WHERE IT WENT', html:`<p>${esc(CASE.story)}</p>`, share:text }), 700);
+  render();
+}
+
+function toast(m){ $('toast').textContent = m; }
+setup();
+</script>
+<script src="../shared/menu.js?v=7" data-root=".." data-game="money"></script>
+<template data-howto data-title="Follow the Money">
+  <p>Stolen money has been moved through companies to hide where it went. Rebuild the trail by filling in every missing amount.</p>
+  <ul>
+    <li><b>Type amounts</b> into the gold tags on the arrows. "32k" and "32,000" both work.</li>
+    <li><b>Each box</b> shows a running total as you type. Companies show money in → money out, with ✓ when they balance and ✗ when they don't.</li>
+    <li><b>What we know</b> (in the side panel) says how each company behaves. Some take a cut or split the money in a fixed way, and a <b>bank statement</b> can tell you what someone ended up with.</li>
+    <li><b>Each check</b> marks every amount green or red. You have three checks. There's a calculator in the side panel too.</li>
+  </ul>
+  <h4>TIP</h4>
+  <p>You can work backwards. A known final amount, or one company's share, can tell you what must have flowed in.</p>
+</template>
+<script src="../shared/help.js?v=7" data-game="money"></script>
+</body>
+</html>

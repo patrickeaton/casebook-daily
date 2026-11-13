@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cooked Books · Casebook</title>
+<meta name="theme-color" content="#1d3a2e">
+<link rel="icon" href="../shared/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="../shared/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../shared/icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casebook">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="../shared/casebook.js?v=7"></script>
+<script src="../shared/modal.js?v=7"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sp-bar-bg:#183126; --sp-bg:#0f1d17;
+    --bg:#13241d; --bg2:#1d3a2e; --paper:#f7f5ec; --rule:#d9e6dc; --ink:#1e2622; --muted:#6c7a70; --light:#e6ece6;
+    --red:#b3261e; --green:#2e7d4f; --gold:#c9a227; --blue:#2e5fa3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 50% 0,var(--bg2),var(--bg) 65%) fixed;color:var(--light);
+    font-family:"Libre Baskerville",Georgia,serif;min-height:100vh}
+  .wrap{max-width:720px;margin:0 auto;padding:22px 16px 48px}
+  header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h1{font:700 22px "Courier Prime",monospace;letter-spacing:.3em;margin:0}
+  h1 span{color:#e0574f}
+  .case{font:13px "Courier Prime",monospace;color:#a9b8ad;letter-spacing:.08em}
+  .brief{color:#cfd8d0;font-size:14px;line-height:1.7;margin:14px 0 12px}
+
+  .clues{display:grid;gap:8px}
+  .clue{background:#fdfcf6;color:var(--ink);border-radius:3px;overflow:hidden;display:flex;font-size:13.5px;line-height:21px;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+  .clue:before{content:attr(data-n);flex:none;width:34px;background:var(--green);color:#fff;font:700 14px "Courier Prime",monospace;display:flex;align-items:center;justify-content:center}
+  .clue span{padding:10px 14px}
+
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font:12px "Courier Prime",monospace;color:#c3cfc6;margin:4px 0 12px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:22px;height:16px;border-radius:3px;display:inline-block;position:relative;background:var(--paper)}
+  .legend i.clear{background:repeating-linear-gradient(135deg,#eceee6 0 4px,#dde3da 4px 8px)}
+  .legend i.star{box-shadow:inset 0 0 0 2px var(--red)}
+  .legend i.over{background:#f7dcd8}
+
+  /* the ledger */
+  .ledger{background:var(--paper);color:var(--ink);border-radius:3px;box-shadow:0 14px 40px rgba(0,0,0,.5);padding:14px 12px 10px;position:relative;overflow:hidden}
+  .ledger h3{margin:0 0 8px;font:700 12px "Courier Prime",monospace;letter-spacing:.2em;color:var(--muted);border-bottom:1px solid var(--rule);padding-bottom:8px}
+  table{width:100%;border-collapse:collapse;font:14px "Courier Prime",monospace;font-variant-numeric:tabular-nums;table-layout:fixed}
+  col.lab{width:12%}col.gapc{width:16%}
+  th,td{padding:0;text-align:right;border-bottom:1px solid var(--rule)}
+  th{font-weight:700;font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding:0}
+  th:first-child,td:first-child{text-align:left}
+  .line{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;padding:9px 4px;border-radius:3px;font:inherit;color:inherit;text-decoration:underline dotted 1px;text-underline-offset:3px}
+  th .line{text-align:right;padding:8px 6px}
+  td .line{font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--muted)}
+  .line:hover{background:rgba(30,38,34,.07)}
+  .line:focus-visible,.cell:focus-visible{outline:2px solid var(--blue)}
+  .over .line,.over .cell{cursor:default}
+  /* the gap column / row: how far each line is from the bank */
+  td.gap,th.gap{border-left:2px solid #c9d8cc;text-align:center;font-weight:700;font-size:12px;padding:4px 2px;line-height:1.25;color:var(--ink)}
+  td.gap .d{display:block;font-size:10.5px;font-weight:700;white-space:nowrap}
+  th.gap{font-size:10px;letter-spacing:.12em}
+  .gap.ok{background:#eaf3ec}.gap.ok .d{color:var(--green)}
+  .gap.bad{background:#f7dcd8}.gap.bad .d{color:var(--red)}
+  .gap.done{background:#eaf3ec}.gap.done .d{color:var(--green)}
+  tr.gaprow td{border-bottom:0;border-top:2px solid #c9d8cc;padding:8px 2px;text-align:center}
+  tr.gaprow td:first-child{text-align:left;font-size:10px;letter-spacing:.12em;color:var(--muted);background:none;padding-left:4px}
+  .cell{all:unset;box-sizing:border-box;display:block;width:100%;text-align:right;padding:10px 6px;cursor:pointer;border-radius:3px;position:relative;font:inherit;color:var(--ink);transition:background .12s}
+  .cell:hover{background:rgba(30,38,34,.07)}
+  .cell .mk{position:absolute;left:3px;top:1px;font-size:10px;line-height:1;font-weight:700}
+  .cell.clear,.cell.genuine{background:repeating-linear-gradient(135deg,#eceee6 0 4px,#dde3da 4px 8px)}
+  .cell.clear .mk{color:#6a7a6f}
+  .cell.star{box-shadow:inset 0 0 0 2px var(--red);background:#fff4f2}
+  .cell.star .mk{color:var(--red);font-size:11px}
+  .cell.genuine .mk{color:var(--red)}
+  .cell.cooked,.cell.missed{background:#f7dcd8;cursor:default}
+  .cell.cooked s,.cell.missed s{text-decoration-color:var(--red);text-decoration-thickness:2px}
+  .cell.missed{box-shadow:inset 0 0 0 2px var(--red);outline:2px dashed var(--red);outline-offset:-5px}
+  .cell .was{position:absolute;right:3px;top:-7px;font:700 16px Caveat,cursive;color:var(--red);transform:rotate(-5deg);white-space:nowrap}
+  .cell.genuine,.cell.cooked{cursor:default}
+  .stamp{position:absolute;right:10px;top:6px;background:var(--paper);font:700 15px "Courier Prime",monospace;letter-spacing:.12em;padding:3px 10px;border:3px solid;border-radius:5px;transform:rotate(-6deg);opacity:.9;pointer-events:none}
+  .stamp.win{color:var(--green)}.stamp.lose{color:var(--red)}
+
+  .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 6px}
+  .btn{font:700 14px "Courier Prime",monospace;background:var(--light);color:var(--ink);border:0;border-radius:3px;padding:11px 16px;cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--light);border:1px solid #4d6656}
+  .left{font:14px "Courier Prime",monospace;color:#c3cfc6}
+  .toast{min-height:22px;font:14px "Courier Prime",monospace;color:#d8e2da;margin:6px 0 4px}
+  .history{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+  .row{display:flex;gap:5px;align-items:center;font:12px "Courier Prime",monospace;color:#8fa496}
+  .row i{width:20px;height:20px;border-radius:3px;display:inline-block}
+  .row i.ok{background:var(--green)}.row i.bad{background:var(--red)}
+  .closed{margin-top:16px;background:#fdfcf6;color:var(--ink);border-radius:3px;padding:16px 18px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .closed h3{margin:0 0 8px;font:700 14px "Courier Prime",monospace;letter-spacing:.18em}
+  .closed p{margin:0;line-height:1.7;font-size:15px}
+  pre.share{background:#0f1c16;color:var(--light);border-radius:4px;padding:12px;font:14px "Courier Prime",monospace;white-space:pre-wrap;margin:12px 0 0}
+  .help{font-size:13px;color:#a9b8ad;line-height:1.7;margin-top:28px;border-top:1px solid #2f4b3d;padding-top:14px}
+  .help b{color:var(--light)}
+  @media (max-width:520px){
+    table{font-size:12.5px}.cell{padding:10px 2px}.ledger{padding:12px 6px 8px}
+    th .line{padding:8px 2px;font-size:9.5px;letter-spacing:0}td .line{font-size:11px;letter-spacing:0;padding:9px 2px}
+    td.gap{font-size:10.5px}td.gap .d{font-size:9.5px}.cell .was{font-size:14px}
+  }
+  /* the main buttons stay on screen: a full-width band stuck to the bottom of the viewport */
+  .actions{position:sticky;bottom:0;z-index:25;padding:12px 0 calc(12px + env(safe-area-inset-bottom));background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+  .actions .toast{flex-basis:100%;margin:2px 0 0;min-height:0}
+  .actions .toast:empty{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>COOKED BOOK<span>S</span></h1><div class="case" id="case"></div></header>
+  <p class="brief" id="brief"></p>
+
+  <div data-side-buttons></div>
+  <section data-side="clues" data-side-label="What we know" data-side-note="Facts the auditors are sure of."><div class="clues" id="clues"></div></section>
+
+  <div class="legend">
+    <span><i class="over"></i>total doesn't match the bank</span>
+    <span><i class="clear"></i>you've cleared it</span>
+    <span><i class="star"></i>you suspect it</span>
+  </div>
+  <div class="ledger" id="ledgerBox">
+    <h3 id="ledgerTitle"></h3>
+    <table id="ledger"></table>
+  </div>
+
+  <div class="bar actions">
+    <button class="btn" id="file"></button>
+    <span class="left" id="left"></span>
+    <div class="toast" id="toast"></div>
+  </div>
+  <div class="history" id="history"></div>
+  <div id="end"></div>
+
+</div>
+
+<section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
+<script src="../shared/calc.js?v=7"></script>
+<script src="../shared/side.js?v=7"></script>
+<script>
+// Every cooked entry pushes one month and one category over the bank's total, and the clues pick out which crossings are real.
+// Verified unique with tools/verify-cooked.py: 6 answers fit the gaps, each clue alone leaves 2, together they leave 1.
+const CASE = {
+  no: 1,
+  title: 'The Marlow Bakery',
+  brief: "Marlow's Bakery suspects its bookkeeper, Simon Crale, has been padding the expenses. He inflated four entries in the ledger and pocketed the difference. The TOTAL figures show where the ledger and the bank disagree. Work out which entries he cooked.",
+  ledgerTitle: 'MARLOW BAKERY · EXPENSES LEDGER (£)',
+  rows: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+  cols: ['Rent', 'Wages', 'Flour', 'Dairy', 'Fuel'],
+  truth: [[800, 1240, 420, 180, 160], [800, 1180, 385, 180, 165], [800, 1310, 450, 180, 175], [800, 1260, 410, 180, 150], [800, 1290, 430, 180, 140]],
+  cooked: { '1,2': 505, '2,3': 300, '3,1': 1560, '4,4': 260 },
+  clues: [
+    'Exactly four entries were changed, and every change made an expense bigger.',
+    'Rent is fixed by the lease: £800 every month.',
+    'The dairy delivers the same order every month, so the dairy bill never changes.',
+    'The van was off the road for most of May, so May had the lowest fuel bill of the five months.',
+  ],
+  story: "Crale padded April's wages by £300, then added £120 each to February's flour, March's dairy and May's fuel: £660 in all, paid to himself as \"petty cash\". The dairy bill gave March away, since it never changes, and May's fuel bill was far too high for a van that never left the garage.",
+};
+
+const REPORTS = 3;
+let shown, marks, left, history, over;
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-GB');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N = Object.keys(CASE.cooked).length;
+const key = (r, c) => `${r},${c}`;
+const locked = k => marks[k] === 'cooked' || marks[k] === 'genuine' || marks[k] === 'missed';
+const delta = k => { const [r, c] = k.split(',').map(Number); return shown[r][c] - CASE.truth[r][c]; };
+
+function setup(){
+  shown = CASE.truth.map(r => r.slice());
+  for (const [k, v] of Object.entries(CASE.cooked)) { const [r, c] = k.split(',').map(Number); shown[r][c] = v; }
+  marks = {}; left = REPORTS; history = []; over = false;
+  $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
+  $('brief').textContent = CASE.brief;
+  $('ledgerTitle').textContent = CASE.ledgerTitle;
+  $('clues').innerHTML = CASE.clues.map((c, i) => `<div class="clue" data-n="${i + 1}"><span>${esc(c)}</span></div>`).join('');
+  $('end').innerHTML = ''; toast('');
+  render();
+}
+
+// A line's ledger total, its difference from the bank, and how much of that is still unexplained
+// by entries already confirmed as cooked.
+function gapOf(cells){
+  const total = cells.reduce((a, [r, c]) => a + shown[r][c], 0);
+  const gap = cells.reduce((a, [r, c]) => a + shown[r][c] - CASE.truth[r][c], 0);
+  const explained = cells.reduce((a, [r, c]) => a + (marks[key(r, c)] === 'cooked' || marks[key(r, c)] === 'missed' ? delta(key(r, c)) : 0), 0);
+  return { total, gap, rest: gap - explained };
+}
+// Total, with the difference from the bank in brackets underneath.
+const gapCell = g => {
+  const bank = `bank says £${fmt(g.total - g.gap)}`;
+  // data-num lets the calculator pick up the total (or, tapping the brackets, the difference)
+  if (!g.gap) return `<td class="gap ok" title="Matches the bank" data-num="${g.total}">${fmt(g.total)}<span class="d">(✓)</span></td>`;
+  if (!g.rest) return `<td class="gap done" title="${bank}; explained by the cooked entries you found" data-num="${g.total}">${fmt(g.total)}<span class="d" data-num="${g.gap}">(+${fmt(g.gap)}✓)</span></td>`;
+  return `<td class="gap bad" title="${bank}" data-num="${g.total}">${fmt(g.total)}<span class="d" data-num="${g.rest}">(+${fmt(g.rest)})</span></td>`;
+};
+
+function render(){
+  let h = `<colgroup><col class="lab">${CASE.cols.map(() => '<col>').join('')}<col class="gapc"></colgroup>`;
+  h += `<tr><th></th>${CASE.cols.map((c, ci) => `<th><button class="line" data-line="c${ci}" aria-label="Clear every blank ${esc(c)} entry">${esc(c)}</button></th>`).join('')}<th class="gap">TOTAL</th></tr>`;
+  CASE.rows.forEach((m, r) => {
+    h += `<tr><td><button class="line" data-line="r${r}" aria-label="Clear every blank ${esc(m)} entry">${esc(m)}</button></td>`;
+    CASE.cols.forEach((cn, c) => {
+      const k = key(r, c), mk = marks[k] || '';
+      let inner = fmt(shown[r][c]), badge = '';
+      if (mk === 'cooked' || mk === 'missed') inner = `<s>${fmt(shown[r][c])}</s><span class="was">${fmt(CASE.truth[r][c])}</span>`;
+      if (mk === 'clear') badge = '✓'; else if (mk === 'star') badge = '★'; else if (mk === 'genuine') badge = '✗';
+      const label = { clear:'cleared', star:'suspected', genuine:'confirmed genuine', cooked:'confirmed cooked', missed:'cooked (missed)' }[mk] || 'unmarked';
+      h += `<td><button class="cell ${mk}" data-cell="${k}" data-num="${shown[r][c]}" aria-label="${esc(m)} ${esc(cn)}: £${fmt(shown[r][c])}, ${label}">${badge ? `<span class="mk">${badge}</span>` : ''}${inner}</button></td>`;
+    });
+    h += gapCell(gapOf(CASE.cols.map((_, c) => [r, c]))) + '</tr>';
+  });
+  const all = CASE.rows.flatMap((_, r) => CASE.cols.map((_, c) => [r, c]));
+  h += `<tr class="gaprow"><td>TOTAL</td>${CASE.cols.map((_, c) => gapCell(gapOf(CASE.rows.map((_, r) => [r, c])))).join('')}${gapCell(gapOf(all))}</tr>`;
+  $('ledger').innerHTML = h;
+  $('ledgerBox').classList.toggle('over', over);
+  $('ledgerBox').querySelector('.stamp')?.remove();
+  if (over) $('ledgerBox').insertAdjacentHTML('beforeend', isWon() ? '<div class="stamp win">BOOKS BALANCED</div>' : '<div class="stamp lose">HE GOT AWAY</div>');
+
+  const stars = Object.values(marks).filter(m => m === 'star').length, found = Object.values(marks).filter(m => m === 'cooked').length;
+  const need = N - found;
+  $('file').textContent = `File report (${stars}/${need} starred)`;
+  $('file').disabled = over || stars !== need || left < 1;
+  $('left').textContent = `${left} report${left === 1 ? '' : 's'} left`;
+  $('history').innerHTML = history.map((row, i) => `<div class="row">${row.map(c => `<i class="${c}"></i>`).join('')}&nbsp; report ${i + 1}</div>`).join('');
+}
+const isWon = () => Object.keys(CASE.cooked).every(k => marks[k] === 'cooked');
+
+$('ledger').addEventListener('click', e => {
+  if (over) return;
+  const cell = e.target.closest('[data-cell]');
+  if (cell) {
+    const k = cell.dataset.cell; if (locked(k)) return;
+    marks[k] = { '':'clear', clear:'star', star:'' }[marks[k] || ''];
+    if (!marks[k]) delete marks[k];
+    render(); return;
+  }
+  const line = e.target.closest('[data-line]');
+  if (line) {
+    const i = +line.dataset.line.slice(1), isRow = line.dataset.line[0] === 'r';
+    const keys = (isRow ? CASE.cols.map((_, c) => key(i, c)) : CASE.rows.map((_, r) => key(r, i))).filter(k => !locked(k) && marks[k] !== 'star');
+    const allClear = keys.length && keys.every(k => marks[k] === 'clear');
+    keys.forEach(k => { if (allClear) delete marks[k]; else marks[k] = 'clear'; });
+    render();
+  }
+});
+
+$('file').onclick = () => {
+  const stars = Object.keys(marks).filter(k => marks[k] === 'star');
+  if (over || left < 1 || stars.length !== N - Object.values(marks).filter(m => m === 'cooked').length) return;
+  left--;
+  const row = stars.map(k => { const hit = CASE.cooked[k] != null; marks[k] = hit ? 'cooked' : 'genuine'; return hit ? 'ok' : 'bad'; });
+  history.push(row);
+  const hits = row.filter(x => x === 'ok').length;
+  if (isWon()) return finish(true);
+  if (left === 0) return finish(false);
+  toast(hits === row.length ? 'All confirmed.' : `${hits} of ${row.length} confirmed cooked. The rest are genuine: ✗.`);
+  render();
+};
+
+function finish(win){
+  over = true;
+  if (!win) for (const k of Object.keys(CASE.cooked)) if (marks[k] !== 'cooked') marks[k] = 'missed';
+  const skimmed = Object.keys(CASE.cooked).reduce((a, k) => a + delta(k), 0);
+  toast(win ? `All four found in ${history.length} report${history.length === 1 ? '' : 's'}: £${fmt(skimmed)} skimmed.` : 'Out of reports. The cooked entries are marked.');
+  const text = `COOKED BOOKS #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${REPORTS}` : `Unsolved (X/${REPORTS})`}\n` + history.map(r => r.map(x => x === 'ok' ? '🟩' : '🟥').join('')).join('\n');
+  $('end').innerHTML = `<div class="closed"><h3>WHAT HAPPENED</h3><p>${esc(CASE.story)}</p><pre class="share">${esc(text)}</pre>
+    <div class="bar"><button class="btn" id="copy">Copy result</button></div></div>`;
+  $('copy').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text above.'));
+  if (win) setTimeout(() => CasebookModal.open({ stamp:'BOOKS BALANCED', heading:'WHAT HAPPENED', html:`<p>${esc(CASE.story)}</p>`, share:text }), 700);
+  render();
+}
+
+function toast(m){ $('toast').textContent = m; }
+setup();
+</script>
+<script src="../shared/menu.js?v=7" data-root=".." data-game="cooked"></script>
+<template data-howto data-title="Cooked Books">
+  <p>A bookkeeper inflated some entries in the ledger and pocketed the difference. The bank's totals are genuine. Find the cooked entries.</p>
+  <ul>
+    <li><b>The TOTAL column and row</b> add up each month and category. In brackets underneath is the difference from the bank's genuine figure: (✓) means it matches, a red (+120) means it's £120 too high.</li>
+    <li><b>Tap an entry</b> to cycle it through <b>cleared</b> ✓, <b>suspected</b> ★ and blank. Tap a month or category name to clear every blank entry in it.</li>
+    <li>When you've starred as many suspects as there are cooked entries, <b>file a report</b>. Each star is confirmed or ruled out. You have three reports.</li>
+    <li><b>What we know</b> and a <b>calculator</b> are in the side panel.</li>
+  </ul>
+  <h4>TIP</h4>
+  <p>A cooked entry pushes both its month and its category over. When the differences allow more than one answer, the clues decide which crossings are real.</p>
+</template>
+<script src="../shared/help.js?v=7" data-game="cooked"></script>
+</body>
+</html>

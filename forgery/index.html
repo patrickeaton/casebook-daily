@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Forgery · Casebook</title>
+<meta name="theme-color" content="#352e28">
+<link rel="icon" href="../shared/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="../shared/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../shared/icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casebook">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="../shared/casebook.js?v=7"></script>
+<script src="../shared/modal.js?v=7"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#26211d; --bg2:#352e28; --paper:#f4ecda; --paper-edge:#e6d9bd;
+    --ink:#2a2420; --muted:#8a7d6c; --light:#efe6d4;
+    --red:#b3261e; --amber:rgba(212,149,26,.32); --cold:rgba(42,36,32,.11); --line:#dccfb4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 50% 0,var(--bg2),var(--bg) 70%) fixed;color:var(--light);
+    font-family:"Libre Baskerville",Georgia,serif;min-height:100vh}
+  header{max-width:720px;margin:0 auto;padding:22px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  h1{font-family:"Courier Prime",monospace;letter-spacing:.35em;font-size:22px;margin:0}
+  h1 span{color:var(--red)}
+  .issue{font:13px "Courier Prime",monospace;color:#b9ad9a;letter-spacing:.08em}
+  /* start card: pick a difficulty to open the case */
+  .startwrap{max-width:720px;margin:0 auto;padding:6px 16px 40px}
+  .start{background:var(--paper);color:var(--ink);border-radius:3px;box-shadow:0 1px 0 var(--paper-edge),0 14px 40px rgba(0,0,0,.5);padding:26px 26px 22px}
+  .start .k{font:700 12px "Courier Prime",monospace;letter-spacing:.2em;color:var(--muted)}
+  .start h2{font:700 24px "Libre Baskerville",Georgia,serif;margin:8px 0 10px;line-height:1.3}
+  .start p{font-size:15px;line-height:1.7;margin:0 0 20px;color:#3b342e}
+  .diffs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+  .diffs button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border:1.5px solid #cdbf9f;border-radius:6px;padding:14px 14px 12px;
+    display:flex;flex-direction:column;gap:6px;box-shadow:0 3px 0 #cdbf9f;transition:transform .08s,box-shadow .08s,border-color .12s}
+  .diffs button:hover{border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+  .diffs button:active{transform:translateY(3px);box-shadow:0 0 0 #cdbf9f}
+  .diffs button:focus-visible{outline:3px solid #2e5fa3;outline-offset:2px}
+  .diffs b{font:700 15px "Courier Prime",monospace;letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+  .diffs b i{font-style:normal;letter-spacing:2px;color:var(--red);font-size:12px}
+  .diffs span{font-size:13px;line-height:1.5;color:#5b5147}
+  .previews{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;font:13px "Courier Prime",monospace;color:var(--muted)}
+  .previews summary{cursor:pointer;letter-spacing:.06em}
+  .previews ol{margin:10px 0 0;padding-left:22px;line-height:1.9}
+  .previews button{all:unset;cursor:pointer;color:#2e5fa3;text-decoration:underline}
+  .previews .cur{color:var(--ink);font-weight:700;text-decoration:none;cursor:default}
+  @media (max-width:560px){.diffs{grid-template-columns:1fr}.start{padding:20px 18px}.start h2{font-size:20px}}
+  .rules{max-width:720px;margin:0 auto;padding:0 16px 14px;color:#bfb3a0;font-size:13px;line-height:1.65}
+  .chip{padding:1px 5px;border-radius:3px;color:var(--ink)}
+  .chip.a{background:#e3b65c}.chip.g{background:#9b9083}
+  .bar{max-width:720px;margin:0 auto 12px;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font:14px "Courier Prime",monospace}
+  .bar b{color:#fff}
+  .lives span{display:inline-block;width:13px;height:13px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--light);margin-left:6px}
+  .lives span.gone{background:transparent;border:1px solid #6a5f55}
+  .wrap{padding:0 16px}
+  .doc{background:var(--paper);color:var(--ink);max-width:688px;margin:0 auto;padding:30px 36px 34px;border-radius:2px;
+    box-shadow:0 1px 0 var(--paper-edge),0 14px 40px rgba(0,0,0,.5);line-height:2.35;font-size:16.5px;position:relative;overflow:hidden}
+  .doc h2{font:700 13px "Courier Prime",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+    border-bottom:1px solid var(--line);padding-bottom:10px;margin:0 0 6px;line-height:1.4}
+  .doc p{margin:0 0 10px;border-radius:4px;transition:outline-color .15s,background .15s;outline:2px dashed transparent;outline-offset:4px}
+  .sent{border-radius:3px;padding:3px 0;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background .25s,color .25s}
+  .sent.warm{background:var(--amber)}
+  .sent.cold{background:var(--cold)}
+  .w{cursor:pointer;border-radius:3px;padding:2px 1px;white-space:nowrap}
+  .w:hover{background:rgba(42,36,32,.1)}
+  .sent.cold .w,.over .w,.w.miss,.w.found,.w.missed{cursor:default}
+  .sent.cold .w:hover,.over .w:hover,.w.miss:hover,.w.found:hover,.w.missed:hover{background:none}
+  .w.miss{font-weight:700;color:var(--ink);text-decoration:underline dotted 1.5px;text-underline-offset:4px}
+  .w.found,.w.missed{position:relative}
+  .w.found s,.w.missed s{color:#7d716a;text-decoration-color:var(--red);text-decoration-thickness:2px}
+  .w.missed{outline:2px dashed var(--red);outline-offset:1px}
+  .fix{position:absolute;left:50%;bottom:1.15em;transform:translateX(-50%) rotate(-4deg);font:700 23px Caveat,cursive;color:var(--red);white-space:nowrap;line-height:1;pointer-events:none}
+  .fresh .fix{animation:ink .35s ease-out}
+  @keyframes ink{from{opacity:0;transform:translateX(-50%) rotate(-4deg) scale(1.4)}}
+  .picking p{cursor:zoom-in}
+  .picking p:hover{outline-color:#4d7fc4;background:rgba(77,127,196,.07)}
+  .picking .w{cursor:zoom-in}
+  .stamp{position:absolute;right:30px;top:54px;font:700 22px "Courier Prime",monospace;letter-spacing:.12em;padding:6px 14px;border:4px solid;border-radius:6px;
+    transform:rotate(-12deg);opacity:.82;pointer-events:none;animation:stamp .3s ease-out}
+  .stamp.win{color:#2f6b3a}.stamp.lose{color:var(--red)}
+  @keyframes stamp{from{transform:rotate(-12deg) scale(2.2);opacity:0}}
+  .tools{max-width:688px;margin:14px auto 0;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{font:700 13px "Courier Prime",monospace;background:var(--light);color:var(--ink);border:0;border-radius:3px;padding:9px 14px;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--light);border:1px solid #5a5048}
+  .btn.active{background:#4d7fc4;color:#fff;border-color:#4d7fc4}
+  .btn:disabled{opacity:.4;cursor:default}
+  .toast{max-width:688px;margin:12px auto 0;min-height:22px;font:14px "Courier Prime",monospace;color:#d8ccb8}
+  .notes{max-width:688px;margin:8px auto 40px;background:rgba(255,255,255,.04);border:1px solid #4a423b;border-radius:4px;padding:14px 18px}
+  .notes h3{margin:0 0 8px;font:700 12px "Courier Prime",monospace;letter-spacing:.2em;color:#a99c88}
+  .notes ol{margin:0;padding-left:20px;font-size:14px;line-height:1.6}
+  .notes li{margin-bottom:8px}
+  .notes b{font-family:"Courier Prime",monospace}
+  .notes .x{color:#e0776f}
+  .notes .empty{font-size:13px;color:#8f8473;font-style:italic}
+  pre.share{background:#1b1714;border-radius:4px;padding:12px;font:14px "Courier Prime",monospace;white-space:pre-wrap;margin:10px 0 0}
+  @media (max-width:560px){.doc{padding:22px 18px 26px;font-size:15.5px;line-height:2.4}.stamp{font-size:18px;right:12px;top:48px}}
+  /* the main buttons stay on screen: a full-width band stuck to the bottom of the viewport */
+  .actions{position:sticky;bottom:0;z-index:25;padding:12px 0 calc(12px + env(safe-area-inset-bottom));background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+  .actions .toast{flex-basis:100%;margin:2px 0 0;min-height:0}
+  .actions .toast:empty{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>FORGER<span>Y</span></h1>
+  <div class="issue" id="issue"></div>
+</header>
+<div class="startwrap" id="start"></div>
+<div id="game" hidden>
+<div class="rules">The forger changed <b id="n">4</b> words. Each fake is contradicted by the text itself. Tap a word to accuse it. A wrong guess costs a life and shades its whole sentence: <span class="chip a">amber</span> means a fake hides in it, <span class="chip g">grey</span> means it's clean.</div>
+<div class="bar"><div id="count"></div><div id="score"></div><div class="lives" id="lives"></div></div>
+<div class="wrap">
+  <article class="doc" id="doc"></article>
+  <div class="tools actions">
+    <button class="btn ghost" id="glass"></button>
+    <button class="btn" id="share" hidden>Copy result</button>
+    <div class="toast" id="toast"></div>
+  </div>
+  <section class="notes"><h3>CASE NOTES</h3><ol id="notes"></ol><div id="sharebox"></div></section>
+</div>
+</div>
+
+<script>
+// Puzzles live in puzzles/bank.json (generated + reviewed with tools/). Markup: [[shown|original|why]].
+// /forgery/?file=../puzzles/pending/x.json plays a single unreviewed puzzle for testing.
+let PUZZLES = [];
+// Which puzzles are out comes from the shared daily rotation (shared/casebook.js).
+// While building, unreleased puzzles are listed as previews so the whole bank can be play-tested.
+const SHOW_PREVIEWS = true;
+
+// Difficulty = how much of the page starts already examined.
+// warm: share of fake-holding sentences pre-shaded amber; cold: share of clean sentences pre-shaded grey.
+const MODES = {
+  easy:   { label:'Easy',   warm:0.5, cold:0.4, pips:'●○○', desc:'A head start: half the sentences hiding a fake come marked amber, and some clean ones are already cleared.' },
+  normal: { label:'Normal', warm:0,   cold:0.2, pips:'●●○', desc:'A few clean sentences are cleared for you. The fakes are all yours to find.' },
+  hard:   { label:'Hard',   warm:0,   cold:0,   pips:'●●●', desc:'No help at all. Just you and the document.' },
+};
+const LIVES = 3, GLASSES = 1;
+const PTS = { fake:25, slip:10, glass:15 };
+
+let P, tokens, probed, lives, found, total, slips, glassUsed, log, picking, over, mode = 'normal';
+const $ = id => document.getElementById(id);
+
+function tokenize(P){
+  const toks = []; let s = 0;
+  const re = /\[\[([^|\]]+)\|([^|\]]+)\|([^\]]+)\]\]/g;
+  P.paras.forEach((para, p) => {
+    const plain = txt => txt.split(/([A-Za-z0-9'’-]+)/).forEach((seg, k) => {
+      if (!seg) return;
+      if (k % 2) { toks.push({ w:true, text:seg, s, p }); return; }
+      // Sentence ends after . ! ? or ; (the trailing space belongs to no sentence, so shading doesn't bleed).
+      const m = seg.match(/^([\s\S]*[.!?;]["”’)]*)([\s\S]*)$/);
+      if (m) { toks.push({ text:m[1], s, p }); s++; if (m[2]) toks.push({ text:m[2], s:null, p }); }
+      else toks.push({ text:seg, s, p });
+    });
+    let last = 0, m; re.lastIndex = 0;
+    while ((m = re.exec(para))) {
+      plain(para.slice(last, m.index));
+      toks.push({ w:true, text:m[1], orig:m[2], why:m[3], forged:true, s, p });
+      last = re.lastIndex;
+    }
+    plain(para.slice(last)); s++;
+  });
+  return toks;
+}
+
+const hasUnfound = s => tokens.some(t => t.forged && !t.state && t.s === s);
+const sentStatus = s => probed.has(s) ? (hasUnfound(s) ? 'warm' : 'cold') : '';
+// Counts down from 100 while playing; unfound fakes only cost you once the game ends.
+const score = () => Math.max(0, (over ? found : total) * PTS.fake - slips * PTS.slip - glassUsed * PTS.glass);
+
+function load(idx){
+  P = PUZZLES[idx]; tokens = tokenize(P); probed = new Set();
+  total = tokens.filter(t => t.forged).length;
+  lives = LIVES; found = 0; slips = 0; glassUsed = 0; log = []; picking = false; over = false;
+  preShade();
+  $('n').textContent = total; $('sharebox').innerHTML = ''; $('share').hidden = true;
+  toast(MODES[mode].warm || MODES[mode].cold ? 'Some of the page has already been examined for you.' : '');
+  render();
+}
+
+// Deterministic per puzzle + mode, so everyone on the same day/mode gets the same head start.
+function preShade(){
+  const cfg = MODES[mode];
+  const rng = mulberry32(P.no * 1009 + Object.keys(MODES).indexOf(mode));
+  const wordSents = [...new Set(tokens.filter(t => t.w).map(t => t.s))];
+  const fakeSents = [...new Set(tokens.filter(t => t.forged).map(t => t.s))];
+  const clean = wordSents.filter(s => !fakeSents.includes(s));
+  shuffle(fakeSents, rng).slice(0, Math.ceil(fakeSents.length * cfg.warm)).forEach(s => probed.add(s));
+  shuffle(clean, rng).slice(0, Math.round(clean.length * cfg.cold)).forEach(s => probed.add(s));
+}
+
+function render(){
+  const wordHtml = (t, i) => {
+    if (!t.w) return esc(t.text);
+    const cls = ['w'];
+    if (t.state) cls.push(t.state);
+    if (t.fresh) { cls.push('fresh'); t.fresh = false; }
+    const inner = (t.state === 'found' || t.state === 'missed')
+      ? `<s>${esc(t.text)}</s><span class="fix">${esc(t.orig)}</span>` : esc(t.text);
+    return `<span class="${cls.join(' ')}" data-i="${i}">${inner}</span>`;
+  };
+  // paragraph -> runs of consecutive tokens sharing a sentence id
+  const paras = [];
+  tokens.forEach((t, i) => {
+    const runs = (paras[t.p] ||= []);
+    const run = runs[runs.length - 1];
+    if (run && run.s === t.s) run.html.push(wordHtml(t, i));
+    else runs.push({ s:t.s, html:[wordHtml(t, i)] });
+  });
+  const paraHtml = runs => runs.map(r => r.s == null ? r.html.join('')
+    : `<span class="sent ${sentStatus(r.s)}">${r.html.join('')}</span>`).join('');
+
+  let stamp = '';
+  if (over) stamp = found === total ? '<div class="stamp win">AUTHENTICATED</div>' : '<div class="stamp lose">FORGER ESCAPED</div>';
+  $('doc').className = 'doc' + (over ? ' over' : '') + (picking ? ' picking' : '');
+  $('doc').innerHTML = `<h2>No. ${P.no} · ${MODES[mode].label} · ${esc(P.title)}</h2>`
+    + paras.map((runs, p) => `<p data-p="${p}">${paraHtml(runs)}</p>`).join('') + stamp;
+  $('count').innerHTML = `Found <b>${found}/${total}</b>`;
+  $('score').innerHTML = `Score <b>${score()}</b>`;
+  $('lives').innerHTML = 'Lives' + Array.from({length:LIVES}, (_, i) => `<span class="${i < lives ? '' : 'gone'}"></span>`).join('');
+  const left = GLASSES - glassUsed;
+  $('glass').disabled = over || (left < 1 && !picking);
+  $('glass').classList.toggle('active', picking);
+  $('glass').textContent = picking ? '✕ Cancel magnifying glass' : `🔍 Magnifying glass ×${left}  (−${PTS.glass} pts)`;
+  const notes = tokens.filter(t => t.state === 'found' || t.state === 'missed');
+  $('notes').innerHTML = notes.length
+    ? notes.map(t => `<li${t.state === 'missed' ? ' class="x"' : ''}><b>${t.state === 'missed' ? '✗' : '✓'} ${esc(t.text)} → ${esc(t.orig)}</b><br>${esc(t.why)}</li>`).join('')
+    : '<span class="empty">Nothing yet. Every fake you catch is logged here with the evidence against it.</span>';
+}
+
+function tap(i){
+  const t = tokens[i];
+  if (over || !t || !t.w || t.state) return;
+  if (probed.has(t.s) && !hasUnfound(t.s)) return toast('That sentence is already cleared.');
+  if (t.forged) {
+    t.state = 'found'; t.fresh = true; found++; log.push('✅');
+    toast(pick(['Caught one.', "The ink doesn't match.", 'Nice eye.', "That's a fake."]));
+  } else {
+    t.state = 'miss'; probed.add(t.s); lives--; slips++;
+    const warm = hasUnfound(t.s); log.push(warm ? '🟨' : '⬛');
+    toast(warm ? "That word is genuine, but something in this sentence isn't." : 'Genuine, and so is the rest of that sentence.');
+  }
+  if (found === total) end(true);
+  else if (lives <= 0) end(false);
+  render();
+}
+
+function examine(p){
+  const sents = new Set(tokens.filter(t => t.p === p && t.w).map(t => t.s));
+  sents.forEach(s => probed.add(s));
+  const warm = [...sents].filter(hasUnfound).length;
+  picking = false; glassUsed++; log.push('🔍');
+  toast(warm ? `The glass finds ${warm} suspicious sentence${warm > 1 ? 's' : ''} in that paragraph.` : 'That paragraph is clean.');
+  render();
+}
+
+function end(win){
+  over = true; picking = false;
+  if (!win) tokens.forEach(t => { if (t.forged && !t.state) { t.state = 'missed'; t.fresh = true; } });
+  toast(win ? 'Document authenticated. The forger has been caught.' : 'Out of lives. The remaining fakes are circled.');
+  const text = `FORGERY #${P.no} · ${MODES[mode].label}\n${found}/${total} found · ${score()} pts\n${log.join('')}`;
+  $('sharebox').innerHTML = `<pre class="share">${esc(text)}</pre>`;
+  $('share').hidden = false;
+  $('share').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text below.'));
+  if (win) {
+    const caught = tokens.filter(t => t.forged).map(t => `<li><b>${esc(t.text)} → ${esc(t.orig)}</b><br>${esc(t.why)}</li>`).join('');
+    setTimeout(() => CasebookModal.open({ stamp:'AUTHENTICATED', heading:`${P.title.toUpperCase()} · ${score()} PTS`,
+      html:`<p>All four fakes caught. Here's what gave them away:</p><ol style="padding-left:20px;margin:0">${caught}</ol>`, share:text }), 700);
+  }
+}
+
+$('glass').onclick = () => {
+  if (over) return;
+  if (picking) { picking = false; toast(''); }
+  else if (glassUsed < GLASSES) { picking = true; toast('Tap a paragraph to examine every sentence in it.'); }
+  render();
+};
+$('doc').addEventListener('click', e => {
+  if (picking) { const p = e.target.closest('[data-p]'); if (p) examine(+p.dataset.p); return; }
+  const el = e.target.closest('[data-i]'); if (el) tap(+el.dataset.i);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && picking) { picking = false; toast(''); render(); } });
+
+function toast(m){ $('toast').textContent = m; }
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function esc(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function mulberry32(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function shuffle(a, rng){ a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ---- start card: shows the case and asks for a difficulty before the document appears
+let RELEASED = 1, IS_TODAY = false, FILE = null, startIdx = 0;
+const noteFor = i => FILE ? '' : i === RELEASED - 1 ? (IS_TODAY ? 'TODAY' : 'LATEST') : i >= RELEASED ? 'PREVIEW' : 'ARCHIVE';
+function showStart(idx){
+  startIdx = idx; const p = PUZZLES[idx];
+  $('game').hidden = true; $('start').hidden = false;
+  $('issue').textContent = p.no ? `ISSUE #${p.no} · ${noteFor(idx)}` : 'TEST PUZZLE';
+  const previews = !FILE && PUZZLES.length > 1 ? `<details class="previews"><summary>Preview other cases (while building)</summary><ol>${
+    PUZZLES.map((q, i) => `<li>${i === idx ? `<span class="cur">${esc(q.title)}</span>` : `<button data-case="${i}">${esc(q.title)}</button>`} <small>${noteFor(i).toLowerCase()}</small></li>`).join('')}</ol></details>` : '';
+  $('start').innerHTML = `<div class="start">
+    <div class="k">FORGERY${p.no ? ` · ISSUE #${p.no}` : ''}</div>
+    <h2>${esc(p.title)}</h2>
+    <p>A forger has changed four words in this document. Every fake is contradicted by the document itself, so read closely.</p>
+    <div class="k">CHOOSE YOUR DIFFICULTY</div>
+    <div class="diffs">${Object.entries(MODES).map(([k, m]) => `<button data-mode="${k}"><b>${m.label}<i>${m.pips}</i></b><span>${esc(m.desc)}</span></button>`).join('')}</div>
+    ${previews}</div>`;
+  window.scrollTo(0, 0);
+}
+$('start').addEventListener('click', e => {
+  const c = e.target.closest('[data-case]'); if (c) { showStart(+c.dataset.case); $('start').querySelector('details').open = true; return; }
+  const m = e.target.closest('[data-mode]'); if (!m) return;
+  mode = m.dataset.mode;
+  $('start').hidden = true; $('game').hidden = false;
+  load(startIdx);
+});
+
+(async () => {
+  const file = new URLSearchParams(location.search).get('file');
+  try {
+    if (file) {
+      const { puzzle } = await (await fetch(file)).json();
+      PUZZLES = [{ ...puzzle, no: 0, title: `[TEST] ${puzzle.title}` }];
+    } else {
+      PUZZLES = await (await fetch('../puzzles/bank.json')).json();
+    }
+  } catch (e) {
+    $('start').innerHTML = `<p class="start">Couldn't load puzzles (${esc(String(e.message))}). Serve this folder over http, e.g. <code>npm run serve</code>.</p>`;
+    return;
+  }
+  // Forgery's latest issue = how many Forgery days the rotation has had so far.
+  const CB = window.Casebook, day = CB.today();
+  const released = file ? PUZZLES.length : Math.max(1, Math.min(PUZZLES.length, CB.issuesBy('forgery', day)));
+  const isToday = !file && CB.gameOn(day).id === 'forgery';
+  const listed = file || SHOW_PREVIEWS ? PUZZLES.length : released;
+  PUZZLES = PUZZLES.slice(0, listed);
+  RELEASED = released; IS_TODAY = isToday; FILE = file;
+  showStart(released - 1);
+})();
+</script>
+<script src="../shared/menu.js?v=7" data-root=".." data-game="forgery"></script>
+<template data-howto data-title="Forgery">
+  <p>A forger has changed <b>four words</b> in today's document. Every fake is contradicted by the document itself, so you never need outside knowledge.</p>
+  <ul>
+    <li><b>Tap a word</b> to accuse it. Catch a fake and it's struck through, with the real word written above it.</li>
+    <li><b>A wrong guess</b> costs one of your 3 lives and shades its whole sentence:
+      <span class="key" style="background:#e3b65c"></span>amber means a fake is hiding in that sentence,
+      <span class="key" style="background:#cfc6b8"></span>grey means the sentence is clean.</li>
+    <li><b>The magnifying glass</b> (once per case) shades every sentence in a paragraph you choose. It costs 15 points.</li>
+    <li><b>Difficulty</b> is picked when you open the case. Easier modes start with some sentences already shaded.</li>
+  </ul>
+  <h4>TIP</h4>
+  <p>A fake is always outvoted: the true fact appears or is implied at least twice elsewhere. If two details disagree, look for the one that's on its own.</p>
+</template>
+<script src="../shared/help.js?v=7" data-game="forgery"></script>
+</body>
+</html>

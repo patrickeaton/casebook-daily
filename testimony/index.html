@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Testimony · Casebook</title>
+<meta name="theme-color" content="#26314a">
+<link rel="icon" href="../shared/icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="../shared/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../shared/icons/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Casebook">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="../shared/casebook.js?v=7"></script>
+<script src="../shared/modal.js?v=7"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1b2230; --bg2:#26314a; --card:#f6f1e4; --card-edge:#e4dcc8; --ink:#1f2328; --muted:#6f6a5f; --light:#e9e4d8;
+    --green:#2e7d4f; --yellow:#d19a12; --red:#b3261e;
+    --green-bg:rgba(46,125,79,.13); --yellow-bg:rgba(209,154,18,.16); --red-bg:rgba(179,38,30,.11);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 50% 0,var(--bg2),var(--bg) 65%) fixed;color:var(--light);
+    font-family:"Libre Baskerville",Georgia,serif;min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 16px 48px}
+  /* on wide screens, make room for the open panel by animating the body's right padding (animates smoothly, unlike margin:auto) */
+  body{transition:padding-right .25s ease-out}
+  @media (min-width:1000px){body.side-on{padding-right:400px}}
+  header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h1{font:700 22px "Courier Prime",monospace;letter-spacing:.35em;margin:0}
+  h1 span{color:#d9534f}
+  .case{font:13px "Courier Prime",monospace;color:#b7b2a6;letter-spacing:.08em}
+  .brief{color:#cfc9bb;font-size:14px;line-height:1.7;margin:14px 0 18px}
+  h2{font:700 12px "Courier Prime",monospace;letter-spacing:.22em;color:#9aa3b5;margin:22px 0 10px}
+  .evidence{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  /* red tab down the left edge, number centred in it */
+  .ev{background:#fdfbf5;color:var(--ink);border-radius:3px;font-size:13.5px;line-height:21px;overflow:hidden;
+    box-shadow:0 6px 16px rgba(0,0,0,.35);display:flex;align-items:stretch}
+  .ev:before{content:attr(data-n);flex:none;width:34px;background:#c0392b;color:#fff;
+    font:700 14px "Courier Prime",monospace;display:flex;align-items:center;justify-content:center}
+  .ev span{padding:12px 14px}
+  .st{background:var(--card);color:var(--ink);border-radius:3px;padding:14px 18px 14px 20px;margin-bottom:12px;position:relative;
+    box-shadow:0 1px 0 var(--card-edge),0 8px 22px rgba(0,0,0,.35);border-left:6px solid #cfc7b3;transition:background .25s,border-color .25s}
+  .st.green{border-left-color:var(--green);background:linear-gradient(var(--green-bg),var(--green-bg)),var(--card)}
+  .st.yellow{border-left-color:var(--yellow);background:linear-gradient(var(--yellow-bg),var(--yellow-bg)),var(--card)}
+  .st.red{border-left-color:var(--red);background:linear-gradient(var(--red-bg),var(--red-bg)),var(--card)}
+  .who{font:700 12px "Courier Prime",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+  .who .tag{font-weight:400;letter-spacing:.04em;text-transform:none}
+  .text{font-size:16px;line-height:2}
+  /* Flippable word: a raised blue "key" so it reads as tappable. Both options sit in the same grid cell
+     (the inactive one invisible), so the chip is always as wide as the longer word and text never reflows. */
+  .flip{font:inherit;color:var(--ink);background:#e6edf8;border:1.5px solid #6f8fc0;border-radius:6px;box-shadow:0 2px 0 #6f8fc0;
+    padding:0 5px 0 6px;margin:0 1px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;line-height:1.45;vertical-align:baseline;
+    transition:background .12s,transform .08s,box-shadow .08s}
+  .flip:hover{background:#d8e3f5}
+  .flip:active{transform:translateY(2px);box-shadow:0 0 0 #6f8fc0}
+  .flip .opts{display:inline-grid}
+  .flip .opts span{grid-area:1/1;text-align:center}
+  .flip .opts .off{visibility:hidden}
+  .flip .ico{font-size:10px;color:#5a79aa;line-height:1}
+  /* after a check, untouched flips take their statement's colour; anything flipped since goes back to blue */
+  .flip.c-green{background:#e2f0e7;border-color:var(--green);box-shadow:0 2px 0 var(--green)}
+  .flip.c-yellow{background:#f8eccc;border-color:#b98a0c;box-shadow:0 2px 0 #b98a0c}
+  .flip.c-red{background:#f6e0dd;border-color:var(--red);box-shadow:0 2px 0 var(--red)}
+  .flip.c-green .ico{color:var(--green)}.flip.c-yellow .ico{color:#9a740a}.flip.c-red .ico{color:var(--red)}
+  /* the whole key turns over like a card: it starts face-down and swings up showing the new word */
+  .flip.turn{animation:turn .38s cubic-bezier(.25,.8,.35,1.15);backface-visibility:hidden}
+  @keyframes turn{0%{transform:perspective(300px) rotateX(-180deg)}100%{transform:perspective(300px) rotateX(0)}}
+  .flip.right{background:#e3f1e8;border-color:var(--green);box-shadow:0 2px 0 var(--green)}
+  .flip.wrong{background:#f7e3e1;border-color:var(--red);box-shadow:0 2px 0 var(--red)}
+  .over .flip{cursor:default}.over .flip .ico{display:none}
+  .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 6px}
+  .btn{font:700 14px "Courier Prime",monospace;background:var(--light);color:var(--ink);border:0;border-radius:3px;padding:11px 18px;cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.ghost{background:transparent;color:var(--light);border:1px solid #4a5570}
+  .checks{font:14px "Courier Prime",monospace;color:#c8c2b4}
+  .toast{min-height:22px;font:14px "Courier Prime",monospace;color:#d8d2c4;margin:6px 0 4px}
+  .history{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+  .row{display:flex;gap:5px;align-items:center;font:12px "Courier Prime",monospace;color:#8f98aa}
+  .row i{width:20px;height:20px;border-radius:3px;display:inline-block}
+  .row i.green{background:var(--green)}.row i.yellow{background:var(--yellow)}.row i.red{background:var(--red)}
+  .sidebar-btns{position:sticky;top:var(--cb-head-h,0px);z-index:30;display:flex;gap:8px;padding:10px 0;margin:4px 0 6px;
+    background:var(--bg2);box-shadow:0 0 0 100vmax var(--bg2);clip-path:inset(0 -100vmax)}
+  .side-btn{font:700 13px "Courier Prime",monospace;letter-spacing:.06em;background:#2c3852;color:var(--light);border:1px solid #4a5570;
+    border-radius:20px;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .side-btn:hover{background:#34425f}
+  .side-btn b{background:#c0392b;color:#fff;border-radius:10px;padding:0 7px;font-size:11px;line-height:18px}
+  .side-btn .si{font-size:12px;opacity:.8}
+  .side-btn.on{background:var(--light);color:var(--ink)}
+  .side-btn.ping b{animation:ping .9s ease-out 2}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(46,125,79,.9)}100%{box-shadow:0 0 0 10px rgba(46,125,79,0)}}
+  .side{position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:#141a27;z-index:40;transform:translateX(102%);
+    transition:transform .25s ease-out;box-shadow:-10px 0 30px rgba(0,0,0,.45);display:flex;flex-direction:column}
+  body.side-on .side{transform:none}
+  .side-head{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 14px 10px 16px;border-bottom:1px solid #2a3348}
+  .side-tabs{display:flex;gap:4px}
+  .side-tabs button{font:700 12px "Courier Prime",monospace;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:#9aa3b5;
+    border:1px solid transparent;border-radius:4px;padding:7px 10px;cursor:pointer}
+  .side-tabs button[aria-selected="true"]{color:var(--light);border-color:#4a5570;background:#1f2738}
+  .side-x{border:0;background:none;color:var(--light);font-size:28px;line-height:1;cursor:pointer;padding:2px 8px}
+  .side-body{overflow-y:auto;padding:12px 16px calc(24px + env(safe-area-inset-bottom));flex:1}
+  .side-note{font:12px "Courier Prime",monospace;letter-spacing:.08em;color:#8f98aa;margin:2px 0 12px}
+  .side .evidence{grid-template-columns:1fr}
+  .file{display:grid;grid-template-columns:1fr;gap:10px}
+  .slot{border:1.5px dashed #46526e;border-radius:4px;padding:11px 13px;background:rgba(255,255,255,.03);min-height:92px;display:flex;flex-direction:column;gap:8px}
+  .slot .k{font:700 13px "Courier Prime",monospace;letter-spacing:.24em;color:#c9cfdc;display:flex;justify-content:space-between}
+  .slot .q{font:700 13px "Courier Prime",monospace;color:#7d879c;letter-spacing:.1em}
+  .slot .needs{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto}
+  .slot .needs span{font:11px "Courier Prime",monospace;color:#c3c9d6;border:1px solid #46526e;border-radius:10px;padding:1px 8px 1px 6px;display:inline-flex;align-items:center;gap:5px}
+  .slot .needs i{width:8px;height:8px;border-radius:50%;background:#5b6680;display:inline-block}
+  .slot .needs i.green{background:var(--green)}.slot .needs i.yellow{background:var(--yellow)}.slot .needs i.red{background:var(--red)}
+  .slot.filled{background:#fdfbf5;color:var(--ink);border:1.5px solid #fdfbf5;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+  .slot.filled .k{color:var(--green)}
+  .slot.filled p{margin:0;font-size:13.5px;line-height:1.55}
+  .slot.fresh{animation:filein .45s ease-out}
+  @keyframes filein{0%{transform:scale(.96);opacity:.3}100%{transform:none;opacity:1}}
+  .slot{min-height:0}
+  .closed{margin-top:18px;background:#fdfbf5;color:var(--ink);border-radius:3px;padding:18px 20px;box-shadow:0 8px 22px rgba(0,0,0,.35);position:relative;overflow:hidden}
+  .closed h3{margin:0 0 8px;font:700 14px "Courier Prime",monospace;letter-spacing:.18em}
+  .closed p{margin:0;line-height:1.7;font-size:15px}
+  .stamp{position:absolute;right:16px;top:12px;font:700 18px "Courier Prime",monospace;letter-spacing:.12em;padding:4px 10px;border:3px solid;border-radius:5px;transform:rotate(-8deg);opacity:.8}
+  .stamp.win{color:var(--green)}.stamp.lose{color:var(--red)}
+  pre.share{background:#121722;color:var(--light);border-radius:4px;padding:12px;font:14px "Courier Prime",monospace;white-space:pre-wrap;margin:12px 0 0}
+  .help{font-size:13px;color:#aab1c0;line-height:1.7;margin-top:28px;border-top:1px solid #33405c;padding-top:14px}
+  .help b{color:var(--light)}
+  .key{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:3px}
+  @media (max-width:560px){.text{font-size:15px}.st{padding:12px 14px 12px 16px}}
+  /* the main buttons stay on screen: a full-width band stuck to the bottom of the viewport */
+  .actions{position:sticky;bottom:0;z-index:25;padding:12px 0 calc(12px + env(safe-area-inset-bottom));background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+  .actions .toast{flex-basis:100%;margin:2px 0 0;min-height:0}
+  .actions .toast:empty{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>TESTIMON<span>Y</span></h1><div class="case" id="case"></div></header>
+  <p class="brief" id="brief"></p>
+
+  <div class="sidebar-btns">
+    <button class="side-btn" data-open="evidence"><span class="si">❶</span>Evidence <b id="evCount"></b></button>
+    <button class="side-btn" data-open="file" id="fileBtn"><span class="si">✎</span>Case file <b id="fileCount"></b></button>
+  </div>
+
+  <h2>STATEMENTS · TAP A RAISED WORD TO FLIP IT</h2>
+  <div id="statements"></div>
+
+  <div class="bar actions">
+    <button class="btn" id="check">Check statements</button>
+    <span class="checks" id="checksLeft"></span>
+    <div class="toast" id="toast"></div>
+  </div>
+  <div class="history" id="history"></div>
+  <div id="end"></div>
+
+</div>
+
+<aside class="side" id="side" aria-label="Evidence and case file" aria-hidden="true">
+  <div class="side-head">
+    <div class="side-tabs" role="tablist">
+      <button role="tab" data-tab="evidence">Evidence</button>
+      <button role="tab" data-tab="file">Case file</button>
+    </div>
+    <button class="side-x" id="sideClose" aria-label="Close panel">×</button>
+  </div>
+  <div class="side-body">
+    <section data-pane="evidence"><p class="side-note">Always true.</p><div class="evidence" id="evidence"></div></section>
+    <section data-pane="file" hidden><p class="side-note">Fills in as the statements it relies on turn green.</p><div class="file" id="file"></div></section>
+  </div>
+</aside>
+
+<script>
+// Markup: [[shown|other]] is a flippable word showing "shown" first. A leading * marks the true option.
+const CASE = {
+  no: 1,
+  title: 'The Ashby Ring',
+  brief: "Lady Ashby's ring vanished during her dinner party. Five people have given statements. Each is true apart from a few words that have been flipped to their opposites. Put every statement right and the thief will be obvious.",
+  checks: 4,
+  evidence: [
+    'Dinner ended at 22:00. Coffee was then served downstairs in the library until 22:30.',
+    'It began to rain at 21:30 and rained all night.',
+    'At 21:45 Lady Ashby locked her ring in the upstairs study. At 22:30 it was gone.',
+    'Whoever took the ring left wet footprints across the study carpet.',
+    'The back stairs are the only way upstairs. They start in the kitchen, beside the back door to the garden.',
+    "In the Major's coat pocket: a pawnbroker's ticket for his medals, and an unpaid gambling bill for £400.",
+  ],
+  statements: [
+    { who:'Pell', tag:'the butler',
+      text:"From 22:00 I served coffee in the library. Miss Clara and Lady Ashby never left the fire. The Major slipped out at 22:05 and came back at 22:15 with his collar [[dry|*wet]]. Between ourselves, the Major is [[rich|*poor]] these days, whatever he pretends." },
+    { who:'Major Fenn', tag:'a guest',
+      text:"I went [[inside|*outside]] for a cigar, and I didn't bother with an umbrella. I came back to the library by the [[front|*back]] door." },
+    { who:'Lady Ashby', tag:'the hostess',
+      text:"I went up to lock my ring away at 21:45, [[after|*before]] dinner ended. The rain was [[*already|not yet]] falling. I was the [[last|*first]] person to climb the back stairs that night." },
+    { who:'Mrs Dace', tag:'the cook',
+      text:"Only two people went up the back stairs tonight. Lady Ashby went up at 21:45. The other went up twenty-five minutes [[earlier|*later]]. My back was turned, but I heard the back door bang and found a trail of rainwater from it to the stairs. Rook's boots sat [[*dry|wet]] by my stove all evening." },
+    { who:'Rook', tag:'the gardener',
+      text:"I came in from the greenhouse at 21:20, [[*before|after]] the rain started, and set my boots by the stove. Whoever left that trail of rainwater, it [[was|*wasn't]] me." },
+  ],
+  file: [
+    { key:'Who', needs:['Mrs Dace', 'Pell', 'Rook'],
+      text:"Major Fenn. Someone came in dripping from the garden at 22:10 and climbed the back stairs. The Major was the only one missing from the library then, and Rook's boots were dry." },
+    { key:'How', needs:['Major Fenn', 'Lady Ashby', 'Mrs Dace'],
+      text:"He slipped out to the garden at 22:05, came back in through the kitchen door at 22:10 and went up the back stairs, the only way to the study, leaving rainwater all the way." },
+    { key:'Why', needs:['Pell'],
+      text:"Money. The Major is broke: his medals are at the pawnbroker's and he owes £400 in gambling debts." },
+  ],
+  solution: "Major Fenn took the ring. Only two people climbed the back stairs: Lady Ashby at 21:45, and someone dripping wet twenty-five minutes later, at 22:10. The only person missing from the library at 22:10 was the Major, out in the rain with no umbrella. Rook came in at 21:20, before the rain, and his boots stayed dry, so the wet footprints aren't his. He needed the money: his medals were already pawned to cover his gambling debts.",
+};
+
+let toggles, history, left, over;
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function setup(){
+  toggles = []; history = []; left = CASE.checks; over = false;
+  CASE.statements.forEach((st, si) => {
+    st.parts = st.text.split(/\[\[([^\]]+)\]\]/).map((p, k) => {
+      if (k % 2 === 0) return { text:p };
+      const opts = p.split('|');
+      const correct = opts.findIndex(o => o.startsWith('*'));
+      const t = { si, opts: opts.map(o => o.replace(/^\*/, '')), correct, cur:0 };
+      toggles.push(t); return { t };
+    });
+    st.last = null; st.edited = false;
+  });
+  CASE.file.forEach(f => { f.filled = false; f.fresh = false; });
+  $('case').textContent = `CASE #${CASE.no} · ${CASE.title.toUpperCase()}`;
+  $('brief').textContent = CASE.brief;
+  $('evCount').textContent = CASE.evidence.length;
+  $('evidence').innerHTML = CASE.evidence.map((e, i) => `<div class="ev" data-n="${i + 1}"><span>${esc(e)}</span></div>`).join('');
+  $('end').innerHTML = ''; toast('');
+  render();
+}
+
+function render(){
+  $('statements').className = over ? 'over' : '';
+  $('statements').innerHTML = CASE.statements.map((st, si) => {
+    const cls = ['st']; if (st.last) cls.push(st.last);
+    const body = st.parts.map(p => {
+      if (!p.t) return esc(p.text);
+      const k = toggles.indexOf(p.t);
+      let c = 'flip'; if (p.t.anim) { c += ' turn'; p.t.anim = false; }
+      if (over) c += p.t.cur === p.t.correct ? ' right' : ' wrong';
+      else if (st.last && p.t.checked === p.t.cur) c += ' c-' + st.last;   // unchanged since the last check
+      const opts = p.t.opts.map((o, i) => `<span class="${i === p.t.cur ? 'on' : 'off'}"${i === p.t.cur ? '' : ' aria-hidden="true"'}>${esc(o)}</span>`).join('');
+      return `<button class="${c}" data-k="${k}" aria-label="${esc(p.t.opts[p.t.cur])}, tap to flip to ${esc(p.t.opts[1 - p.t.cur])}"><span class="opts">${opts}</span><span class="ico" aria-hidden="true">⇅</span></button>`;
+    }).join('');
+    return `<div class="${cls.join(' ')}"><div class="who"><span>${esc(st.who)} <span class="tag">· ${esc(st.tag)}</span></span></div><div class="text">${body}</div></div>`;
+  }).join('');
+  renderFile();
+  $('checksLeft').textContent = `${left} check${left === 1 ? '' : 's'} left`;
+  $('check').disabled = over || left < 1;
+  $('history').innerHTML = history.map((row, i) => `<div class="row">${row.map(c => `<i class="${c}"></i>`).join('')}&nbsp; check ${i + 1}</div>`).join('');
+}
+
+const statusOf = who => CASE.statements.find(s => s.who === who).last;
+
+function renderFile(){
+  const n = CASE.file.filter(f => f.filled).length;
+  $('fileCount').textContent = `${n}/${CASE.file.length}`;
+  $('file').innerHTML = CASE.file.map(f => {
+    if (f.filled) {
+      const html = `<div class="slot filled${f.fresh ? ' fresh' : ''}"><div class="k">${f.key.toUpperCase()}<span>✓</span></div><p>${esc(f.text)}</p></div>`;
+      f.fresh = false; return html;
+    }
+    const needs = f.needs.map(n => `<span><i class="${statusOf(n) || ''}"></i>${esc(n)}</span>`).join('');
+    return `<div class="slot"><div class="k">${f.key.toUpperCase()}</div><div class="q">UNKNOWN</div><div class="needs">${needs}</div></div>`;
+  }).join('');
+}
+
+function colourOf(si){
+  const ts = toggles.filter(t => t.si === si), ok = ts.filter(t => t.cur === t.correct).length;
+  return ok === ts.length ? 'green' : ok === 0 ? 'red' : 'yellow';
+}
+
+$('statements').addEventListener('click', e => {
+  const b = e.target.closest('[data-k]'); if (!b || over) return;
+  const t = toggles[+b.dataset.k]; t.cur ^= 1; t.anim = true;
+  CASE.statements[t.si].edited = true;
+  render();
+});
+
+$('check').onclick = () => {
+  if (over || left < 1) return;
+  left--;
+  toggles.forEach(t => t.checked = t.cur);   // remember what each flip showed when checked
+  const row = CASE.statements.map((st, si) => (st.last = colourOf(si), st.edited = false, st.last));
+  history.push(row);
+  // Case file slots fill (and stay filled) once every statement they rely on has checked green.
+  const opened = CASE.file.filter(f => !f.filled && f.needs.every(n => statusOf(n) === 'green'));
+  opened.forEach(f => { f.filled = true; f.fresh = true; });
+  if (opened.length) { $('fileBtn').classList.remove('ping'); void $('fileBtn').offsetWidth; $('fileBtn').classList.add('ping'); }
+  const greens = row.filter(c => c === 'green').length;
+  if (greens === row.length) return finish(true);
+  if (left === 0) return finish(false);
+  toast(`${greens} of ${row.length} statements fully right.` + (opened.length ? ` Case file: ${opened.map(f => f.key).join(', ')} solved.` : ''));
+  render();
+};
+
+function finish(win){
+  over = true;
+  if (win) CASE.file.forEach(f => { if (!f.filled) { f.filled = true; f.fresh = true; } });
+  toast(win ? `Case closed in ${history.length} check${history.length === 1 ? '' : 's'}.` : 'Out of checks. The right words are shown in green.');
+  const text = `TESTIMONY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CASE.checks}` : `Unsolved (X/${CASE.checks})`}\n` +
+    history.map(r => r.map(c => ({green:'🟩', yellow:'🟨', red:'🟥'}[c])).join('')).join('\n');
+  $('end').innerHTML = `<div class="closed"><div class="stamp ${win ? 'win' : 'lose'}">${win ? 'CASE CLOSED' : 'COLD CASE'}</div>
+    <h3>WHAT HAPPENED</h3><p>${esc(CASE.solution)}</p><pre class="share">${esc(text)}</pre>
+    <div class="bar"><button class="btn" id="copy">Copy result</button></div></div>`;
+  $('copy').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text above.'));
+  if (win) {
+    const file = CASE.file.map(f => `<p><b style="font-family:'Courier Prime',monospace;letter-spacing:.14em">${f.key.toUpperCase()}</b> · ${esc(f.text)}</p>`).join('');
+    setTimeout(() => CasebookModal.open({ stamp:'CASE CLOSED', heading:'WHAT HAPPENED', html:`<p>${esc(CASE.solution)}</p>${file}`, share:text }), 700);
+  }
+  render();
+}
+
+// ---- right-hand panel (evidence / case file). Non-modal: statements stay usable while it's open.
+let sideTab = null;
+function openSide(tab){
+  sideTab = tab;
+  document.body.classList.add('side-on');
+  $('side').setAttribute('aria-hidden', 'false');
+  document.querySelectorAll('.side-tabs [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
+  document.querySelectorAll('.side [data-pane]').forEach(p => p.hidden = p.dataset.pane !== tab);
+  document.querySelectorAll('.side-btn').forEach(b => b.classList.toggle('on', b.dataset.open === tab));
+  if (tab === 'file') $('fileBtn').classList.remove('ping');
+}
+function closeSide(){
+  sideTab = null;
+  document.body.classList.remove('side-on');
+  $('side').setAttribute('aria-hidden', 'true');
+  document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('on'));
+}
+document.querySelectorAll('.side-btn').forEach(b => b.onclick = () => sideTab === b.dataset.open ? closeSide() : openSide(b.dataset.open));
+document.querySelectorAll('.side-tabs [data-tab]').forEach(b => b.onclick = () => openSide(b.dataset.tab));
+$('sideClose').onclick = closeSide;
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && sideTab && !document.body.classList.contains('cb-on')) closeSide(); });
+
+function toast(m){ $('toast').textContent = m; }
+setup();
+</script>
+<script src="../shared/menu.js?v=7" data-root=".." data-game="testimony"></script>
+<template data-howto data-title="Testimony">
+  <p>Five people have given statements. Everything in them is true <b>except the raised words</b>, some of which have been flipped to their opposite (up/down, before/after, wet/dry…).</p>
+  <ul>
+    <li><b>Tap a raised word</b> to flip it. Nothing is checked until you press <b>Check statements</b>.</li>
+    <li><b>Each check</b> colours every statement:
+      <span class="key" style="background:#2e7d4f"></span>all its raised words are right,
+      <span class="key" style="background:#d19a12"></span>some are right,
+      <span class="key" style="background:#b3261e"></span>none are. You have four checks.</li>
+    <li>After a check, words you change turn <b>blue</b>, so you can see what's different from last time.</li>
+    <li><b>Evidence</b> (always true) and the <b>case file</b> are in the side panel. The case file fills in Who, How and Why as their statements turn green.</li>
+  </ul>
+  <h4>TIP</h4>
+  <p>Start with statements the evidence settles on its own. Once those are right, they tell you what you need for the rest.</p>
+</template>
+<script src="../shared/help.js?v=7" data-game="testimony"></script>
+</body>
+</html>
