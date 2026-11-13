@@ -39,5 +39,13 @@
   // The date a game's issue N came out (or comes out).
   const dateOfIssue = (id, n) => dateOf(ROTATION.indexOf(id) + (n - 1) * ROTATION.length);
 
-  window.Casebook = { GAMES, ROTATION, LAUNCH, dayOf, gameOn, issuesBy, dateOf, dateOfIssue, pickCase, today: () => dayOf() };
+  // Results are remembered in this browser (until there's a backend), so the archive can show solved / cold.
+  const RKEY = (id, n) => `casebook:result:${id}:${n}`;
+  const saveResult = (id, n, win, detail = '') => { if (!n) return; try { localStorage.setItem(RKEY(id, n), JSON.stringify({ win, detail, at: Date.now() })); } catch {} };
+  const getResult = (id, n) => { try { return JSON.parse(localStorage.getItem(RKEY(id, n)) || 'null'); } catch { return null; } };
+
+  // Link to a specific case of the current game, for sharing results.
+  const shareUrl = issue => `${location.origin}${location.pathname}${issue ? `?issue=${issue}` : ''}`;
+
+  window.Casebook = { shareUrl, saveResult, getResult, GAMES, ROTATION, LAUNCH, dayOf, gameOn, issuesBy, dateOf, dateOfIssue, pickCase, today: () => dayOf() };
 })();

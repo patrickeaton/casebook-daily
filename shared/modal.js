@@ -16,6 +16,7 @@
   .cbm-shade.on .cbm{transform:none}
   .cbm-stamp{display:inline-block;font:700 20px "Courier Prime",monospace;letter-spacing:.14em;padding:5px 14px;border:3px solid #2e7d4f;color:#2e7d4f;
     border-radius:6px;transform:rotate(-5deg);margin:0 0 14px 2px}
+  .cbm-stamp.lose{border-color:#b3261e;color:#b3261e}
   .cbm-shade.on .cbm-stamp{animation:cbm-thump .45s .12s both}
   @keyframes cbm-thump{0%{transform:rotate(-5deg) scale(2);opacity:0}70%{transform:rotate(-5deg) scale(.95);opacity:1}100%{transform:rotate(-5deg) scale(1)}}
   .cbm h3{margin:0 0 4px;font:700 13px "Courier Prime",monospace;letter-spacing:.2em;color:#6f6a5f}
@@ -53,7 +54,7 @@
       else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
     }
   }
-  function open({ stamp = '', title = '', heading = '', html = '', share = '', closeLabel = 'Close' } = {}){
+  function open({ stamp = '', tone = 'win', title = '', heading = '', html = '', share = '', closeLabel = 'Close' } = {}){
     if (!styled) { document.head.insertAdjacentHTML('beforeend', `<style>${css}</style>`); styled = true; }
     document.querySelector('.cbm-shade')?.remove();
     lastFocus = document.activeElement;
@@ -62,7 +63,7 @@
     shade.innerHTML = `<div class="cbm" role="dialog" aria-modal="true" aria-labelledby="cbm-h">
       <div class="cbm-head">
         <button class="cbm-x" aria-label="Close">×</button>
-        ${stamp ? `<div class="cbm-stamp">${esc(stamp)}</div>` : ''}
+        ${stamp ? `<div class="cbm-stamp${tone === 'lose' ? ' lose' : ''}">${esc(stamp)}</div>` : ''}
         <h3 id="cbm-h">${esc(heading)}</h3>${title ? `<div class="cbm-title">${esc(title)}</div>` : ''}
       </div>
       <div class="cbm-scroll">

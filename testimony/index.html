@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=9"></script>
-<script src="../shared/modal.js?v=9"></script>
+<script src="../shared/casebook.js?v=11"></script>
+<script src="../shared/modal.js?v=11"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -270,15 +270,17 @@ function finish(win){
   over = true;
   if (win) CASE.file.forEach(f => { if (!f.filled) { f.filled = true; f.fresh = true; } });
   toast(win ? `Case closed in ${history.length} check${history.length === 1 ? '' : 's'}.` : 'Out of checks. The right words are shown in green.');
-  const text = `TESTIMONY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CASE.checks}` : `Unsolved (X/${CASE.checks})`}\n` +
+  let text = `TESTIMONY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CASE.checks}` : `Unsolved (X/${CASE.checks})`}\n` +
     history.map(r => r.map(c => ({green:'🟩', yellow:'🟨', red:'🟥'}[c])).join('')).join('\n');
+  text += '\n' + Casebook.shareUrl(CASE.no);   // so whoever sees it can play the same case
+  Casebook.saveResult('testimony', CASE.no, win, `${history.length} check${history.length === 1 ? '' : 's'}`);
   $('end').innerHTML = `<div class="closed"><div class="stamp ${win ? 'win' : 'lose'}">${win ? 'CASE CLOSED' : 'COLD CASE'}</div>
     <h3>WHAT HAPPENED</h3><p>${esc(CASE.solution)}</p><pre class="share">${esc(text)}</pre>
     <div class="bar"><button class="btn" id="copy">Copy result</button></div></div>`;
   $('copy').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text above.'));
-  if (win) {
+  {
     const file = CASE.file.map(f => `<p><b style="font-family:'Courier Prime',monospace;letter-spacing:.14em">${f.key.toUpperCase()}</b> · ${esc(f.text)}</p>`).join('');
-    setTimeout(() => CasebookModal.open({ stamp:'CASE CLOSED', heading:'WHAT HAPPENED', html:`<p>${esc(CASE.solution)}</p>${file}`, share:text }), 700);
+    setTimeout(() => CasebookModal.open({ stamp: win ? 'CASE CLOSED' : 'COLD CASE', tone: win ? 'win' : 'lose', heading:'WHAT HAPPENED', html:`<p>${esc(CASE.solution)}</p>${file}`, share:text }), 700);
   }
   render();
 }
@@ -310,7 +312,7 @@ function toast(m){ $('toast').textContent = m; }
 Casebook.pickCase('testimony', '../puzzles/testimony.json').then(r => { CASE = r.case; setup(); })
   .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=9" data-root=".." data-game="testimony"></script>
+<script src="../shared/menu.js?v=11" data-root=".." data-game="testimony"></script>
 <template data-howto data-title="Testimony">
   <p>Five people have given statements. Everything in them is true <b>except the raised words</b>, some of which have been flipped to their opposite (up/down, before/after, wet/dry…).</p>
   <ul>
@@ -325,6 +327,6 @@ Casebook.pickCase('testimony', '../puzzles/testimony.json').then(r => { CASE = r
   <h4>TIP</h4>
   <p>Start with statements the evidence settles on its own. Once those are right, they tell you what you need for the rest.</p>
 </template>
-<script src="../shared/help.js?v=9" data-game="testimony"></script>
+<script src="../shared/help.js?v=11" data-game="testimony"></script>
 </body>
 </html>

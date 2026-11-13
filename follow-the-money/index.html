@@ -14,8 +14,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=9"></script>
-<script src="../shared/modal.js?v=9"></script>
+<script src="../shared/casebook.js?v=11"></script>
+<script src="../shared/modal.js?v=11"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -127,8 +127,8 @@
 </div>
 
 <section data-side="calc" data-side-label="Calculator" data-side-note="Tap the keys, or type on a keyboard."><div data-calc></div></section>
-<script src="../shared/calc.js?v=9"></script>
-<script src="../shared/side.js?v=9"></script>
+<script src="../shared/calc.js?v=11"></script>
+<script src="../shared/side.js?v=11"></script>
 <script>
 // Each shell has exactly one missing amount once the one before it is solved, so the trail is a chain.
 // Verified with tools/verify-money.mjs.
@@ -250,14 +250,16 @@ function finish(win){
   over = true;
   if (!win) { for (const e of hidden) { values[e.id] = e.amount; results[e.id] = results[e.id] === 'ok' ? 'ok' : 'bad'; } }
   toast(win ? `Trail rebuilt in ${history.length} check${history.length === 1 ? '' : 's'}.` : 'Out of checks. The real amounts are filled in.');
-  const text = `FOLLOW THE MONEY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CHECKS}` : `Unsolved (X/${CHECKS})`}\n` +
+  let text = `FOLLOW THE MONEY #${CASE.no} · ${CASE.title}\n${win ? `Solved in ${history.length}/${CHECKS}` : `Unsolved (X/${CHECKS})`}\n` +
     history.map(r => r.map(c => c === 'ok' ? '🟩' : '🟥').join('')).join('\n');
+  text += '\n' + Casebook.shareUrl(CASE.no);   // so whoever sees it can play the same case
+  Casebook.saveResult('money', CASE.no, win, `${history.length} check${history.length === 1 ? '' : 's'}`);
   $('end').innerHTML = `<div class="closed"><div class="stamp ${win ? 'win' : 'lose'}">${win ? 'TRAIL FOUND' : 'TRAIL LOST'}</div>
     <h3>WHERE IT WENT</h3><p>${esc(CASE.story)}</p><pre class="share">${esc(text)}</pre>
     <div class="bar"><button class="btn" id="copy">Copy result</button></div></div>`;
   $('copy').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text above.'));
   document.querySelectorAll('[data-in]').forEach(i => i.value = values[i.dataset.in].toLocaleString('en-GB'));
-  if (win) setTimeout(() => CasebookModal.open({ stamp:'TRAIL FOUND', heading:'WHERE IT WENT', html:`<p>${esc(CASE.story)}</p>`, share:text }), 700);
+  setTimeout(() => CasebookModal.open({ stamp: win ? 'TRAIL FOUND' : 'TRAIL LOST', tone: win ? 'win' : 'lose', heading:'WHERE IT WENT', html:`<p>${esc(CASE.story)}</p>`, share:text }), 700);
   render();
 }
 
@@ -266,7 +268,7 @@ function toast(m){ $('toast').textContent = m; }
 Casebook.pickCase('money', '../puzzles/money.json').then(r => { CASE = r.case; setup(); })
   .catch(e => { document.querySelector('.wrap').insertAdjacentHTML('beforeend', `<p>Couldn't load the case (${e.message}).</p>`); });
 </script>
-<script src="../shared/menu.js?v=9" data-root=".." data-game="money"></script>
+<script src="../shared/menu.js?v=11" data-root=".." data-game="money"></script>
 <template data-howto data-title="Follow the Money">
   <p>Stolen money has been moved through companies to hide where it went. Rebuild the trail by filling in every missing amount.</p>
   <ul>
@@ -278,6 +280,6 @@ Casebook.pickCase('money', '../puzzles/money.json').then(r => { CASE = r.case; s
   <h4>TIP</h4>
   <p>You can work backwards. A known final amount, or one company's share, can tell you what must have flowed in.</p>
 </template>
-<script src="../shared/help.js?v=9" data-game="money"></script>
+<script src="../shared/help.js?v=11" data-game="money"></script>
 </body>
 </html>

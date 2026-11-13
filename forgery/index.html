@@ -13,8 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Casebook">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script src="../shared/casebook.js?v=9"></script>
-<script src="../shared/modal.js?v=9"></script>
+<script src="../shared/casebook.js?v=11"></script>
+<script src="../shared/modal.js?v=11"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -265,14 +265,17 @@ function end(win){
   over = true; picking = false;
   if (!win) tokens.forEach(t => { if (t.forged && !t.state) { t.state = 'missed'; t.fresh = true; } });
   toast(win ? 'Document authenticated. The forger has been caught.' : 'Out of lives. The remaining fakes are circled.');
-  const text = `FORGERY #${P.no} · ${MODES[mode].label}\n${found}/${total} found · ${score()} pts\n${log.join('')}`;
+  let text = `FORGERY #${P.no} · ${MODES[mode].label}\n${found}/${total} found · ${score()} pts\n${log.join('')}`;
+  text += '\n' + Casebook.shareUrl(P.no);   // so whoever sees it can play the same case
+  Casebook.saveResult('forgery', P.no, win, `${score()} pts · ${MODES[mode].label}`);
   $('sharebox').innerHTML = `<pre class="share">${esc(text)}</pre>`;
   $('share').hidden = false;
   $('share').onclick = () => navigator.clipboard?.writeText(text).then(() => toast('Copied to clipboard.'), () => toast('Copy failed. Select the text below.'));
-  if (win) {
-    const caught = tokens.filter(t => t.forged).map(t => `<li><b>${esc(t.text)} → ${esc(t.orig)}</b><br>${esc(t.why)}</li>`).join('');
-    setTimeout(() => CasebookModal.open({ stamp:'AUTHENTICATED', heading:`${P.title.toUpperCase()} · ${score()} PTS`,
-      html:`<p>All four fakes caught. Here's what gave them away:</p><ol style="padding-left:20px;margin:0">${caught}</ol>`, share:text }), 700);
+  {
+    const fakes = tokens.filter(t => t.forged).map(t => `<li><b>${t.state === 'found' ? '✓' : '✗'} ${esc(t.text)} → ${esc(t.orig)}</b><br>${esc(t.why)}</li>`).join('');
+    setTimeout(() => CasebookModal.open({ stamp: win ? 'AUTHENTICATED' : 'FORGER ESCAPED', tone: win ? 'win' : 'lose',
+      heading:`${P.title.toUpperCase()} · ${score()} PTS`,
+      html:`<p>${win ? "All four fakes caught. Here's what gave them away:" : `You caught ${found} of ${total}. Here's how to spot all four:`}</p><ol style="padding-left:20px;margin:0">${fakes}</ol>`, share:text }), 700);
   }
 }
 
@@ -344,7 +347,7 @@ $('start').addEventListener('click', e => {
   showStart(Math.max(1, Math.min(want, PUZZLES.length)) - 1);
 })();
 </script>
-<script src="../shared/menu.js?v=9" data-root=".." data-game="forgery"></script>
+<script src="../shared/menu.js?v=11" data-root=".." data-game="forgery"></script>
 <template data-howto data-title="Forgery">
   <p>A forger has changed <b>four words</b> in today's document. Every fake is contradicted by the document itself, so you never need outside knowledge.</p>
   <ul>
@@ -358,6 +361,6 @@ $('start').addEventListener('click', e => {
   <h4>TIP</h4>
   <p>A fake is always outvoted: the true fact appears or is implied at least twice elsewhere. If two details disagree, look for the one that's on its own.</p>
 </template>
-<script src="../shared/help.js?v=9" data-game="forgery"></script>
+<script src="../shared/help.js?v=11" data-game="forgery"></script>
 </body>
 </html>
